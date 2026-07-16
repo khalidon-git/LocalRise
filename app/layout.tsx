@@ -83,6 +83,9 @@ const jsonLd = {
   ],
 };
 
+import { CartProvider } from "@/components/CartProvider";
+import { CartDrawer } from "@/components/ui/CartDrawer";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -91,7 +94,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {children}
+        <CartProvider>
+          {children}
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

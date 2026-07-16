@@ -235,7 +235,7 @@ export const individualServices: IndividualService[] = [
     price: 9999,
     priceNote: "starting",
     delivery: "5 days",
-    icon: "palette",
+    icon: "layers",
     desc: "A complete look for your business, from logo to social posts.",
     includes: ["Logo & colour system", "Business cards", "Social media templates", "Signage-ready files"],
   },
