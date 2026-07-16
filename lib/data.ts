@@ -9,9 +9,14 @@
 export const brand = {
   name: "LocalRise",
   tagline: "Helping local businesses grow online.",
+  // Primary number: drives the nav call button and every WhatsApp link.
   phoneDisplay: "+91 91222 69958",
   phoneHref: "+919122269958",
   whatsappHref: "919122269958", // wa.me number: country code + number, no +
+  // Second line, also on WhatsApp. Shown in contact + footer only — the nav
+  // and the floating button stay on the primary so there's one obvious action.
+  phoneAltDisplay: "+91 89693 99650",
+  phoneAltHref: "+918969399650",
   email: "help@localrise.in",
   instagram: "https://www.instagram.com/localrise.in/",
   location: "Serving local businesses across India",

@@ -58,7 +58,7 @@ const jsonLd = {
       description,
       url: siteUrl,
       email: brand.email,
-      telephone: brand.phoneDisplay,
+      telephone: [brand.phoneDisplay, brand.phoneAltDisplay],
       areaServed: "IN",
       slogan: brand.tagline,
       priceRange: "₹₹",

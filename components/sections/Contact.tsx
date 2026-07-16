@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 const methods: { icon: IconName; label: string; value: string; href: string; tone: string }[] = [
   { icon: "whatsapp", label: "WhatsApp", value: "Chat with us instantly", href: `https://wa.me/${brand.whatsappHref}`, tone: "text-[#25D366]" },
   { icon: "phone", label: "Call us", value: brand.phoneDisplay, href: `tel:${brand.phoneHref}`, tone: "text-accent" },
+  { icon: "phone", label: "Or call us", value: brand.phoneAltDisplay, href: `tel:${brand.phoneAltHref}`, tone: "text-accent" },
   { icon: "mail", label: "Email", value: brand.email, href: `mailto:${brand.email}`, tone: "text-accent" },
 ];
 

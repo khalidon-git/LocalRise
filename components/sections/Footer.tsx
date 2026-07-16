@@ -94,6 +94,11 @@ export function Footer() {
                 </a>
               </li>
               <li>
+                <a href={`tel:${brand.phoneAltHref}`} className="inline-flex items-center gap-2 transition-colors hover:text-white">
+                  <Icon name="phone" size={16} /> {brand.phoneAltDisplay}
+                </a>
+              </li>
+              <li>
                 <a href={`mailto:${brand.email}`} className="inline-flex items-center gap-2 transition-colors hover:text-white">
                   <Icon name="mail" size={16} /> {brand.email}
                 </a>
