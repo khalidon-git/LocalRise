@@ -62,6 +62,7 @@ const jsonLd = {
       areaServed: "IN",
       slogan: brand.tagline,
       priceRange: "₹₹",
+      sameAs: [brand.instagram],
     },
     {
       "@type": "WebSite",

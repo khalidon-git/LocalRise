@@ -55,15 +55,10 @@ lib/
 
 Almost everything you'll want to change lives in **`lib/data.ts`** — copy, prices, services, packages, industries, FAQs, and the `brand` object.
 
-### ⚠️ Replace before launch (currently placeholders)
+### ⚠️ Still placeholders
 
-In `lib/data.ts` → `brand`:
-- `phoneDisplay` / `phoneHref` — real phone number
-- `whatsappHref` — real WhatsApp number (digits only, incl. country code, no `+`)
-- `email` — real email
+Contact details in `lib/data.ts` → `brand` (phone, WhatsApp, email, Instagram) are live. Remaining:
 
-Elsewhere:
-- Social links → `components/sections/Footer.tsx`
 - "Schedule a meeting" link → `components/sections/Contact.tsx` (currently `calendly.com/localrise`)
 - Canonical domain / site URL → `app/layout.tsx`, `app/sitemap.ts`, `app/robots.ts` (currently `https://localrise.in`)
 - Add a real `opengraph-image` (e.g. `app/opengraph-image.png`) for rich link previews
@@ -81,7 +76,20 @@ There is no backend. On submit, the form composes the visitor's details into a m
 
 - Semantic landmarks, keyboard-operable accordions/tabs, visible focus rings, `prefers-reduced-motion` respected
 - No external network calls at runtime (fonts self-hosted, icons inline) → fast, private, resilient
-- Deploy to **Vercel** (zero-config) or any Node host.
+
+## Deployment
+
+Live at **localrise.in**, on **Hostinger** shared hosting via its GitHub integration.
+
+Hostinger clones the repo into `public_html` and serves it as-is — it does **not** run a build. Since `main` holds source only (`/out/` is gitignored), it can't be served directly. So:
+
+1. Push to `main`.
+2. `.github/workflows/deploy.yml` runs `npm ci && npm run build` and force-pushes the contents of `out/` to the **`deploy`** branch.
+3. Hostinger is pointed at `deploy` (hPanel → Websites → localrise.in → Advanced → GIT), where `index.html` sits at the root.
+
+**`deploy` is generated — never commit to it by hand; it gets force-pushed on every build.** All real work happens on `main`.
+
+`public/.htaccess` is copied into the build and configures the 404 page and asset caching.
 
 ---
 

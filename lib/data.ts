@@ -2,16 +2,18 @@
 // LocalRise — single source of truth for site content.
 // Written in plain language for local business owners: customers, calls,
 // WhatsApp, Google, reviews, growth — never jargon.
-// Prices in INR (₹). Replace placeholder contact details before launch.
+// Prices in INR (₹). Contact details are live — change them here to update
+// the whole site (nav, contact, footer, WhatsApp button and SEO schema).
 // ---------------------------------------------------------------------------
 
 export const brand = {
   name: "LocalRise",
   tagline: "Helping local businesses grow online.",
-  phoneDisplay: "+91 90000 00000",
-  phoneHref: "+919000000000",
-  whatsappHref: "919000000000", // wa.me number, no +
-  email: "hello@localrise.in",
+  phoneDisplay: "+91 91222 69958",
+  phoneHref: "+919122269958",
+  whatsappHref: "919122269958", // wa.me number: country code + number, no +
+  email: "help@localrise.in",
+  instagram: "https://www.instagram.com/localrise.in/",
   location: "Serving local businesses across India",
 } as const;
 

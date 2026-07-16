@@ -3,11 +3,10 @@ import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/Icon";
 
+// Only live profiles belong here — a dead social link costs more trust than a
+// missing one. Add Facebook / LinkedIn / X back once those accounts exist.
 const socials = [
-  { label: "Instagram", href: "https://instagram.com/localrise", path: "M12 8.2A3.8 3.8 0 1 0 12 15.8 3.8 3.8 0 0 0 12 8.2Zm0 6.3a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Zm4-6.6a.9.9 0 1 1-1.8 0 .9.9 0 0 1 1.8 0ZM7.5 4.5h9A3 3 0 0 1 19.5 7.5v9a3 3 0 0 1-3 3h-9a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3Zm0 1.4A1.6 1.6 0 0 0 5.9 7.5v9a1.6 1.6 0 0 0 1.6 1.6h9a1.6 1.6 0 0 0 1.6-1.6v-9A1.6 1.6 0 0 0 16.5 5.9Z" },
-  { label: "Facebook", href: "https://facebook.com/localrise", path: "M13.5 21v-7.3h2.4l.4-2.8h-2.8V9.1c0-.8.2-1.4 1.4-1.4h1.5V5.2c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.1H8.2v2.8h2.5V21h2.8Z" },
-  { label: "LinkedIn", href: "https://linkedin.com/company/localrise", path: "M7.2 9.3H4.6V19h2.6V9.3ZM5.9 5A1.5 1.5 0 1 0 5.9 8 1.5 1.5 0 0 0 5.9 5ZM19.4 19v-5.6c0-2.7-1.4-3.9-3.4-3.9a2.9 2.9 0 0 0-2.6 1.4V9.3H10.8V19h2.6v-5.1c0-1.3.5-2.1 1.6-2.1s1.6.8 1.6 2.1V19h2.8Z" },
-  { label: "X", href: "https://x.com/localrise", path: "M17.5 4.5h2.4l-5.3 6 6.2 8.9h-4.9l-3.8-5.5-4.4 5.5H5.3l5.6-6.4L5 4.5h5l3.4 5 4.1-5Zm-.9 13 1.4.1L8.4 5.9H6.9l9.7 11.6Z" },
+  { label: "Instagram", href: brand.instagram, path: "M12 8.2A3.8 3.8 0 1 0 12 15.8 3.8 3.8 0 0 0 12 8.2Zm0 6.3a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Zm4-6.6a.9.9 0 1 1-1.8 0 .9.9 0 0 1 1.8 0ZM7.5 4.5h9A3 3 0 0 1 19.5 7.5v9a3 3 0 0 1-3 3h-9a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3Zm0 1.4A1.6 1.6 0 0 0 5.9 7.5v9a1.6 1.6 0 0 0 1.6 1.6h9a1.6 1.6 0 0 0 1.6-1.6v-9A1.6 1.6 0 0 0 16.5 5.9Z" },
 ];
 
 export function Footer() {
