@@ -3,6 +3,13 @@
 # Serve the site's own 404 page instead of Apache's default.
 ErrorDocument 404 /404.html
 
+# Apache doesn't always know Ogg/Opus — be explicit so browsers accept the
+# intro audio instead of getting it as a generic download.
+<IfModule mod_mime.c>
+  AddType audio/ogg .ogg
+  AddType audio/ogg .opus
+</IfModule>
+
 # Everything under /_next/static/ has a content hash in its filename, so a
 # change always produces a new URL and these can never go stale. Scoped to
 # that path deliberately — a year-long cache on anything unhashed would be

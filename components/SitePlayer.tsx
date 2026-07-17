@@ -2,12 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const SRC = "/intro.mp3";
-
 // Plays the intro audio when the site opens. Browsers block audio-with-sound
 // until the visitor interacts, so we try to autoplay immediately and, if that
 // is blocked, start on the first click / tap / key press anywhere. A small
 // floating button lets visitors pause or resume it at any time.
+//
+// Two encodes are served: Opus (~417 KB) for browsers that support it, and MP3
+// (~601 KB) as the fallback for Safari/iOS. The browser picks the first
+// <source> it can play.
 export function SitePlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
@@ -54,7 +56,13 @@ export function SitePlayer() {
 
   return (
     <>
-      <audio ref={audioRef} src={SRC} preload="auto" />
+      {/* preload="none": most browsers block autoplay anyway, so visitors who
+          never interact download nothing. On the first gesture the audio streams
+          progressively, so playback still starts almost immediately. */}
+      <audio ref={audioRef} preload="none">
+        <source src="/intro.ogg" type="audio/ogg; codecs=opus" />
+        <source src="/intro.mp3" type="audio/mpeg" />
+      </audio>
       <button
         type="button"
         onClick={toggle}
