@@ -68,11 +68,6 @@
     @apply mx-auto w-full max-w-content px-5 sm:px-6 lg:px-8;
   }
 
-  /* Eyebrow / kicker label */
-  .eyebrow {
-    @apply inline-flex items-center gap-2 text-eyebrow uppercase text-accent;
-  }
-
   /* Thin-bordered chip */
   .chip {
     @apply inline-flex items-center gap-2 rounded-full border border-line-2 bg-white/70 px-3.5 py-1.5 text-label font-medium text-ink-2 backdrop-blur;
@@ -101,7 +96,7 @@
 
   /* Grain / noise overlay helper handled via ::before on hero */
   .section-pad {
-    @apply py-20 sm:py-24 lg:py-30;
+    @apply py-14 sm:py-16 lg:py-20;
   }
 }
 

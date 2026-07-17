@@ -30,7 +30,6 @@ export function Services() {
     <section id="services" className="section-pad">
       <div className="container-x">
         <SectionHeading
-          eyebrow="What we do"
           title="Everything your business needs to grow online"
           description="One team for your website, Google presence, WhatsApp, branding and more — explained simply, priced transparently."
         />

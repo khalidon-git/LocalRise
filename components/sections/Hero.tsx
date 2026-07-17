@@ -27,19 +27,9 @@ export function Hero() {
 
       <div className="container-x relative grid items-center gap-12 pb-16 pt-32 sm:pt-36 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pb-24 lg:pt-40">
         <motion.div variants={container} initial="hidden" animate="show" className="flex flex-col items-start">
-          <motion.div variants={item}>
-            <span className="chip">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
-              </span>
-              Digital agency for local businesses
-            </span>
-          </motion.div>
-
           <motion.h1
             variants={item}
-            className="mt-6 text-display-xl font-display text-ink"
+            className="text-display-xl font-display text-ink"
           >
             Helping local businesses{" "}
             <span className="relative whitespace-nowrap text-accent">

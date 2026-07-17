@@ -10,14 +10,8 @@ export function WhyChooseUs() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] [background:radial-gradient(60%_100%_at_50%_0%,rgba(47,91,255,0.22),transparent_70%)]" />
       <div className="container-x relative">
         <div className="mx-auto max-w-2xl text-center">
-          <Reveal>
-            <span className="eyebrow text-accent-bright">
-              <span className="h-1.5 w-1.5 rounded-full bg-current" />
-              Why LocalRise
-            </span>
-          </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="mt-4 font-display text-heading-1 font-semibold text-white">
+            <h2 className="font-display text-heading-1 font-semibold text-white">
               The reasons businesses stay with us
             </h2>
           </Reveal>

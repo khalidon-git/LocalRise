@@ -11,7 +11,6 @@ export function Packages() {
     <section id="packages" className="section-pad bg-bg-subtle">
       <div className="container-x">
         <SectionHeading
-          eyebrow="Packages"
           title="Simple pricing. No surprises."
           description="Pick the package that fits where your business is today. One-time price, clearly explained — tap any feature to see what it means."
         />

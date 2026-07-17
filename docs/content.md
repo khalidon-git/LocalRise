@@ -62,14 +62,15 @@ icon tiles (Services, IndividualServices, WhyChooseUs, Contact, TrustBar).
 
 These are product decisions, not oversights. **Preserve them:**
 
-- **No invented testimonials or client logos.** `Testimonials` deliberately shows
-  a "founding partner" offer and empty placeholders instead of fake quotes.
+- **No invented testimonials or client logos.** There is deliberately no
+  testimonials section at all — an earlier one showed a "founding partner" offer
+  and empty placeholders rather than fake quotes, and was later removed outright.
+  Don't add fabricated social proof.
 - **Portfolio projects are labelled "Demo Project"** — they're concept work.
 - **No fabricated metrics** ("3× more leads"). Nothing claims a result that
   didn't happen.
 
-If real clients arrive, replace these with real, permitted material — don't
-loosen the rule.
+If real clients arrive, add real, permitted material — don't loosen the rule.
 
 ## Types
 

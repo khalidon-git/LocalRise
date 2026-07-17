@@ -11,7 +11,6 @@ export function Portfolio() {
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeading
             align="left"
-            eyebrow="Selected work"
             title="Concept projects, crafted with care"
             description="We're a young studio, so instead of borrowed logos we show honest demo projects — the same quality we'll bring to your business."
           />

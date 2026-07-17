@@ -18,14 +18,8 @@ export function FAQ() {
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           {/* Left intro */}
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <Reveal>
-              <span className="eyebrow">
-                <span className="h-1.5 w-1.5 rounded-full bg-current" />
-                FAQ
-              </span>
-            </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="mt-4 font-display text-heading-1 font-semibold text-ink">
+              <h2 className="font-display text-heading-1 font-semibold text-ink">
                 Questions? Answered simply.
               </h2>
             </Reveal>

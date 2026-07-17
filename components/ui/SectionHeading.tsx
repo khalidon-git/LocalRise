@@ -3,7 +3,6 @@ import { cx } from "@/lib/utils";
 import { Reveal } from "./Reveal";
 
 type Props = {
-  eyebrow?: string;
   title: ReactNode;
   description?: ReactNode;
   align?: "left" | "center";
@@ -12,7 +11,6 @@ type Props = {
 };
 
 export function SectionHeading({
-  eyebrow,
   title,
   description,
   align = "center",
@@ -27,14 +25,6 @@ export function SectionHeading({
         className,
       )}
     >
-      {eyebrow && (
-        <Reveal>
-          <span className={cx("eyebrow", tone === "dark" && "text-accent-bright")}>
-            <span className="h-1.5 w-1.5 rounded-full bg-current" />
-            {eyebrow}
-          </span>
-        </Reveal>
-      )}
       <Reveal delay={0.05}>
         <h2
           className={cx(

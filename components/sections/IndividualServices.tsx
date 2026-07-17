@@ -19,7 +19,6 @@ export function IndividualServices() {
     <section id="individual-services" className="section-pad overflow-hidden">
       <div className="container-x">
         <SectionHeading
-          eyebrow="À la carte"
           title="Need just one thing? Pick a service."
           description="Every service is a clear, fixed offer — you always see the price, the delivery time and exactly what's included before you decide."
         />

@@ -49,11 +49,7 @@ export function Contact() {
             <div className="relative border-b border-line p-8 sm:p-10 lg:border-b-0 lg:border-r lg:p-12">
               <div className="pointer-events-none absolute -left-16 top-10 h-56 w-56 rounded-full bg-accent/10 blur-3xl" />
               <div className="relative">
-                <span className="eyebrow">
-                  <span className="h-1.5 w-1.5 rounded-full bg-current" />
-                  Get started
-                </span>
-                <h2 className="mt-4 font-display text-heading-2 font-semibold text-ink">
+                <h2 className="font-display text-heading-2 font-semibold text-ink">
                   Let&apos;s grow your business
                 </h2>
                 <p className="mt-3 max-w-md text-body-lg text-ink-2">

@@ -19,7 +19,6 @@ export function Industries() {
     <section id="industries" className="section-pad bg-bg-subtle">
       <div className="container-x">
         <SectionHeading
-          eyebrow="Industries"
           title="Built around your kind of business"
           description="We understand what customers look for in your field — and design your online presence to bring them in."
         />

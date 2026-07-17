@@ -26,7 +26,6 @@ export function Process() {
     <section id="process" className="section-pad">
       <div className="container-x">
         <SectionHeading
-          eyebrow="How it works"
           title="A clear path from idea to launch"
           description="No confusion, no jargon. You always know exactly what's happening and what comes next."
         />

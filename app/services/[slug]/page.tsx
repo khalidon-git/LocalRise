@@ -114,7 +114,6 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
       <section className="section-pad">
         <div className="container-x">
           <SectionHeading
-            eyebrow="Why it matters"
             title={`What ${service.title} does for you`}
             description={detail.who}
           />
@@ -171,7 +170,6 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
         <section className="section-pad">
           <div className="container-x">
             <SectionHeading
-              eyebrow="Popular pairing"
               title="Often part of a package"
               description="Bundle it and save — here's the package this service fits into."
             />
@@ -192,7 +190,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
       {serviceFaqs.length > 0 && (
         <section className="section-pad bg-bg-subtle">
           <div className="container-x max-w-3xl">
-            <SectionHeading eyebrow="FAQ" title="Good questions" />
+            <SectionHeading title="Good questions" />
             <div className="mt-12">
               <ServiceFAQ items={serviceFaqs} />
             </div>
