@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { services, serviceDetails, packages, faqs, brand } from "@/lib/data";
 import { Icon, type IconName } from "@/components/Icon";
 import { Button } from "@/components/ui/Button";
+import { SmartLink } from "@/components/ui/SmartLink";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
@@ -178,10 +179,10 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
               <PackageCard pkg={pkg} />
             </div>
             <Reveal delay={0.1} className="mt-8 text-center">
-              <a href="/#packages" className="inline-flex items-center gap-2 text-body-sm font-medium text-accent">
+              <SmartLink href="/#packages" className="inline-flex items-center gap-2 text-body-sm font-medium text-accent">
                 See all packages
                 <Icon name="arrow-right" size={16} strokeWidth={2} />
-              </a>
+              </SmartLink>
             </Reveal>
           </div>
         </section>

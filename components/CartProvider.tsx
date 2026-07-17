@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
+import { useScrollLock } from "@/hooks/useScrollLock";
 
 export interface CartItem {
   title: string;
@@ -23,17 +24,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Sync scroll lock on body when cart drawer is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
+  // Shared, reference-counted so it can't fight the mobile menu's lock.
+  useScrollLock(isOpen);
 
   const addToCart = (title: string, price: number) => {
     setCart((prevCart) => {

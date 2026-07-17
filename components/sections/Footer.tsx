@@ -1,6 +1,7 @@
 import { brand, nav } from "@/lib/data";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
+import { SmartLink } from "@/components/ui/SmartLink";
 import { Icon } from "@/components/Icon";
 import { GrowScene } from "@/components/illustrations/SpotScenes";
 
@@ -76,7 +77,7 @@ export function Footer() {
             <ul className="mt-4 flex flex-col gap-3">
               {nav.map((n) => (
                 <li key={n.href}>
-                  <a href={n.href} className="text-body-sm text-ink-inverse-2 transition-colors hover:text-white">{n.label}</a>
+                  <SmartLink href={n.href} className="text-body-sm text-ink-inverse-2 transition-colors hover:text-white">{n.label}</SmartLink>
                 </li>
               ))}
             </ul>
@@ -87,7 +88,7 @@ export function Footer() {
             <ul className="mt-4 flex flex-col gap-3">
               {footerServices.map((s) => (
                 <li key={s.href}>
-                  <a href={s.href} className="text-body-sm text-ink-inverse-2 transition-colors hover:text-white">{s.label}</a>
+                  <SmartLink href={s.href} className="text-body-sm text-ink-inverse-2 transition-colors hover:text-white">{s.label}</SmartLink>
                 </li>
               ))}
             </ul>

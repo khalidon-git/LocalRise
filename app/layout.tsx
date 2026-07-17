@@ -3,6 +3,13 @@ import "@fontsource-variable/inter";
 import "@fontsource-variable/space-grotesk";
 import "./globals.css";
 import { brand, faqs } from "@/lib/data";
+import { AudioProvider } from "@/providers/AudioProvider";
+import { CartProvider } from "@/components/CartProvider";
+import { AudioToggle } from "@/components/audio/AudioToggle";
+import { CartDrawer } from "@/components/ui/CartDrawer";
+import { Nav } from "@/components/sections/Nav";
+import { Footer } from "@/components/sections/Footer";
+import { WhatsAppButton } from "@/components/sections/WhatsAppButton";
 
 const siteUrl = "https://localrise.in";
 const description =
@@ -83,13 +90,6 @@ const jsonLd = {
   ],
 };
 
-import { CartProvider } from "@/components/CartProvider";
-import { CartDrawer } from "@/components/ui/CartDrawer";
-import { Nav } from "@/components/sections/Nav";
-import { Footer } from "@/components/sections/Footer";
-import { WhatsAppButton } from "@/components/sections/WhatsAppButton";
-import { SitePlayer } from "@/components/SitePlayer";
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -98,14 +98,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <CartProvider>
-          <Nav />
-          {children}
-          <Footer />
-          <WhatsAppButton />
-          <SitePlayer />
-          <CartDrawer />
-        </CartProvider>
+        {/* AudioProvider sits at the root so its <audio> element is mounted once
+            and survives every client-side navigation — never recreated, never
+            restarted. */}
+        <AudioProvider>
+          <CartProvider>
+            <Nav />
+            {children}
+            <Footer />
+            <WhatsAppButton />
+            <AudioToggle />
+            <CartDrawer />
+          </CartProvider>
+        </AudioProvider>
       </body>
     </html>
   );

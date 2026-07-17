@@ -5,7 +5,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { nav, brand } from "@/lib/data";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
+import { SmartLink } from "@/components/ui/SmartLink";
 import { Icon } from "@/components/Icon";
+import { useScrollLock } from "@/hooks/useScrollLock";
 import { cx } from "@/lib/utils";
 
 export function Nav() {
@@ -19,12 +21,7 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+  useScrollLock(open);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
@@ -40,19 +37,19 @@ export function Nav() {
               : "border border-transparent py-2.5",
           )}
         >
-          <a href="/#top" aria-label="LocalRise home" className="shrink-0">
+          <SmartLink href="/#top" aria-label="LocalRise home" className="shrink-0">
             <Logo />
-          </a>
+          </SmartLink>
 
           <ul className="hidden items-center gap-1 lg:flex">
             {nav.map((item) => (
               <li key={item.href}>
-                <a
+                <SmartLink
                   href={item.href}
                   className="rounded-full px-3.5 py-2 text-body-sm font-medium text-ink-2 transition-colors duration-200 hover:bg-bg-muted hover:text-ink"
                 >
                   {item.label}
-                </a>
+                </SmartLink>
               </li>
             ))}
           </ul>
@@ -111,14 +108,14 @@ export function Nav() {
               <ul className="mt-6 flex flex-col gap-1">
                 {nav.map((item) => (
                   <li key={item.href}>
-                    <a
+                    <SmartLink
                       href={item.href}
                       onClick={() => setOpen(false)}
                       className="flex items-center justify-between rounded-xl px-4 py-3.5 text-lg font-medium text-ink transition-colors hover:bg-bg-muted"
                     >
                       {item.label}
                       <Icon name="arrow-up-right" size={18} className="text-ink-3" />
-                    </a>
+                    </SmartLink>
                   </li>
                 ))}
               </ul>

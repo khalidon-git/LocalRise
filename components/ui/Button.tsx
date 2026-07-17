@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { cx } from "@/lib/utils";
 import { Icon, type IconName } from "@/components/Icon";
+import { SmartLink } from "@/components/ui/SmartLink";
 
 type Variant = "primary" | "secondary" | "ghost" | "dark" | "whatsapp";
 type Size = "md" | "lg";
@@ -67,9 +68,9 @@ export function Button({
 
   if (href) {
     return (
-      <a href={href} className={classes} {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}>
+      <SmartLink href={href} className={classes} {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}>
         {inner}
-      </a>
+      </SmartLink>
     );
   }
   return (

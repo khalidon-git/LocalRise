@@ -117,12 +117,17 @@ const config: Config = {
           "0%": { transform: "scale(0.9)", opacity: "0.6" },
           "70%, 100%": { transform: "scale(1.7)", opacity: "0" },
         },
+        eq: {
+          "0%, 100%": { transform: "scaleY(0.35)" },
+          "50%": { transform: "scaleY(1)" },
+        },
       },
       animation: {
         "float-slow": "float-slow 7s ease-in-out infinite",
         "float-soft": "float-soft 5s ease-in-out infinite",
         marquee: "marquee 32s linear infinite",
         "pulse-ring": "pulse-ring 2.4s cubic-bezier(0.22,1,0.36,1) infinite",
+        eq: "eq 0.9s ease-in-out infinite",
       },
     },
   },
