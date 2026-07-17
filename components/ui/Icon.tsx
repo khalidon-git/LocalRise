@@ -7,7 +7,8 @@ export type IconName =
   | "code" | "rocket" | "shield" | "tag" | "heart" | "target" | "layers"
   | "arrow-right" | "arrow-up-right" | "check" | "plus" | "minus"
   | "whatsapp" | "phone" | "mail" | "calendar" | "clock" | "quote"
-  | "menu" | "close" | "pin" | "spark";
+  | "menu" | "close" | "pin" | "spark"
+  | "camera" | "home" | "chart" | "users" | "award" | "leaf" | "gem" | "shirt" | "dumbbell";
 
 const paths: Record<IconName, JSX.Element> = {
   browser: (<><rect x="3" y="4" width="18" height="16" rx="2.5" /><path d="M3 9h18" /><path d="M7 6.5h.01M9.5 6.5h.01" /></>),
@@ -52,6 +53,15 @@ const paths: Record<IconName, JSX.Element> = {
   close: (<><path d="M6 6l12 12M18 6 6 18" /></>),
   pin: (<><path d="M12 21s6-5.3 6-10a6 6 0 1 0-12 0c0 4.7 6 10 6 10Z" /><circle cx="12" cy="11" r="2.2" /></>),
   spark: (<><path d="M12 4v4M12 16v4M4 12h4M16 12h4" /><path d="m6.5 6.5 2.5 2.5M15 15l2.5 2.5M17.5 6.5 15 9M9 15l-2.5 2.5" /></>),
+  camera: (<><rect x="3" y="7" width="18" height="13" rx="2.5" /><path d="m8 7 1.4-2.5h5.2L16 7" /><circle cx="12" cy="13.5" r="3.4" /></>),
+  home: (<><path d="M4 11 12 4l8 7" /><path d="M6 10v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9" /><path d="M10 20v-5h4v5" /></>),
+  chart: (<><path d="M5 20V11M10.5 20V5M16 20v-8" /><path d="M3 20h18" /></>),
+  users: (<><circle cx="9" cy="8" r="3" /><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5" /><circle cx="17" cy="9" r="2.3" /><path d="M15.3 13.2c2.4.4 4.2 2.2 4.2 5.8" /></>),
+  award: (<><circle cx="12" cy="9" r="5.2" /><path d="M9 13.5 7.5 21l4.5-2.3 4.5 2.3-1.5-7.5" /></>),
+  leaf: (<><path d="M20 4c0 9-6 15-15 15C5 10 11 4 20 4Z" /><path d="M9 19c2-4 6-8 10-11" /></>),
+  gem: (<><path d="M4 9 8 4h8l4 5-10 11L4 9Z" /><path d="M4 9h16M9.5 4 8 9l4 11 4-11-1.5-5" /></>),
+  shirt: (<><path d="M8 4 4 7l2 3 2-1.3V20h8V8.7L18 10l2-3-4-3-2 1.5h-4L8 4Z" /></>),
+  dumbbell: (<><path d="M2 9v6M22 9v6" /><rect x="4.5" y="8" width="3" height="8" rx="1.2" /><rect x="16.5" y="8" width="3" height="8" rx="1.2" /><path d="M7.5 12h9" /></>),
 };
 
 type Props = SVGProps<SVGSVGElement> & {

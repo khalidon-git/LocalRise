@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { concepts, getConcept, brand } from "@/lib/content";
+import { concepts, getConcept } from "@/lib/content";
 import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
 import { SmartLink } from "@/components/ui/SmartLink";
@@ -104,20 +104,16 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
 
               <Reveal delay={0.15}>
                 <div className="mt-7 flex flex-wrap gap-3">
-                  <Button href="/#contact" size="lg" arrow>
+                  <Button href={`/concepts/${concept.slug}/live`} size="lg" variant="dark" icon="browser" arrow>
+                    Live Preview
+                  </Button>
+                  <Button href="/#contact" size="lg" variant="secondary">
                     Build something similar
                   </Button>
-                  <Button
-                    href={`https://wa.me/${brand.whatsappHref}?text=${encodeURIComponent(
-                      `Hi LocalRise! I like the ${concept.name} concept — can we build something similar for my business?`,
-                    )}`}
-                    variant="whatsapp"
-                    size="lg"
-                    icon="whatsapp"
-                  >
-                    Discuss on WhatsApp
-                  </Button>
                 </div>
+                <p className="mt-3 text-[13px] text-ink-3">
+                  Live Preview opens {concept.name}&apos;s full concept site — independent, no LocalRise branding.
+                </p>
               </Reveal>
 
               <Reveal delay={0.2}>

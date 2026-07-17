@@ -7,5 +7,6 @@ export * from "./services";
 export * from "./packages";
 export * from "./industries";
 export * from "./concepts";
+export * from "./conceptSites";
 export * from "./process";
 export * from "./faqs";

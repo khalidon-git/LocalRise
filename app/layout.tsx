@@ -5,12 +5,7 @@ import "./globals.css";
 import { brand, faqs } from "@/lib/content";
 import { AudioProvider } from "@/providers/AudioProvider";
 import { CartProvider } from "@/providers/CartProvider";
-import { AudioToggle } from "@/components/audio/AudioToggle";
-import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
-import { CartDrawer } from "@/components/cart/CartDrawer";
-import { Nav } from "@/components/layout/Nav";
-import { Footer } from "@/components/layout/Footer";
-import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 
 const siteUrl = "https://localrise.in";
 const description =
@@ -104,15 +99,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             restarted. */}
         <AudioProvider>
           <CartProvider>
-            <Nav />
-            {children}
-            <Footer />
-            <WhatsAppButton />
-            <AudioToggle />
-            <CartDrawer />
-            {/* Inside AudioProvider: the "Start Guided Experience" click is the
-                user gesture that lets narration begin. */}
-            <WelcomeModal />
+            {/* SiteChrome renders Nav/Footer/floating chrome around the page —
+                except on concept "live" routes, which render chrome-free so each
+                fictional brand stands alone. Providers stay mounted either way,
+                so the audio engine and the "Start Guided Experience" gesture
+                still work everywhere they should. */}
+            <SiteChrome>{children}</SiteChrome>
           </CartProvider>
         </AudioProvider>
       </body>

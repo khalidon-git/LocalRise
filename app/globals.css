@@ -137,6 +137,43 @@
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Concept "live" sites (/concepts/[slug]/live). Each fictional brand sets its
+   own COLOUR theme through CSS custom properties on `.lv-root`, set inline from
+   lib/content/conceptSites.ts (ConceptSite.theme). Components then reference
+   them through literal Tailwind arbitrary-value classes — e.g. bg-[var(--lv-bg)],
+   text-[var(--lv-ink)] — which is safe for the JIT because the CLASS STRING
+   itself never changes between themes; only the CSS variable's runtime value
+   does. Typography and radius are NOT done this way — theme.font/headFont/radius
+   hold literal Tailwind class names directly (font-serif, rounded-2xl, …), the
+   same pattern components/concepts/ConceptMock.tsx already uses. See
+   docs/content.md on why dynamic class construction is banned.
+--------------------------------------------------------------------------- */
+.lv-root {
+  background: var(--lv-bg);
+  color: var(--lv-ink);
+}
+.lv-root ::selection {
+  background: var(--lv-brand);
+  color: var(--lv-brand-ink);
+}
+.lv-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+.lv-section {
+  padding-block: clamp(3.5rem, 8vw, 7rem);
+}
+/* Ken-Burns drift for full-bleed hero photography; disabled under reduced motion
+   by the rule below. */
+@keyframes lv-kenburns {
+  0% { transform: scale(1.05); }
+  100% { transform: scale(1.14); }
+}
+.lv-kenburns { animation: lv-kenburns 18s ease-out both alternate infinite; }
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
