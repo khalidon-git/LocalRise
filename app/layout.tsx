@@ -85,6 +85,9 @@ const jsonLd = {
 
 import { CartProvider } from "@/components/CartProvider";
 import { CartDrawer } from "@/components/ui/CartDrawer";
+import { Nav } from "@/components/sections/Nav";
+import { Footer } from "@/components/sections/Footer";
+import { WhatsAppButton } from "@/components/sections/WhatsAppButton";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -95,7 +98,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <CartProvider>
+          <Nav />
           {children}
+          <Footer />
+          <WhatsAppButton />
           <CartDrawer />
         </CartProvider>
       </body>

@@ -40,7 +40,7 @@ export function Nav() {
               : "border border-transparent py-2.5",
           )}
         >
-          <a href="#top" aria-label="LocalRise home" className="shrink-0">
+          <a href="/#top" aria-label="LocalRise home" className="shrink-0">
             <Logo />
           </a>
 
@@ -65,7 +65,7 @@ export function Nav() {
               <Icon name="phone" size={16} strokeWidth={1.8} />
               <span className="hidden xl:inline">{brand.phoneDisplay}</span>
             </a>
-            <Button href="#contact" size="md" className="hidden sm:inline-flex" arrow>
+            <Button href="/#contact" size="md" className="hidden sm:inline-flex" arrow>
               Get Free Consultation
             </Button>
             <button
@@ -123,7 +123,7 @@ export function Nav() {
                 ))}
               </ul>
               <div className="mt-6 flex flex-col gap-3">
-                <Button href="#contact" size="lg" onClick={() => setOpen(false)} arrow className="w-full">
+                <Button href="/#contact" size="lg" onClick={() => setOpen(false)} arrow className="w-full">
                   Get Free Consultation
                 </Button>
                 <Button

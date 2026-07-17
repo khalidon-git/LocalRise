@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { services } from "@/lib/data";
 import { Icon, type IconName } from "@/components/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -41,7 +42,9 @@ export function Services() {
                 key={s.id}
                 className={cx("h-full", spanClass[s.id])}
               >
-                <article
+                <Link
+                  href={`/services/${s.id}`}
+                  aria-label={`${s.title} — learn more`}
                   className={cx(
                     "card card-hover group relative flex h-full flex-col overflow-hidden p-6 lg:p-7",
                     isFeature && "bg-gradient-to-br from-white to-bg-subtle",
@@ -68,7 +71,7 @@ export function Services() {
                     )}
 
                     <div className="mt-auto pt-5">
-                      <span className="inline-flex items-center gap-1.5 text-body-sm font-medium text-accent opacity-0 transition-all duration-300 group-hover:opacity-100">
+                      <span className="inline-flex items-center gap-1.5 text-body-sm font-medium text-accent transition-all duration-300">
                         Learn more
                         <Icon name="arrow-right" size={16} strokeWidth={2} className="transition-transform group-hover:translate-x-1" />
                       </span>
@@ -78,7 +81,7 @@ export function Services() {
                   {isFeature && (
                     <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/10 blur-2xl" />
                   )}
-                </article>
+                </Link>
               </StaggerItem>
             );
           })}

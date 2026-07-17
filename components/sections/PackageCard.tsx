@@ -47,7 +47,7 @@ export function PackageCard({ pkg }: { pkg: Package }) {
 
       <div className="mt-6">
         <Button
-          href="#contact"
+          href="/#contact"
           variant={best ? "primary" : "secondary"}
           size="lg"
           arrow

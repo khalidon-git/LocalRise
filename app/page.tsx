@@ -1,4 +1,3 @@
-import { Nav } from "@/components/sections/Nav";
 import { Hero } from "@/components/sections/Hero";
 import { TrustBar } from "@/components/sections/TrustBar";
 import { Services } from "@/components/sections/Services";
@@ -11,29 +10,24 @@ import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { FAQ } from "@/components/sections/FAQ";
 import { Contact } from "@/components/sections/Contact";
-import { Footer } from "@/components/sections/Footer";
-import { WhatsAppButton } from "@/components/sections/WhatsAppButton";
 
+// Nav, Footer and WhatsAppButton live in app/layout.tsx so every page —
+// including the /services/[slug] pages — shares the same chrome.
 export default function Home() {
   return (
-    <>
-      <Nav />
-      <main>
-        <Hero />
-        <TrustBar />
-        <Services />
-        <Packages />
-        <IndividualServices />
-        <Industries />
-        <Portfolio />
-        <Process />
-        <WhyChooseUs />
-        <Testimonials />
-        <FAQ />
-        <Contact />
-      </main>
-      <Footer />
-      <WhatsAppButton />
-    </>
+    <main>
+      <Hero />
+      <TrustBar />
+      <Services />
+      <Packages />
+      <IndividualServices />
+      <Industries />
+      <Portfolio />
+      <Process />
+      <WhyChooseUs />
+      <Testimonials />
+      <FAQ />
+      <Contact />
+    </main>
   );
 }

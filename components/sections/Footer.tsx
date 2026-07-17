@@ -3,6 +3,17 @@ import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/Icon";
 
+// Deep-links into the per-service pages (short labels for the column).
+// Trailing slash matches the exported canonical URLs (trailingSlash: true) so
+// Hostinger serves the page directly with no redirect hop.
+const footerServices = [
+  { label: "Business Websites", href: "/services/websites/" },
+  { label: "Google Profile", href: "/services/google/" },
+  { label: "Online Store", href: "/services/store/" },
+  { label: "WhatsApp Setup", href: "/services/whatsapp/" },
+  { label: "Branding", href: "/services/logo/" },
+];
+
 // Only live profiles belong here — a dead social link costs more trust than a
 // missing one. Add Facebook / LinkedIn / X back once those accounts exist.
 const socials = [
@@ -26,7 +37,7 @@ export function Footer() {
             </p>
           </div>
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-            <Button href="#contact" size="lg" arrow>Get Free Consultation</Button>
+            <Button href="/#contact" size="lg" arrow>Get Free Consultation</Button>
             <Button href={`https://wa.me/${brand.whatsappHref}`} variant="whatsapp" size="lg" icon="whatsapp">
               WhatsApp us
             </Button>
@@ -72,9 +83,9 @@ export function Footer() {
           <div>
             <h3 className="text-label font-semibold uppercase tracking-wider text-ink-inverse-3">Services</h3>
             <ul className="mt-4 flex flex-col gap-3">
-              {["Business Websites", "Google Profile", "Online Store", "WhatsApp Setup", "Branding"].map((s) => (
-                <li key={s}>
-                  <a href="#services" className="text-body-sm text-ink-inverse-2 transition-colors hover:text-white">{s}</a>
+              {footerServices.map((s) => (
+                <li key={s.href}>
+                  <a href={s.href} className="text-body-sm text-ink-inverse-2 transition-colors hover:text-white">{s.label}</a>
                 </li>
               ))}
             </ul>
