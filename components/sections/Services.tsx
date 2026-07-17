@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { services } from "@/lib/data";
+import { services, serviceDetails } from "@/lib/data";
 import { Icon, type IconName } from "@/components/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
@@ -11,11 +11,12 @@ const spanClass: Record<string, string> = {
   automation: "sm:col-span-2 lg:col-span-2",
 };
 
-function IconChip({ name, large }: { name: IconName; large?: boolean }) {
+function IconChip({ name, accent, large }: { name: IconName; accent: string; large?: boolean }) {
   return (
     <span
       className={cx(
-        "grid place-items-center rounded-2xl border border-line bg-white text-accent shadow-xs transition-all duration-500 ease-premium group-hover:-translate-y-0.5 group-hover:border-accent/30 group-hover:shadow-glow",
+        "grid place-items-center rounded-2xl bg-gradient-to-br text-white shadow-md transition-all duration-500 ease-premium group-hover:-translate-y-0.5 group-hover:shadow-glow",
+        accent,
         large ? "h-14 w-14" : "h-12 w-12",
       )}
     >
@@ -50,7 +51,7 @@ export function Services() {
                     isFeature && "bg-gradient-to-br from-white to-bg-subtle",
                   )}
                 >
-                  <IconChip name={s.icon as IconName} large={isFeature} />
+                  <IconChip name={s.icon as IconName} accent={serviceDetails[s.id]?.accent ?? "from-accent to-accent-bright"} large={isFeature} />
 
                   <div className="mt-5 flex flex-1 flex-col">
                     <h3 className={cx("font-display font-semibold tracking-tight text-ink", isFeature ? "text-2xl" : "text-lg")}>

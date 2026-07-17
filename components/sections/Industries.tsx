@@ -6,6 +6,7 @@ import { industries } from "@/lib/data";
 import { Icon, type IconName } from "@/components/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
+import { IndustryVisual } from "@/components/illustrations/IndustryVisual";
 import { cx } from "@/lib/utils";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -77,28 +78,34 @@ export function Industries() {
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
                 transition={{ duration: 0.4, ease }}
-                className="relative flex h-full flex-col"
+                className="relative grid h-full items-center gap-8 lg:grid-cols-[1fr_0.82fr]"
               >
-                <span className="grid h-16 w-16 place-items-center rounded-2xl accent-gradient text-white shadow-glow">
-                  <Icon name={current.icon as IconName} size={30} strokeWidth={1.7} />
-                </span>
-                <h3 className="mt-6 font-display text-heading-3 font-semibold text-ink">{current.name}</h3>
-                <p className="mt-2 max-w-md text-body-lg text-ink-2">{current.line}</p>
+                <div className="flex flex-col">
+                  <span className={cx("grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br text-white shadow-glow", current.accent)}>
+                    <Icon name={current.icon as IconName} size={30} strokeWidth={1.7} />
+                  </span>
+                  <h3 className="mt-6 font-display text-heading-3 font-semibold text-ink">{current.name}</h3>
+                  <p className="mt-2 max-w-md text-body-lg text-ink-2">{current.line}</p>
 
-                <ul className="mt-7 grid gap-3 sm:grid-cols-3">
-                  {current.outcomes.map((o) => (
-                    <li key={o} className="rounded-xl border border-line bg-bg-subtle px-4 py-3.5">
-                      <Icon name="check" size={18} strokeWidth={2.2} className="text-accent" />
-                      <p className="mt-2 text-body-sm font-medium text-ink">{o}</p>
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="mt-7 grid gap-3 sm:grid-cols-3">
+                    {current.outcomes.map((o) => (
+                      <li key={o} className="rounded-xl border border-line bg-bg-subtle px-4 py-3.5">
+                        <Icon name="check" size={18} strokeWidth={2.2} className="text-accent" />
+                        <p className="mt-2 text-body-sm font-medium text-ink">{o}</p>
+                      </li>
+                    ))}
+                  </ul>
 
-                <div className="mt-8 flex flex-wrap items-center gap-4">
-                  <Button href="#contact" arrow>
-                    Grow my {current.name.split(" ")[0].toLowerCase()} business
-                  </Button>
-                  <span className="text-body-sm text-ink-3">Free consultation · No obligation</span>
+                  <div className="mt-8 flex flex-wrap items-center gap-4">
+                    <Button href="#contact" arrow>
+                      Grow my {current.name.split(" ")[0].toLowerCase()} business
+                    </Button>
+                    <span className="text-body-sm text-ink-3">Free consultation · No obligation</span>
+                  </div>
+                </div>
+
+                <div className="hidden lg:block">
+                  <IndustryVisual icon={current.icon as IconName} accent={current.accent} />
                 </div>
               </motion.div>
             </AnimatePresence>
