@@ -6,6 +6,7 @@ import { faqs, brand } from "@/lib/data";
 import { Icon } from "@/components/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
+import { HelpScene } from "@/components/illustrations/SpotScenes";
 import { cx } from "@/lib/utils";
 
 export function FAQ() {
@@ -39,6 +40,9 @@ export function FAQ() {
                   Ask us on WhatsApp
                 </Button>
               </div>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <HelpScene className="mt-10 hidden h-auto w-full max-w-[240px] lg:block" />
             </Reveal>
           </div>
 

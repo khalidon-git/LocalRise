@@ -5,12 +5,13 @@ import { brand, industries } from "@/lib/data";
 import { Icon, type IconName } from "@/components/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
+import { ConsultScene } from "@/components/illustrations/SpotScenes";
 
-const methods: { icon: IconName; label: string; value: string; href: string; tone: string }[] = [
-  { icon: "whatsapp", label: "WhatsApp", value: "Chat with us instantly", href: `https://wa.me/${brand.whatsappHref}`, tone: "text-[#25D366]" },
-  { icon: "phone", label: "Call us", value: brand.phoneDisplay, href: `tel:${brand.phoneHref}`, tone: "text-accent" },
-  { icon: "phone", label: "Or call us", value: brand.phoneAltDisplay, href: `tel:${brand.phoneAltHref}`, tone: "text-accent" },
-  { icon: "mail", label: "Email", value: brand.email, href: `mailto:${brand.email}`, tone: "text-accent" },
+const methods: { icon: IconName; label: string; value: string; href: string; grad: string }[] = [
+  { icon: "whatsapp", label: "WhatsApp", value: "Chat with us instantly", href: `https://wa.me/${brand.whatsappHref}`, grad: "from-[#25D366] to-[#4ADE9E]" },
+  { icon: "phone", label: "Call us", value: brand.phoneDisplay, href: `tel:${brand.phoneHref}`, grad: "from-[#2f5bff] to-[#5b84ff]" },
+  { icon: "phone", label: "Or call us", value: brand.phoneAltDisplay, href: `tel:${brand.phoneAltHref}`, grad: "from-[#06b6d4] to-[#22d3ee]" },
+  { icon: "mail", label: "Email", value: brand.email, href: `mailto:${brand.email}`, grad: "from-[#9b5bff] to-[#c79bff]" },
 ];
 
 export function Contact() {
@@ -59,6 +60,8 @@ export function Contact() {
                   Tell us a little about your business and we&apos;ll get back with a clear plan — free, no obligation.
                 </p>
 
+                <ConsultScene className="mt-6 hidden h-auto w-full max-w-[300px] sm:block" />
+
                 <div className="mt-8 flex flex-col gap-3">
                   {methods.map((m) => (
                     <a
@@ -68,7 +71,7 @@ export function Contact() {
                       rel={m.icon === "whatsapp" ? "noopener noreferrer" : undefined}
                       className="group flex items-center gap-4 rounded-2xl border border-line bg-white p-4 shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                     >
-                      <span className={`grid h-11 w-11 place-items-center rounded-xl bg-bg-subtle ${m.tone}`}>
+                      <span className={`grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br text-white shadow-sm ${m.grad}`}>
                         <Icon name={m.icon} size={20} strokeWidth={1.8} />
                       </span>
                       <span className="flex-1">

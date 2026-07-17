@@ -1,5 +1,9 @@
 import { trustItems } from "@/lib/data";
 import { Icon } from "@/components/Icon";
+import { cx } from "@/lib/utils";
+
+// Colour-cycled check marks so the trust marquee isn't a wall of one blue.
+const checkColors = ["text-[#2f5bff]", "text-[#12b981]", "text-[#ff7a3d]", "text-[#9b5bff]", "text-[#ec4899]"];
 
 export function TrustBar() {
   const items = [...trustItems, ...trustItems, ...trustItems];
@@ -10,7 +14,9 @@ export function TrustBar() {
           {items.map((item, i) => (
             <div key={i} className="flex shrink-0 items-center gap-10">
               <span className="flex items-center gap-2.5 text-body-sm font-medium tracking-tight text-ink-2">
-                <Icon name="check" size={16} strokeWidth={2.2} className="text-accent" />
+                <span className="grid h-6 w-6 place-items-center rounded-full bg-bg-subtle">
+                  <Icon name="check" size={14} strokeWidth={2.4} className={checkColors[i % checkColors.length]} />
+                </span>
                 {item}
               </span>
               <span className="h-1 w-1 rounded-full bg-line-2" />

@@ -2,6 +2,7 @@ import { brand, nav } from "@/lib/data";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/Icon";
+import { GrowScene } from "@/components/illustrations/SpotScenes";
 
 // Deep-links into the per-service pages (short labels for the column).
 // Trailing slash matches the exported canonical URLs (trailingSlash: true) so
@@ -36,6 +37,7 @@ export function Footer() {
               Book a free consultation today. No pressure, no jargon — just a clear next step.
             </p>
           </div>
+          <GrowScene className="hidden h-auto w-[230px] shrink-0 xl:block" />
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
             <Button href="/#contact" size="lg" arrow>Get Free Consultation</Button>
             <Button href={`https://wa.me/${brand.whatsappHref}`} variant="whatsapp" size="lg" icon="whatsapp">

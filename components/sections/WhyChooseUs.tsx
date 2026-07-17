@@ -1,6 +1,7 @@
 import { whyChooseUs, stats } from "@/lib/data";
 import { Icon, type IconName } from "@/components/Icon";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
+import { gradient } from "@/lib/palette";
 import { cx } from "@/lib/utils";
 
 export function WhyChooseUs() {
@@ -44,7 +45,7 @@ export function WhyChooseUs() {
             return (
               <StaggerItem key={r.title} className={cx(feature && "sm:col-span-2 lg:col-span-2")}>
                 <div className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-all duration-500 ease-premium hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.06]">
-                  <span className="grid h-11 w-11 place-items-center rounded-xl border border-white/10 bg-accent/15 text-accent-bright">
+                  <span className={cx("grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br text-white shadow-md", gradient(i))}>
                     <Icon name={r.icon as IconName} size={22} strokeWidth={1.7} />
                   </span>
                   <h3 className={cx("mt-5 font-display font-semibold tracking-tight text-white", feature ? "text-2xl" : "text-lg")}>

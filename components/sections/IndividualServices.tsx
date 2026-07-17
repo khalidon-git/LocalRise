@@ -7,6 +7,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { formatINR } from "@/lib/utils";
+import { gradient } from "@/lib/palette";
 import { useCart } from "@/components/CartProvider";
 
 export function IndividualServices() {
@@ -124,14 +125,14 @@ export function IndividualServices() {
               ref={containerRef}
               className="no-scrollbar flex gap-3 md:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 px-1"
             >
-              {individualServices.map((s) => (
+              {individualServices.map((s, i) => (
                 <StaggerItem
                   key={s.title}
                   className="w-[calc((100%-12px)/1.15)] md:w-[calc((100%-24px)/2.25)] lg:w-[calc((100%-48px)/3)] shrink-0 snap-start h-auto"
                 >
                   <article className="card card-hover group flex h-full flex-col p-6">
                     <div className="flex items-start justify-between">
-                      <span className="grid h-12 w-12 place-items-center rounded-2xl border border-line bg-white text-accent shadow-xs transition-all duration-500 group-hover:-translate-y-0.5 group-hover:shadow-glow">
+                      <span className={`grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br text-white shadow-md transition-all duration-500 group-hover:-translate-y-0.5 group-hover:shadow-glow ${gradient(i)}`}>
                         <Icon name={s.icon as IconName} size={22} strokeWidth={1.7} />
                       </span>
                       <div className="text-right">
