@@ -28,3 +28,6 @@ next-env.d.ts
 
 # vercel (unused — site deploys to Hostinger)
 .vercel
+
+# deploy archives (temporary)
+*.tar.gz
