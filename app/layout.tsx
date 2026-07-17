@@ -88,6 +88,7 @@ import { CartDrawer } from "@/components/ui/CartDrawer";
 import { Nav } from "@/components/sections/Nav";
 import { Footer } from "@/components/sections/Footer";
 import { WhatsAppButton } from "@/components/sections/WhatsAppButton";
+import { SitePlayer } from "@/components/SitePlayer";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -102,6 +103,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <Footer />
           <WhatsAppButton />
+          <SitePlayer />
           <CartDrawer />
         </CartProvider>
       </body>
