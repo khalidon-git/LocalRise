@@ -18,6 +18,7 @@ and how to extend it safely.
 | [animations.md](./animations.md) | Framer Motion patterns, Tailwind keyframes, reduced motion |
 | [content.md](./content.md) | `lib/content` — the single source of site copy |
 | [seo.md](./seo.md) | Metadata, JSON-LD, sitemap, robots |
+| [seo-audit.md](./seo-audit.md) | Audit findings + prioritised remediation plan |
 | [deployment.md](./deployment.md) | Hostinger, the `deploy` branch, and a real size limit |
 
 ## The five things that bite newcomers
