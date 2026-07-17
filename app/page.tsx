@@ -1,6 +1,5 @@
 import { Hero } from "@/components/sections/Hero";
 import { TrustBar } from "@/components/sections/TrustBar";
-import { Services } from "@/components/sections/Services";
 import { Packages } from "@/components/sections/Packages";
 import { IndividualServices } from "@/components/sections/IndividualServices";
 import { Industries } from "@/components/sections/Industries";
@@ -16,7 +15,6 @@ export default function Home() {
     <main>
       <Hero />
       <TrustBar />
-      <Services />
       <Packages />
       <IndividualServices />
       <Industries />

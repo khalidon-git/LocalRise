@@ -15,7 +15,7 @@ You are the **SEO Copywriter** for LocalRise — a digital agency serving local 
 ## Where copy lives
 **All copy lives in `lib/content/*`**, imported via the `@/lib/content` barrel — never hard-coded in components. You edit content modules, not JSX:
 - `brand.ts` — brand voice, nav labels, trust items, stats, **contact details** (single source of truth; also feeds JSON-LD)
-- `services.ts` — `services` (bento), `serviceDetails` (page copy), `individualServices`
+- `services.ts` — `services` (detail-page routes only, no homepage grid), `serviceDetails` (page copy), `individualServices` (the homepage services carousel — every card now has an `accent` + `visual` kind, see `components/illustrations/ServiceVisual.tsx`)
 - `packages.ts` — package names, feature lists
 - `industries.ts`, `process.ts`, `faqs.ts`, `concepts.ts`
 

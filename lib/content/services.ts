@@ -188,6 +188,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     outcomes: ["A stronger reputation", "Higher trust from new customers", "More reviews on autopilot"],
     faqPicks: [2, 5, 7],
     relatedPackageId: "growth",
+    priceFrom: 2499,
   },
   automation: {
     headline: "Let your business run on autopilot",
@@ -209,6 +210,18 @@ export const serviceDetails: Record<string, ServiceDetail> = {
 };
 
 
+/** Which ServiceVisual mockup a card shows — see components/illustrations/ServiceVisual.tsx. */
+export type ServiceVisualKind =
+  | "website"
+  | "maps"
+  | "chat"
+  | "shop"
+  | "brand"
+  | "brandkit"
+  | "reviews"
+  | "automation"
+  | "marketplace";
+
 export type IndividualService = {
   title: string;
   price: number;
@@ -217,6 +230,9 @@ export type IndividualService = {
   desc: string;
   includes: string[];
   icon: string;
+  /** Literal Tailwind gradient classes — matches serviceDetails[id].accent where one exists. */
+  accent: string;
+  visual: ServiceVisualKind;
 };
 
 export const individualServices: IndividualService[] = [
@@ -228,6 +244,8 @@ export const individualServices: IndividualService[] = [
     icon: "browser",
     desc: "A professional website built to bring you calls, messages and walk-ins.",
     includes: ["Mobile responsive design", "WhatsApp & call buttons", "Contact form", "Google Maps"],
+    accent: "from-[#2f5bff] to-[#5b84ff]",
+    visual: "website",
   },
   {
     title: "Google Business Profile",
@@ -236,14 +254,18 @@ export const individualServices: IndividualService[] = [
     icon: "map",
     desc: "Get your business on Google Maps and local search results.",
     includes: ["Profile setup & verification", "Photos & business hours", "Posts & category tuning"],
+    accent: "from-[#12b981] to-[#5be3b0]",
+    visual: "maps",
   },
   {
-    title: "Logo Design",
-    price: 3499,
-    delivery: "3 days",
-    icon: "sparkles",
-    desc: "A clean, memorable logo with the files you'll need everywhere.",
-    includes: ["3 concepts to choose from", "All file formats", "Colour & mono versions"],
+    title: "WhatsApp Business Setup",
+    price: 1999,
+    delivery: "1 day",
+    icon: "chat",
+    desc: "Look professional on WhatsApp with a proper business presence.",
+    includes: ["Business profile", "Quick replies", "Product catalogue", "Greeting message"],
+    accent: "from-[#25D366] to-[#5be3b0]",
+    visual: "chat",
   },
   {
     title: "Online Store",
@@ -253,14 +275,18 @@ export const individualServices: IndividualService[] = [
     icon: "cart",
     desc: "Sell your products online with easy payments and order alerts.",
     includes: ["Product catalogue", "Online payments", "Order notifications", "WhatsApp checkout"],
+    accent: "from-[#9b5bff] to-[#c79bff]",
+    visual: "shop",
   },
   {
-    title: "WhatsApp Business Setup",
-    price: 1999,
-    delivery: "1 day",
-    icon: "chat",
-    desc: "Look professional on WhatsApp with a proper business presence.",
-    includes: ["Business profile", "Quick replies", "Product catalogue", "Greeting message"],
+    title: "Logo Design",
+    price: 3499,
+    delivery: "3 days",
+    icon: "sparkles",
+    desc: "A clean, memorable logo with the files you'll need everywhere.",
+    includes: ["3 concepts to choose from", "All file formats", "Colour & mono versions"],
+    accent: "from-[#ff7a3d] to-[#ffb26b]",
+    visual: "brand",
   },
   {
     title: "Business Branding Kit",
@@ -270,6 +296,39 @@ export const individualServices: IndividualService[] = [
     icon: "layers",
     desc: "A complete look for your business, from logo to social posts.",
     includes: ["Logo & colour system", "Business cards", "Social media templates", "Signage-ready files"],
+    accent: "from-[#ec4899] to-[#f9a8d4]",
+    visual: "brandkit",
+  },
+  {
+    title: "Reviews & Reputation",
+    price: 2499,
+    delivery: "2 days",
+    icon: "star",
+    desc: "Collect more 5-star reviews and show them off to build trust fast.",
+    includes: ["Review link & QR code", "Request message templates", "Reviews shown on your site"],
+    accent: "from-[#FFB020] to-[#ffd37a]",
+    visual: "reviews",
+  },
+  {
+    title: "Business Automation",
+    price: 29999,
+    priceNote: "starting",
+    delivery: "5–7 days",
+    icon: "bolt",
+    desc: "Auto-replies, lead capture and reminders that work while you sleep.",
+    includes: ["WhatsApp auto-replies", "Lead capture into a sheet", "Automated reminders", "Simple analytics dashboard"],
+    accent: "from-[#2f5bff] to-[#9b5bff]",
+    visual: "automation",
+  },
+  {
+    title: "Marketplace Registration",
+    price: 4999,
+    delivery: "5–7 days",
+    icon: "rocket",
+    desc: "Get set up to sell on Amazon, Flipkart, Myntra and more — we handle the paperwork.",
+    includes: ["Amazon + Flipkart + Myntra setup", "Document & GST handling", "Initial catalog upload", "Account health setup"],
+    accent: "from-[#06b6d4] to-[#22d3ee]",
+    visual: "marketplace",
   },
 ];
 

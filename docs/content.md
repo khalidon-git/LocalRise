@@ -12,7 +12,7 @@ contact section, footer, WhatsApp links and the SEO schema together.
 lib/content/
   index.ts        barrel — always import from "@/lib/content"
   brand.ts        brand, nav, trustItems, stats
-  services.ts     services (bento) + serviceDetails (pages) + individualServices
+  services.ts     services (detail-page routes only) + serviceDetails (pages) + individualServices (homepage carousel)
   packages.ts     packages, Package/Feature types
   industries.ts   industries + accent colours
   projects.ts     demo portfolio projects
