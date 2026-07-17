@@ -54,6 +54,11 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "var(--font-sans)", "sans-serif"],
+        // Concept previews only — gives each fictional brand a distinct
+        // typographic voice. Deliberately system stacks: they cost zero bytes
+        // and no external request, which the rest of the site depends on.
+        serif: ["Georgia", "Cambria", "Times New Roman", "serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
       },
       fontSize: {
         "display-xl": ["clamp(2.75rem, 6.2vw, 5rem)", { lineHeight: "1.02", letterSpacing: "-0.03em", fontWeight: "600" }],

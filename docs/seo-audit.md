@@ -30,7 +30,7 @@ is a genuine Google guideline violation.
 | --- | --- | --- | --- |
 | 1 | Add an OG/Twitter share image | **High** | Medium |
 | 2 | Scope `FAQPage` schema to the homepage | Medium | Easy |
-| 3 | Trailing slashes in `sitemap.xml` | Medium | Easy |
+| 3 | ~~Trailing slashes in `sitemap.xml`~~ — **fixed** | Medium | Easy |
 | 4 | Replace the placeholder Calendly link | Medium | Easy |
 
 Everything else is Low or not worth doing. **I am not padding this to 20 items** —
@@ -245,7 +245,7 @@ Checked directly against the built output — **no action needed**:
 ### Phase 1 — Immediate (~1 hour)
 
 1. **Redeploy** so the live site matches `main` (else you're auditing an old build).
-2. Trailing slashes in `app/sitemap.ts` (#3).
+2. ~~Trailing slashes in `app/sitemap.ts`~~ — **done**, shipped with Concept Websites.
 3. Scope `FAQPage` to the homepage (#2).
 4. Fix or remove the Calendly link (#4) — *needs your URL*.
 

@@ -14,6 +14,7 @@ and how to extend it safely.
 | [onboarding.md](./onboarding.md) | First-visit welcome modal and the consent gate |
 | [navigation.md](./navigation.md) | Routing, SmartLink, and why raw `<a>` is banned internally |
 | [cart.md](./cart.md) | Cart context and drawer |
+| [concepts.md](./concepts.md) | Concept Websites — fictional showcase sites |
 | [hooks.md](./hooks.md) | `useScrollLock`, `useCarousel` |
 | [animations.md](./animations.md) | Framer Motion patterns, Tailwind keyframes, reduced motion |
 | [content.md](./content.md) | `lib/content` — the single source of site copy |

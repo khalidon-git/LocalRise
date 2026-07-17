@@ -1,8 +1,9 @@
 import { cx } from "@/lib/utils";
 
-// Code-rendered browser + phone mockup. Factored out of Portfolio so the
-// per-service hero visuals share the exact same look. Pure markup (no client
-// JS) — safe in server components and the static export.
+// Code-rendered browser + phone mockup used by the per-service hero visuals.
+// Pure markup (no client JS) — safe in server components and the static export.
+// Concept pages use components/concepts/ConceptMock instead: that one takes a
+// full per-concept identity, whereas this only varies by accent gradient.
 export function BrowserMock({
   accent,
   title,

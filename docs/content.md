@@ -66,7 +66,7 @@ These are product decisions, not oversights. **Preserve them:**
   testimonials section at all — an earlier one showed a "founding partner" offer
   and empty placeholders rather than fake quotes, and was later removed outright.
   Don't add fabricated social proof.
-- **Portfolio projects are labelled "Demo Project"** — they're concept work.
+- **Concept sites are labelled "Design Concept"** and stated as fictional in prose and schema. See [concepts.md](./concepts.md).
 - **No fabricated metrics** ("3× more leads"). Nothing claims a result that
   didn't happen.
 

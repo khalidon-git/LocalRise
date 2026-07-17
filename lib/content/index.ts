@@ -6,6 +6,6 @@ export * from "./brand";
 export * from "./services";
 export * from "./packages";
 export * from "./industries";
-export * from "./projects";
+export * from "./concepts";
 export * from "./process";
 export * from "./faqs";

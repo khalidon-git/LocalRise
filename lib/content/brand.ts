@@ -24,7 +24,7 @@ export const brand = {
 export const nav = [
   { label: "Services", href: "/#services" },
   { label: "Packages", href: "/#packages" },
-  { label: "Work", href: "/#portfolio" },
+  { label: "Work", href: "/#concepts" },
   { label: "Industries", href: "/#industries" },
   { label: "Process", href: "/#process" },
   { label: "FAQ", href: "/#faq" },
