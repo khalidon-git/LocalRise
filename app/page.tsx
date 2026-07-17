@@ -4,7 +4,6 @@ import { Services } from "@/components/sections/Services";
 import { Packages } from "@/components/sections/Packages";
 import { IndividualServices } from "@/components/sections/IndividualServices";
 import { Industries } from "@/components/sections/Industries";
-import { Concepts } from "@/components/sections/Concepts";
 import { Process } from "@/components/sections/Process";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { FAQ } from "@/components/sections/FAQ";
@@ -21,7 +20,6 @@ export default function Home() {
       <Packages />
       <IndividualServices />
       <Industries />
-      <Concepts />
       <Process />
       <WhyChooseUs />
       <FAQ />

@@ -28,7 +28,7 @@ SaaS Startup, Wedding Photography Studio.
 
 Both are keyed by the same `slug` — adding concept #11 means appending one
 object to **each** file. Everything else (listing, detail page, live route,
-homepage teaser) derives from these two arrays.
+homepage industry panel) derives from these two arrays.
 
 ## Key files
 
@@ -39,7 +39,7 @@ homepage teaser) derives from these two arrays.
 | `components/concepts/ConceptMock.tsx` | Code-rendered desktop preview (6 layouts) |
 | `components/concepts/ConceptPhone.tsx` | Code-rendered mobile preview |
 | `components/concepts/ConceptCard.tsx` | Listing card — mock preview + Live Preview + Build Something Similar |
-| `components/sections/Concepts.tsx` | Homepage teaser (first 4 + link to listing) |
+| `components/sections/Industries.tsx` | Homepage industry picker — click a category, see its real concept mock (merged with the old standalone Concepts teaser; see the coverage-gap note in the file) |
 | `app/concepts/page.tsx` | Listing page |
 | `app/concepts/[slug]/page.tsx` | Detail page (mock preview, features, design notes) |
 | `app/concepts/[slug]/live/page.tsx` | **Live site** — full, chrome-free, independent page |
@@ -56,7 +56,11 @@ homepage teaser) derives from these two arrays.
 
 The listing and detail routes feed `app/sitemap.ts`; live routes are
 deliberately **excluded** from the sitemap (noindex pages shouldn't be listed).
-Nav "Work" → `/#concepts` (the homepage teaser).
+Nav "Work" → `/#concepts` (the homepage industry panel, `Industries.tsx`).
+Only 4 of the 9 industries there currently have a matching concept — the
+other six concepts cover industries outside that list entirely (gym, fashion,
+interior design, architecture, SaaS, wedding photography) and are reachable
+only via `/concepts/`, not from the homepage panel.
 
 ## How the mock preview works (unchanged)
 

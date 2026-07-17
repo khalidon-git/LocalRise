@@ -43,7 +43,7 @@ components/
   layout/        site chrome rendered by the root layout: Nav, Footer,
                  WhatsAppButton
   sections/      homepage/service page content blocks
-  illustrations/ inline SVG artwork: HeroScene, IndustryVisual, SpotScenes
+  illustrations/ inline SVG artwork: HeroScene, SpotScenes
   cart/          CartDrawer
   audio/         AudioToggle (UI only)
   onboarding/    WelcomeModal
