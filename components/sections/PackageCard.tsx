@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import type { Package } from "@/lib/data";
+import type { Package } from "@/lib/content";
 import { formatINR, cx } from "@/lib/utils";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
 
 export function PackageCard({ pkg }: { pkg: Package }) {

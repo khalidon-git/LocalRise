@@ -1,6 +1,6 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
 
 const perks = [

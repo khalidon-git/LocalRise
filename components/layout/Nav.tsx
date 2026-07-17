@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { nav, brand } from "@/lib/data";
+import { nav, brand } from "@/lib/content";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { SmartLink } from "@/components/ui/SmartLink";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components/ui/Icon";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { cx } from "@/lib/utils";
 

@@ -1,7 +1,7 @@
-import { projects } from "@/lib/data";
+import { projects } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components/ui/Icon";
 import { BrowserMock } from "@/components/BrowserMock";
 
 export function Portfolio() {

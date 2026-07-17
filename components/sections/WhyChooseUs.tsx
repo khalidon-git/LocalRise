@@ -1,5 +1,5 @@
-import { whyChooseUs, stats } from "@/lib/data";
-import { Icon, type IconName } from "@/components/Icon";
+import { whyChooseUs, stats } from "@/lib/content";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { gradient } from "@/lib/palette";
 import { cx } from "@/lib/utils";

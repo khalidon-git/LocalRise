@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { cx } from "@/lib/utils";
-import { Icon, type IconName } from "@/components/Icon";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { SmartLink } from "@/components/ui/SmartLink";
 
 type Variant = "primary" | "secondary" | "ghost" | "dark" | "whatsapp";

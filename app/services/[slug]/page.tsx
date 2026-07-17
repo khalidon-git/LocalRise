@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { services, serviceDetails, packages, faqs, brand } from "@/lib/data";
-import { Icon, type IconName } from "@/components/Icon";
+import { services, serviceDetails, packages, faqs, brand } from "@/lib/content";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
 import { SmartLink } from "@/components/ui/SmartLink";
 import { Magnetic } from "@/components/ui/Magnetic";
@@ -10,7 +10,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { ServiceHeroVisual } from "@/components/sections/ServiceHeroVisual";
 import { PackageCard } from "@/components/sections/PackageCard";
-import { ServiceFAQ } from "@/components/ServiceFAQ";
+import { ServiceFAQ } from "@/components/sections/ServiceFAQ";
 import { formatINR } from "@/lib/utils";
 
 const siteUrl = "https://localrise.in";

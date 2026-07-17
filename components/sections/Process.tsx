@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { process } from "@/lib/data";
-import { Icon, type IconName } from "@/components/Icon";
+import { process } from "@/lib/content";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 

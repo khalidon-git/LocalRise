@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { industries } from "@/lib/data";
-import { Icon, type IconName } from "@/components/Icon";
+import { industries } from "@/lib/content";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { IndustryVisual } from "@/components/illustrations/IndustryVisual";

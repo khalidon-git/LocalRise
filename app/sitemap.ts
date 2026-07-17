@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { services } from "@/lib/data";
+import { services } from "@/lib/content";
 
 const siteUrl = "https://localrise.in";
 

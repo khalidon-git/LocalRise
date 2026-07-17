@@ -1,8 +1,8 @@
-import { brand, nav } from "@/lib/data";
+import { brand, nav } from "@/lib/content";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { SmartLink } from "@/components/ui/SmartLink";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components/ui/Icon";
 import { GrowScene } from "@/components/illustrations/SpotScenes";
 
 // Deep-links into the per-service pages (short labels for the column).

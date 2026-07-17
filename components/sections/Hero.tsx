@@ -4,8 +4,8 @@ import { motion, type Variants } from "framer-motion";
 import { HeroScene } from "@/components/illustrations/HeroScene";
 import { Button } from "@/components/ui/Button";
 import { Magnetic } from "@/components/ui/Magnetic";
-import { Icon } from "@/components/Icon";
-import { brand } from "@/lib/data";
+import { Icon } from "@/components/ui/Icon";
+import { brand } from "@/lib/content";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 

@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useCart } from "@/components/CartProvider";
+import { useCart } from "@/providers/CartProvider";
 import { formatINR } from "@/lib/utils";
-import { Icon } from "@/components/Icon";
-import { brand } from "@/lib/data";
+import { Icon } from "@/components/ui/Icon";
+import { brand } from "@/lib/content";
 
 export function CartDrawer() {
   const { cart, isOpen, toggleCart, updateQuantity } = useCart();

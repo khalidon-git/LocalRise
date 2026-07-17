@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { faqs, brand } from "@/lib/data";
-import { Icon } from "@/components/Icon";
+import { faqs, brand } from "@/lib/content";
+import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { HelpScene } from "@/components/illustrations/SpotScenes";

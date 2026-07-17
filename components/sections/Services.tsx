@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { services, serviceDetails } from "@/lib/data";
-import { Icon, type IconName } from "@/components/Icon";
+import { services, serviceDetails } from "@/lib/content";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { cx } from "@/lib/utils";

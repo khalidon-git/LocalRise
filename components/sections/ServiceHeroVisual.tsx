@@ -1,4 +1,4 @@
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components/ui/Icon";
 import { BrowserMock } from "@/components/BrowserMock";
 
 // A calm, code-rendered hero scene for each service page: the shared

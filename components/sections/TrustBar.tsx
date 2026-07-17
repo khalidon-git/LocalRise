@@ -1,5 +1,5 @@
-import { trustItems } from "@/lib/data";
-import { Icon } from "@/components/Icon";
+import { trustItems } from "@/lib/content";
+import { Icon } from "@/components/ui/Icon";
 import { cx } from "@/lib/utils";
 
 // Colour-cycled check marks so the trust marquee isn't a wall of one blue.

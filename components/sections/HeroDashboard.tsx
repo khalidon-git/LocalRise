@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components/ui/Icon";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 

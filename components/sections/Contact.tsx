@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { brand, industries } from "@/lib/data";
-import { Icon, type IconName } from "@/components/Icon";
+import { brand, industries } from "@/lib/content";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { ConsultScene } from "@/components/illustrations/SpotScenes";

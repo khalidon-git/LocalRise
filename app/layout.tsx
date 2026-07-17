@@ -2,14 +2,14 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/space-grotesk";
 import "./globals.css";
-import { brand, faqs } from "@/lib/data";
+import { brand, faqs } from "@/lib/content";
 import { AudioProvider } from "@/providers/AudioProvider";
-import { CartProvider } from "@/components/CartProvider";
+import { CartProvider } from "@/providers/CartProvider";
 import { AudioToggle } from "@/components/audio/AudioToggle";
-import { CartDrawer } from "@/components/ui/CartDrawer";
-import { Nav } from "@/components/sections/Nav";
-import { Footer } from "@/components/sections/Footer";
-import { WhatsAppButton } from "@/components/sections/WhatsAppButton";
+import { CartDrawer } from "@/components/cart/CartDrawer";
+import { Nav } from "@/components/layout/Nav";
+import { Footer } from "@/components/layout/Footer";
+import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 
 const siteUrl = "https://localrise.in";
 const description =

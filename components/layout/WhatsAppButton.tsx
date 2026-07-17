@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { brand } from "@/lib/data";
-import { Icon } from "@/components/Icon";
+import { brand } from "@/lib/content";
+import { Icon } from "@/components/ui/Icon";
 
 export function WhatsAppButton() {
   const [show, setShow] = useState(false);

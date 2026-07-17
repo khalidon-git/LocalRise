@@ -1,102 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { individualServices } from "@/lib/data";
-import { Icon, type IconName } from "@/components/Icon";
+import { useCarousel } from "@/hooks/useCarousel";
+import { individualServices } from "@/lib/content";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { formatINR } from "@/lib/utils";
 import { gradient } from "@/lib/palette";
-import { useCart } from "@/components/CartProvider";
+import { useCart } from "@/providers/CartProvider";
 
 export function IndividualServices() {
   const { addToCart } = useCart();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
-  // Monitor scroll positioning to update active dots and button states
-  const handleScroll = () => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    // 1. Determine active snap item
-    const children = container.children;
-    if (children.length > 0) {
-      let minDiff = Infinity;
-      let closestIndex = 0;
-      const containerLeft = container.getBoundingClientRect().left;
-
-      for (let i = 0; i < children.length; i++) {
-        const child = children[i] as HTMLElement;
-        const childLeft = child.getBoundingClientRect().left;
-        const diff = Math.abs(childLeft - containerLeft);
-        if (diff < minDiff) {
-          minDiff = diff;
-          closestIndex = i;
-        }
-      }
-      setActiveIndex(closestIndex);
-    }
-
-    // 2. Determine scroll boundaries
-    setCanScrollLeft(container.scrollLeft > 5);
-    // Add small buffer to account for rounding/fractional pixels in browsers
-    setCanScrollRight(
-      container.scrollLeft + container.clientWidth < container.scrollWidth - 8
-    );
-  };
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    handleScroll(); // Run once to initialize states
-    container.addEventListener("scroll", handleScroll, { passive: true });
-    
-    // Also attach resize listener to recalculate bounds on window resizing
-    window.addEventListener("resize", handleScroll, { passive: true });
-
-    return () => {
-      container.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
-  }, []);
-
-  // Smooth scroll logic by card width + gap
-  const scroll = (direction: "left" | "right") => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const firstCard = container.children[0] as HTMLElement;
-    if (!firstCard) return;
-
-    const cardWidth = firstCard.clientWidth;
-    // Gap sizes are gap-3 (12px) on mobile, gap-6 (24px) on tablet/desktop
-    const gap = window.innerWidth < 768 ? 12 : 24;
-    const scrollAmount = cardWidth + gap;
-
-    container.scrollBy({
-      left: direction === "left" ? -scrollAmount : scrollAmount,
-      behavior: "smooth",
-    });
-  };
-
-  // Dot navigation click handler
-  const scrollToCard = (index: number) => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const card = container.children[index] as HTMLElement;
-    if (card) {
-      container.scrollTo({
-        left: card.offsetLeft - container.offsetLeft,
-        behavior: "smooth",
-      });
-    }
-  };
+  const { containerRef, activeIndex, canScrollLeft, canScrollRight, scrollByCard, scrollToIndex } =
+    useCarousel<HTMLDivElement>();
 
   return (
     <section id="individual-services" className="section-pad overflow-hidden">
@@ -111,7 +28,7 @@ export function IndividualServices() {
           {/* Navigation Arrow - Left */}
           <button
             type="button"
-            onClick={() => scroll("left")}
+            onClick={() => scrollByCard("left")}
             disabled={!canScrollLeft}
             aria-label="Previous packages"
             className="absolute -left-6 top-[40%] z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-line bg-white shadow-md transition-all hover:bg-bg-subtle disabled:pointer-events-none disabled:opacity-0 lg:flex h-12 w-12 text-ink active:scale-95"
@@ -187,7 +104,7 @@ export function IndividualServices() {
           {/* Navigation Arrow - Right */}
           <button
             type="button"
-            onClick={() => scroll("right")}
+            onClick={() => scrollByCard("right")}
             disabled={!canScrollRight}
             aria-label="Next packages"
             className="absolute -right-6 top-[40%] z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-line bg-white shadow-md transition-all hover:bg-bg-subtle disabled:pointer-events-none disabled:opacity-0 lg:flex h-12 w-12 text-ink active:scale-95"
@@ -202,7 +119,7 @@ export function IndividualServices() {
             <button
               key={index}
               type="button"
-              onClick={() => scrollToCard(index)}
+              onClick={() => scrollToIndex(index)}
               aria-label={`Go to service package ${index + 1}`}
               className={`h-2 rounded-full transition-all duration-300 ${
                 activeIndex === index

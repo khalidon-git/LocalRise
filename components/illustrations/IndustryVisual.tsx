@@ -1,4 +1,4 @@
-import { Icon, type IconName } from "@/components/Icon";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { cx } from "@/lib/utils";
 
 // A vivid, colourful illustrated tile for each industry: the industry's icon on

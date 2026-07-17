@@ -1,8 +1,8 @@
-import { packages } from "@/lib/data";
+import { packages } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { PackageCard } from "./PackageCard";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components/ui/Icon";
 
 const guarantees = ["No hidden charges", "Free consultation first", "Friendly ongoing support"];
 

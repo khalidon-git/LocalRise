@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components/ui/Icon";
 import { cx } from "@/lib/utils";
 
 // Same accordion look/behaviour as the homepage FAQ section, but driven by a
