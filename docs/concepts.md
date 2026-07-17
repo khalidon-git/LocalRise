@@ -39,7 +39,9 @@ homepage industry panel) derives from these two arrays.
 | `components/concepts/ConceptMock.tsx` | Code-rendered desktop preview (6 layouts) |
 | `components/concepts/ConceptPhone.tsx` | Code-rendered mobile preview |
 | `components/concepts/ConceptCard.tsx` | Listing card — mock preview + Live Preview + Build Something Similar |
-| `components/sections/Industries.tsx` | Homepage industry picker — click a category, see its real concept mock (merged with the old standalone Concepts teaser; see the coverage-gap note in the file) |
+| `components/sections/Industries.tsx` | Homepage industry picker — click a category, see a real screenshot of that concept's live site (merged with the old standalone Concepts teaser) |
+| `components/concepts/ScreenshotMock.tsx` / `ScreenshotPhone.tsx` | Real-screenshot framing — same browser-chrome/phone-bezel language as `ConceptMock`/`ConceptPhone`, but renders a captured `<img>` instead of code-rendered markup |
+| `scripts/capture-concept-screenshots.mjs` | Regenerates `public/concepts-shots/*.jpg` — **run this after any change to a concept's live site** |
 | `app/concepts/page.tsx` | Listing page |
 | `app/concepts/[slug]/page.tsx` | Detail page (mock preview, features, design notes) |
 | `app/concepts/[slug]/live/page.tsx` | **Live site** — full, chrome-free, independent page |
@@ -57,12 +59,42 @@ homepage industry panel) derives from these two arrays.
 The listing and detail routes feed `app/sitemap.ts`; live routes are
 deliberately **excluded** from the sitemap (noindex pages shouldn't be listed).
 Nav "Work" → `/#concepts` (the homepage industry panel, `Industries.tsx`).
-Only 4 of the 9 industries there currently have a matching concept — the
-other six concepts cover industries outside that list entirely (gym, fashion,
-interior design, architecture, SaaS, wedding photography) and are reachable
-only via `/concepts/`, not from the homepage panel.
+The panel is driven directly by `concepts` (all ten), not by the separate
+9-category `industries` list `Contact.tsx`'s business-type dropdown uses — an
+earlier version mapped concepts onto that list and could only cover 4 of 10;
+driving the sidebar from `concepts` itself means every entry always has a
+real concept, with no coverage gap and no placeholder state.
 
-## How the mock preview works (unchanged)
+## Real screenshots on the homepage (a deliberate, scoped exception)
+
+`Industries.tsx`'s panel shows a **real screenshot** of the active concept's
+live site — `ScreenshotMock` + `ScreenshotPhone`, both just a captured
+`<img>` inside the same chrome framing `ConceptMock`/`ConceptPhone` use.
+This is a further, deliberate extension of the photography exception
+[ADR-007](../knowledge/decisions/007-concept-live-sites.md) established for
+live concept pages — for the first time it puts real image weight on the
+**homepage itself**, not just on `/concepts/*/live/` pages a visitor opts
+into. Kept acceptable by: only one concept's pair of images (desktop +
+mobile, ~60–130 KB each) loads at a time, they're `loading="lazy"`, and the
+total set is ~1.2 MB across all 10 concepts, never all loaded at once.
+
+**These are static captures, not generated at build time** —
+`scripts/capture-concept-screenshots.mjs` drives a headless browser against
+each `/concepts/<slug>/live/` page and saves the result to
+`public/concepts-shots/<slug>-{desktop,mobile}.jpg`. **Nothing warns you if a
+screenshot goes stale.** Re-run the script (see the file header for exact
+steps — Playwright is installed on demand, not a project dependency, same
+pattern as the `ffmpeg-static` audio recipe in
+[deployment.md](./deployment.md)) whenever a concept's copy, theme, or layout
+changes in `conceptSites.ts`.
+
+`ConceptCard` (the `/concepts/` listing and detail-page "more concepts")
+still uses the code-rendered `ConceptMock`/`ConceptPhone`, not real
+screenshots — that's an intentional scope boundary for now, not an
+oversight. Extending the same real-screenshot treatment there is a
+reasonable next step if the inconsistency is worth fixing.
+
+## How the mock preview works (`ConceptCard`, listing/detail pages)
 
 Each concept carries an `identity` (colour, typography, corner radius) and a
 `preview` (layout variant + fake copy). `ConceptMock` is **one component with
@@ -185,6 +217,9 @@ one to `conceptSites` in `conceptSites.ts`, same `slug` in both. Choose:
    `kind`) or, for a SaaS-shaped business, `dashboard` + `pricing` instead,
    `gallery`, `testimonials`, `faq`, `contact`.
 5. Verify every image URL returns `200` before committing it.
+6. Add the new `slug` to the list in `scripts/capture-concept-screenshots.mjs`
+   and run it, so `Industries.tsx`'s homepage panel has a real screenshot for
+   it instead of a broken image.
 
 **Add a live-site layout variant** — extend `LiveTheme["heroStyle"]` and add a
 branch in `components/live/LiveHero.tsx`, the same way `ConceptMock` grows a
