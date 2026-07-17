@@ -6,6 +6,7 @@ import { brand, faqs } from "@/lib/content";
 import { AudioProvider } from "@/providers/AudioProvider";
 import { CartProvider } from "@/providers/CartProvider";
 import { AudioToggle } from "@/components/audio/AudioToggle";
+import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
@@ -109,6 +110,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <WhatsAppButton />
             <AudioToggle />
             <CartDrawer />
+            {/* Inside AudioProvider: the "Start Guided Experience" click is the
+                user gesture that lets narration begin. */}
+            <WelcomeModal />
           </CartProvider>
         </AudioProvider>
       </body>

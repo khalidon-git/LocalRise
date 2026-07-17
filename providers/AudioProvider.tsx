@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { readOnboardingChoice } from "@/lib/onboarding";
 
 // ---------------------------------------------------------------------------
 // Owns the site's single audio engine.
@@ -34,6 +35,12 @@ type AudioContextValue = {
   /** Audible state. Muting never pauses — the timeline keeps running. */
   isMuted: boolean;
   toggleMute: () => void;
+  /**
+   * Explicitly begin narration. Called from the welcome modal's
+   * "Start Guided Experience" button — that click is a user gesture, which is
+   * exactly what autoplay policy requires, so playback reliably starts here.
+   */
+  startNarration: () => void;
 };
 
 const AudioCtx = createContext<AudioContextValue | undefined>(undefined);
@@ -60,6 +67,9 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  // Set inside the mount effect; lets startNarration() re-arm the gesture
+  // fallback if its own play() attempt is somehow still blocked.
+  const armFallbackRef = useRef<() => void>(() => {});
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -95,6 +105,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     const removeGestureListeners = () => {
       GESTURES.forEach((e) => window.removeEventListener(e, attemptPlay));
     };
+    armFallbackRef.current = addGestureListeners;
 
     // Only tear the fallback down once playback is CONFIRMED. Removing the
     // listeners on the play() call itself (before the promise settles) is what
@@ -123,9 +134,15 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     audio.addEventListener("ended", onEnded);
     audio.addEventListener("timeupdate", onTimeUpdate);
 
-    // Start the engine immediately. If autoplay is blocked, begin on the very
-    // first interaction anywhere — navigation is never required.
-    audio.play().catch(() => addGestureListeners());
+    // Only visitors who previously opted into the guided experience get audio
+    // without asking again. First-time visitors are handled by WelcomeModal, and
+    // anyone who chose "Browse on My Own" stays silent until they use the toggle.
+    //
+    // This gate matters: arming the gesture fallback unconditionally would make
+    // the very click on "Browse on My Own" start the narration.
+    if (readOnboardingChoice() === "guided") {
+      audio.play().catch(() => addGestureListeners());
+    }
 
     return () => {
       removeGestureListeners();
@@ -137,24 +154,42 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
+  // Begins playback from an explicit user action (the welcome modal). Because
+  // the call originates in a click handler it satisfies autoplay policy, so no
+  // gesture fallback is normally needed — it's re-armed only as a safety net.
+  const startNarration = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.muted = false;
+    setIsMuted(false);
+    audio.play().catch(() => armFallbackRef.current());
+  }, []);
+
   // Mute/unmute ONLY. Never pauses, reloads, or seeks — the timeline keeps
   // running while muted, so unmuting reveals the audio at the current position.
   const toggleMute = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
+    // Nothing is playing yet — e.g. the visitor chose "Browse on My Own", or
+    // the narration finished. Treat the click as "play with sound"; muting
+    // something inaudible would just cost them a second click to hear anything.
+    if (audio.paused) {
+      audio.muted = false;
+      setIsMuted(false);
+      audio.play().catch(() => {});
+      persist(false, audio.currentTime);
+      return;
+    }
+
     const next = !audio.muted;
     audio.muted = next;
     setIsMuted(next);
-
-    // If autoplay was blocked, this click is itself a valid user gesture.
-    if (audio.paused) audio.play().catch(() => {});
-
     persist(next, audio.currentTime);
   }, []);
 
   return (
-    <AudioCtx.Provider value={{ isPlaying, isMuted, toggleMute }}>
+    <AudioCtx.Provider value={{ isPlaying, isMuted, toggleMute, startNarration }}>
       {/* preload="none": autoplay is blocked for most first-time visitors, so
           anyone who never interacts downloads nothing. On the first gesture the
           audio streams progressively and starts almost immediately. */}
