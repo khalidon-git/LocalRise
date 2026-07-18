@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { ScreenshotMock } from "@/components/concepts/ScreenshotMock";
 import { ScreenshotPhone } from "@/components/concepts/ScreenshotPhone";
+import { SmartLink } from "@/components/ui/SmartLink";
 import { cx } from "@/lib/utils";
 import { startConversation } from "@/lib/communication";
 
@@ -46,6 +47,16 @@ export function Industries() {
           title="Built around your kind of business"
           description="We understand what customers look for in your field — and design your online presence to bring them in. Real screenshots of real concept sites, not stock illustrations."
         />
+
+        <div className="mt-5 flex justify-center">
+          <SmartLink
+            href="/concepts"
+            className="inline-flex items-center gap-2 text-body-sm font-medium text-accent"
+          >
+            Browse all {concepts.length} concepts
+            <Icon name="arrow-right" size={16} strokeWidth={2} />
+          </SmartLink>
+        </div>
 
         <div className="mt-14 grid gap-4 lg:grid-cols-[320px_1fr] lg:gap-6">
           {/* Selector */}
