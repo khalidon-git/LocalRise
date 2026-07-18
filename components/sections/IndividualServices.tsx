@@ -77,11 +77,11 @@ export function IndividualServices() {
                           </span>
                         </div>
                       </div>
-                      <p className="mt-1.5 text-body-sm text-ink-2 flex-1">{s.desc}</p>
+                      <p className="mt-1.5 text-body-sm text-ink-2">{s.desc}</p>
 
                       <div className="my-5 h-px bg-line" />
 
-                      <ul className="mb-6 flex flex-col gap-2">
+                      <ul className="mb-6 flex flex-1 flex-col gap-2">
                         {s.includes.map((inc) => (
                           <li key={inc} className="flex items-center gap-2.5 text-body-sm text-ink-2">
                             <Icon

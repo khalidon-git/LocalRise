@@ -22,11 +22,23 @@ const quickPoints = ["Free consultation", "Ready in days", "No hidden charges"];
 
 export function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden mesh-hero">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-full dotgrid opacity-[0.5] [mask-image:radial-gradient(70%_50%_at_50%_0%,#000,transparent)]" />
+    <section id="top" className="relative isolate min-h-[640px] overflow-hidden bg-bg-subtle sm:min-h-[680px] lg:min-h-[760px]">
+      {/* Full-bleed background: the shop-to-city clip plays behind the whole
+          section, not beside it. HeroVideo's own "bg" scrim keeps the
+          overlaid heading/CTAs legible — see components/illustrations/HeroVideo.tsx.
+          mesh-hero/dotgrid (the old flat background) are dropped here: they'd
+          be fully hidden under an opaque full-bleed video anyway. */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="absolute inset-0 z-0"
+      >
+        <HeroVideo size="bg" />
+      </motion.div>
 
-      <div className="container-x relative grid items-center gap-12 pb-16 pt-32 sm:pt-36 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pb-24 lg:pt-40">
-        <motion.div variants={container} initial="hidden" animate="show" className="flex flex-col items-start">
+      <div className="container-x relative z-10 flex flex-col items-start pb-16 pt-32 sm:pt-36 lg:pb-24 lg:pt-40">
+        <motion.div variants={container} initial="hidden" animate="show" className="flex max-w-2xl flex-col items-start">
           <motion.h1
             variants={item}
             className="text-display-xl font-display text-ink"
@@ -68,19 +80,10 @@ export function Hero() {
             ))}
           </motion.ul>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="relative"
-        >
-          <HeroVideo />
-        </motion.div>
       </div>
 
       {/* smooth transition into next section */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-white" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-b from-transparent to-white" />
     </section>
   );
 }
