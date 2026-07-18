@@ -1,6 +1,7 @@
 import { whyChooseUs, stats } from "@/lib/content";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
+import { SmartLink } from "@/components/ui/SmartLink";
 import { gradient } from "@/lib/palette";
 import { cx } from "@/lib/utils";
 
@@ -53,8 +54,8 @@ export function WhyChooseUs() {
 
           {/* CTA tile fills the grid */}
           <StaggerItem>
-            <a
-              href="#contact"
+            <SmartLink
+              href="/contact"
               className="group flex h-full flex-col justify-between rounded-2xl accent-gradient p-6 text-white shadow-glow transition-transform duration-500 ease-premium hover:-translate-y-0.5"
             >
               <div>
@@ -65,7 +66,7 @@ export function WhyChooseUs() {
                 Let&apos;s talk
                 <Icon name="arrow-right" size={18} strokeWidth={2.2} className="transition-transform group-hover:translate-x-1" />
               </span>
-            </a>
+            </SmartLink>
           </StaggerItem>
         </Stagger>
       </div>

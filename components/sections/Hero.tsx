@@ -48,7 +48,7 @@ export function Hero() {
 
           <motion.div variants={item} className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Magnetic>
-              <Button href="#contact" size="lg" arrow>
+              <Button href="/contact" size="lg" arrow>
                 Get Free Consultation
               </Button>
             </Magnetic>

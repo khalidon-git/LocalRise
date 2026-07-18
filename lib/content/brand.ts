@@ -13,6 +13,7 @@ export const brand = {
   // and the floating button stay on the primary so there's one obvious action.
   phoneAltDisplay: "+91 89693 99650",
   phoneAltHref: "+918969399650",
+  whatsappAltHref: "918969399650", // same number as phoneAltHref, wa.me-formatted — see lib/communication/whatsapp.ts
   email: "help@localrise.in",
   instagram: "https://www.instagram.com/localrise.in/",
   location: "Serving local businesses across India",

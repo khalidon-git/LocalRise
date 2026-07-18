@@ -8,8 +8,11 @@ import { cx } from "@/lib/utils";
 // brand colour and radius so it reads as that brand's button, not LocalRise's.
 // Colours arrive as CSS custom properties (see conceptSites.ts theme + globals.css)
 // consumed through literal bg-[var(--lv-*)] classes — never built dynamically.
-type Props = {
-  href: string;
+//
+// Dual-mode like the main Button: pass `href` for a link, or `onClick` (no
+// href) to render a plain <button> — e.g. LiveFooter's "Build something
+// similar" starts a WhatsApp conversation rather than navigating.
+type CommonProps = {
   children: ReactNode;
   variant?: "solid" | "outline" | "ghost";
   radius: string;
@@ -17,23 +20,24 @@ type Props = {
   className?: string;
 };
 
-export function LiveButton({ href, children, variant = "solid", radius, arrow, className }: Props) {
+type Props = CommonProps & ({ href: string; onClick?: never } | { href?: undefined; onClick: () => void });
+
+export function LiveButton({ children, variant = "solid", radius, arrow, className, href, onClick }: Props) {
   const variants: Record<string, string> = {
     solid: "bg-[var(--lv-brand)] text-[var(--lv-brand-ink)] hover:opacity-90",
     outline: "border border-[var(--lv-line)] text-[var(--lv-ink)] hover:bg-[var(--lv-brand-soft)]",
     ghost: "text-[var(--lv-ink)] hover:bg-[var(--lv-brand-soft)]",
   };
 
-  return (
-    <SmartLink
-      href={href}
-      className={cx(
-        "group inline-flex items-center justify-center gap-2 px-6 py-3.5 text-[14px] font-medium tracking-tight transition-all duration-300 ease-premium",
-        variants[variant],
-        radius,
-        className,
-      )}
-    >
+  const classes = cx(
+    "group inline-flex items-center justify-center gap-2 px-6 py-3.5 text-[14px] font-medium tracking-tight transition-all duration-300 ease-premium",
+    variants[variant],
+    radius,
+    className,
+  );
+
+  const inner = (
+    <>
       <span>{children}</span>
       {arrow && (
         <Icon
@@ -43,7 +47,20 @@ export function LiveButton({ href, children, variant = "solid", radius, arrow, c
           className="transition-transform duration-300 ease-premium group-hover:translate-x-1"
         />
       )}
-    </SmartLink>
+    </>
+  );
+
+  if (href) {
+    return (
+      <SmartLink href={href} className={classes}>
+        {inner}
+      </SmartLink>
+    );
+  }
+  return (
+    <button type="button" onClick={onClick} className={classes}>
+      {inner}
+    </button>
   );
 }
 

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { brand } from "@/lib/content";
 import { Icon } from "@/components/ui/Icon";
+import { startConversation } from "@/lib/communication";
 
 export function WhatsAppButton() {
   const [show, setShow] = useState(false);
@@ -18,10 +18,11 @@ export function WhatsAppButton() {
   return (
     <AnimatePresence>
       {show && (
-        <motion.a
-          href={`https://wa.me/${brand.whatsappHref}`}
-          target="_blank"
-          rel="noopener noreferrer"
+        <motion.button
+          type="button"
+          onClick={() =>
+            startConversation({ channel: "whatsapp", type: "consultation", meta: { section: "floating-button" } })
+          }
           aria-label="Chat with LocalRise on WhatsApp"
           initial={{ opacity: 0, scale: 0.6, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -36,7 +37,7 @@ export function WhatsAppButton() {
           <span className="pointer-events-none absolute right-16 hidden max-w-0 overflow-hidden whitespace-nowrap rounded-full bg-ink px-0 py-2.5 text-body-sm font-medium text-white opacity-0 shadow-lg transition-all duration-300 group-hover:max-w-[180px] group-hover:px-4 group-hover:opacity-100 sm:block">
             Chat with us
           </span>
-        </motion.a>
+        </motion.button>
       )}
     </AnimatePresence>
   );

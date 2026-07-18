@@ -9,6 +9,7 @@ import { SmartLink } from "@/components/ui/SmartLink";
 import { Icon } from "@/components/ui/Icon";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { cx } from "@/lib/utils";
+import { startConversation } from "@/lib/communication";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -62,7 +63,7 @@ export function Nav() {
               <Icon name="phone" size={16} strokeWidth={1.8} />
               <span className="hidden xl:inline">{brand.phoneDisplay}</span>
             </a>
-            <Button href="/#contact" size="md" className="hidden sm:inline-flex" arrow>
+            <Button href="/contact" size="md" className="hidden sm:inline-flex" arrow>
               Get Free Consultation
             </Button>
             <button
@@ -120,15 +121,17 @@ export function Nav() {
                 ))}
               </ul>
               <div className="mt-6 flex flex-col gap-3">
-                <Button href="/#contact" size="lg" onClick={() => setOpen(false)} arrow className="w-full">
+                <Button href="/contact" size="lg" onClick={() => setOpen(false)} arrow className="w-full">
                   Get Free Consultation
                 </Button>
                 <Button
-                  href={`https://wa.me/${brand.whatsappHref}`}
                   variant="whatsapp"
                   size="lg"
                   icon="whatsapp"
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    startConversation({ channel: "whatsapp", type: "consultation", meta: { section: "nav", button: "chat-on-whatsapp" } });
+                    setOpen(false);
+                  }}
                   className="w-full"
                 >
                   Chat on WhatsApp

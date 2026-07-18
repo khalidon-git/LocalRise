@@ -6,6 +6,7 @@ import type { Package } from "@/lib/content";
 import { formatINR, cx } from "@/lib/utils";
 import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
+import { startConversation } from "@/lib/communication";
 
 export function PackageCard({ pkg }: { pkg: Package }) {
   const [open, setOpen] = useState<number | null>(null);
@@ -47,7 +48,16 @@ export function PackageCard({ pkg }: { pkg: Package }) {
 
       <div className="mt-6">
         <Button
-          href="/#contact"
+          type="button"
+          onClick={() =>
+            startConversation({
+              channel: "whatsapp",
+              type: "package",
+              packageName: pkg.name,
+              price: pkg.price,
+              meta: { section: "packages", button: pkg.id },
+            })
+          }
           variant={best ? "primary" : "secondary"}
           size="lg"
           arrow

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { concepts, brand } from "@/lib/content";
+import { concepts } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
+import { ConversationButton } from "@/components/ui/ConversationButton";
 import { Icon } from "@/components/ui/Icon";
 import { ConceptCard } from "@/components/concepts/ConceptCard";
 
@@ -77,12 +78,17 @@ export default function ConceptsPage() {
               timeline before we start.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
-              <Button href="/#contact" size="lg" arrow>
+              <Button href="/contact" size="lg" arrow>
                 Get a free consultation
               </Button>
-              <Button href={`https://wa.me/${brand.whatsappHref}`} variant="whatsapp" size="lg" icon="whatsapp">
+              <ConversationButton
+                start={{ channel: "whatsapp", type: "consultation", meta: { section: "concepts-listing", button: "chat-on-whatsapp" } }}
+                variant="whatsapp"
+                size="lg"
+                icon="whatsapp"
+              >
                 Chat on WhatsApp
-              </Button>
+              </ConversationButton>
             </div>
           </Reveal>
         </div>

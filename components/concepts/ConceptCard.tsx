@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Concept } from "@/lib/content";
 import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
+import { ConversationButton } from "@/components/ui/ConversationButton";
 import { ConceptMock } from "@/components/concepts/ConceptMock";
 import { ConceptPhone } from "@/components/concepts/ConceptPhone";
 
@@ -56,9 +57,14 @@ export function ConceptCard({ concept }: { concept: Concept }) {
           <Button href={`/concepts/${concept.slug}/live`} size="md" variant="dark" icon="browser" className="flex-1">
             Live Preview
           </Button>
-          <Button href="/#contact" size="md" variant="secondary" className="flex-1">
+          <ConversationButton
+            start={{ channel: "whatsapp", type: "concept", conceptName: concept.name, meta: { section: "concept-card", button: concept.slug } }}
+            size="md"
+            variant="secondary"
+            className="flex-1"
+          >
             Build Something Similar
-          </Button>
+          </ConversationButton>
         </div>
       </div>
     </article>

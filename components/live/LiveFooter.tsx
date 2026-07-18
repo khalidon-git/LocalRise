@@ -2,6 +2,7 @@ import type { ConceptSite } from "@/lib/content";
 import { SmartLink } from "@/components/ui/SmartLink";
 import { Icon } from "@/components/ui/Icon";
 import { LiveButton } from "@/components/live/LiveButton";
+import { LiveConversationButton } from "@/components/live/LiveConversationButton";
 import { Reveal } from "@/components/ui/Reveal";
 import { cx } from "@/lib/utils";
 
@@ -37,7 +38,13 @@ export function LiveFooter({ site }: { site: ConceptSite }) {
                 website could become. Tell us about your business and we&apos;ll design a look that fits it.
               </p>
               <div className="mt-1 flex flex-wrap justify-center gap-3">
-                <LiveButton href="/#contact" radius={theme.radius} arrow>Build something similar</LiveButton>
+                <LiveConversationButton
+                  start={{ channel: "whatsapp", type: "concept", conceptName: site.brandName, meta: { section: "live-footer", button: site.slug } }}
+                  radius={theme.radius}
+                  arrow
+                >
+                  Build something similar
+                </LiveConversationButton>
                 <LiveButton href={`/concepts/${site.slug}`} radius={theme.radius} variant="outline">About this concept</LiveButton>
               </div>
             </div>

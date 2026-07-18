@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { services, serviceDetails, packages, faqs, brand } from "@/lib/content";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
+import { ConversationButton } from "@/components/ui/ConversationButton";
 import { SmartLink } from "@/components/ui/SmartLink";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -89,11 +90,16 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Magnetic>
-                <Button href="/#contact" size="lg" arrow>Get Free Consultation</Button>
+                <Button href="/contact" size="lg" arrow>Get Free Consultation</Button>
               </Magnetic>
-              <Button href={`https://wa.me/${brand.whatsappHref}`} variant="whatsapp" size="lg" icon="whatsapp">
+              <ConversationButton
+                start={{ channel: "whatsapp", type: "service", serviceName: service.title, price: detail.priceFrom, meta: { section: "service-detail-hero", button: service.id } }}
+                variant="whatsapp"
+                size="lg"
+                icon="whatsapp"
+              >
                 WhatsApp us
-              </Button>
+              </ConversationButton>
             </div>
 
             {detail.priceFrom && (
@@ -211,11 +217,16 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
             </p>
             <div className="relative mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Magnetic>
-                <Button href="/#contact" size="lg" arrow>Get Free Consultation</Button>
+                <Button href="/contact" size="lg" arrow>Get Free Consultation</Button>
               </Magnetic>
-              <Button href={`https://wa.me/${brand.whatsappHref}`} variant="whatsapp" size="lg" icon="whatsapp">
+              <ConversationButton
+                start={{ channel: "whatsapp", type: "service", serviceName: service.title, price: detail.priceFrom, meta: { section: "service-detail-closing-cta", button: service.id } }}
+                variant="whatsapp"
+                size="lg"
+                icon="whatsapp"
+              >
                 WhatsApp us
-              </Button>
+              </ConversationButton>
             </div>
           </div>
         </div>

@@ -1,9 +1,11 @@
 import { brand, nav } from "@/lib/content";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
+import { ConversationButton } from "@/components/ui/ConversationButton";
 import { SmartLink } from "@/components/ui/SmartLink";
 import { Icon } from "@/components/ui/Icon";
 import { GrowScene } from "@/components/illustrations/SpotScenes";
+import { FooterWhatsAppLink } from "@/components/layout/FooterWhatsAppLink";
 
 // Deep-links into the per-service pages (short labels for the column).
 // Trailing slash matches the exported canonical URLs (trailingSlash: true) so
@@ -50,10 +52,15 @@ export function Footer() {
           </div>
           <GrowScene className="hidden h-auto w-[230px] shrink-0 xl:block" />
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-            <Button href="/#contact" size="lg" arrow>Get Free Consultation</Button>
-            <Button href={`https://wa.me/${brand.whatsappHref}`} variant="whatsapp" size="lg" icon="whatsapp">
+            <Button href="/contact" size="lg" arrow>Get Free Consultation</Button>
+            <ConversationButton
+              start={{ channel: "whatsapp", type: "consultation", meta: { section: "footer", button: "whatsapp-us" } }}
+              variant="whatsapp"
+              size="lg"
+              icon="whatsapp"
+            >
               WhatsApp us
-            </Button>
+            </ConversationButton>
           </div>
         </div>
 
@@ -98,6 +105,9 @@ export function Footer() {
                   <SmartLink href={n.href} className="text-body-sm text-ink-inverse-2 transition-colors hover:text-white">{n.label}</SmartLink>
                 </li>
               ))}
+              <li>
+                <SmartLink href="/contact" className="text-body-sm text-ink-inverse-2 transition-colors hover:text-white">Contact Us</SmartLink>
+              </li>
             </ul>
           </nav>
 
@@ -116,9 +126,7 @@ export function Footer() {
             <h3 className="text-label font-semibold uppercase tracking-wider text-ink-inverse-3">Get in touch</h3>
             <ul className="mt-4 flex flex-col gap-3 text-body-sm text-ink-inverse-2">
               <li>
-                <a href={`https://wa.me/${brand.whatsappHref}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 transition-colors hover:text-white">
-                  <Icon name="whatsapp" size={16} /> WhatsApp
-                </a>
+                <FooterWhatsAppLink />
               </li>
               <li>
                 <a href={`tel:${brand.phoneHref}`} className="inline-flex items-center gap-2 transition-colors hover:text-white">

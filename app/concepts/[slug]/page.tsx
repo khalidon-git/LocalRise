@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { concepts, getConcept } from "@/lib/content";
 import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
+import { ConversationButton } from "@/components/ui/ConversationButton";
 import { SmartLink } from "@/components/ui/SmartLink";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { ConceptMock } from "@/components/concepts/ConceptMock";
@@ -107,9 +108,13 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
                   <Button href={`/concepts/${concept.slug}/live`} size="lg" variant="dark" icon="browser" arrow>
                     Live Preview
                   </Button>
-                  <Button href="/#contact" size="lg" variant="secondary">
+                  <ConversationButton
+                    start={{ channel: "whatsapp", type: "concept", conceptName: concept.name, meta: { section: "concept-detail", button: concept.slug } }}
+                    size="lg"
+                    variant="secondary"
+                  >
                     Build something similar
-                  </Button>
+                  </ConversationButton>
                 </div>
                 <p className="mt-3 text-[13px] text-ink-3">
                   Live Preview opens {concept.name}&apos;s full concept site — independent, no LocalRise branding.
@@ -221,7 +226,7 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
               what you do and we&apos;ll show you what it could become.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
-              <Button href="/#contact" size="lg" arrow>
+              <Button href="/contact" size="lg" arrow>
                 Get a free consultation
               </Button>
               <Button href="/#packages" variant="secondary" size="lg">

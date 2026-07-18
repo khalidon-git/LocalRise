@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { ScreenshotMock } from "@/components/concepts/ScreenshotMock";
 import { ScreenshotPhone } from "@/components/concepts/ScreenshotPhone";
 import { cx } from "@/lib/utils";
+import { startConversation } from "@/lib/communication";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -16,7 +17,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 // Driven directly by the ten `concepts`, not a separate industries list: every
 // entry here is guaranteed to have a real concept and a real screenshot, no
 // "coming soon" placeholder needed. (An earlier version mapped concepts onto
-// the pre-existing 9-category `industries` list used by Contact.tsx's
+// the pre-existing 9-category `industries` list used by ContactForm.tsx's
 // business-type dropdown — that only covered 4 of 10 concepts and showed a
 // placeholder for the rest. Driving the list from `concepts` itself removes
 // the mismatch entirely.)
@@ -129,7 +130,20 @@ export function Industries() {
                     <Button href={`/concepts/${current.slug}/live`} size="md" variant="dark" icon="browser">
                       Live Preview
                     </Button>
-                    <Button href="/#contact" size="md" variant="secondary">
+                    <Button
+                      type="button"
+                      onClick={() =>
+                        startConversation({
+                          channel: "whatsapp",
+                          type: "industry",
+                          industryName: current.industry,
+                          conceptName: current.name,
+                          meta: { section: "industries", button: current.slug },
+                        })
+                      }
+                      size="md"
+                      variant="secondary"
+                    >
                       Build Something Similar
                     </Button>
                   </div>
@@ -145,7 +159,7 @@ export function Industries() {
                 </ul>
 
                 <div className="mt-8 flex flex-wrap items-center gap-4">
-                  <Button href="#contact" arrow>
+                  <Button href="/contact" arrow>
                     Grow my business
                   </Button>
                   <span className="text-body-sm text-ink-3">Free consultation · No obligation</span>

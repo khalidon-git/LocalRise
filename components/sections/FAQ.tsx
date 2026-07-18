@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { faqs, brand } from "@/lib/content";
+import { faqs } from "@/lib/content";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { HelpScene } from "@/components/illustrations/SpotScenes";
 import { cx } from "@/lib/utils";
+import { startConversation } from "@/lib/communication";
 
 export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
@@ -30,7 +31,15 @@ export function FAQ() {
             </Reveal>
             <Reveal delay={0.15}>
               <div className="mt-6">
-                <Button href={`https://wa.me/${brand.whatsappHref}`} variant="whatsapp" icon="whatsapp" size="lg">
+                <Button
+                  type="button"
+                  onClick={() =>
+                    startConversation({ channel: "whatsapp", type: "consultation", meta: { section: "faq", button: "ask-us-on-whatsapp" } })
+                  }
+                  variant="whatsapp"
+                  icon="whatsapp"
+                  size="lg"
+                >
                   Ask us on WhatsApp
                 </Button>
               </div>

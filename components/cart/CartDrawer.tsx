@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/providers/CartProvider";
 import { formatINR } from "@/lib/utils";
 import { Icon } from "@/components/ui/Icon";
-import { brand } from "@/lib/content";
+import { startConversation } from "@/lib/communication";
 
 export function CartDrawer() {
   const { cart, isOpen, toggleCart, updateQuantity } = useCart();
@@ -29,26 +29,19 @@ export function CartDrawer() {
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  // Construct the prefilled WhatsApp text for booking checkout
+  // Starts a WhatsApp conversation listing every cart item — the "cart" type,
+  // added to the communication layer specifically for this multi-item case
+  // (consultation/package/service/etc. each describe exactly one thing).
   const handleCheckout = () => {
     if (cart.length === 0) return;
 
-    const lineItems = cart
-      .map(
-        (item) =>
-          `• ${item.title} x${item.quantity} (${formatINR(item.price * item.quantity)})`
-      )
-      .join("\n");
-
-    const textMessage = `Hi LocalRise! I'd like to book these services:\n\n${lineItems}\n\nTotal Price: ${formatINR(
-      subtotal
-    )}\n\nPlease let me know how to proceed!`;
-
-    window.open(
-      `https://wa.me/${brand.whatsappHref}?text=${encodeURIComponent(textMessage)}`,
-      "_blank",
-      "noopener,noreferrer"
-    );
+    startConversation({
+      channel: "whatsapp",
+      type: "cart",
+      items: cart,
+      subtotal,
+      meta: { section: "cart-drawer", button: "proceed-to-checkout" },
+    });
   };
 
   return (
