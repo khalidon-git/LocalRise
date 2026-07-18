@@ -15,11 +15,16 @@ ErrorDocument 404 /404.html
   RewriteRule ^ https://localrise.in%{REQUEST_URI} [R=301,L,NE]
 </IfModule>
 
-# Apache doesn't always know Ogg/Opus — be explicit so browsers accept the
-# intro audio instead of getting it as a generic download.
+# Apache doesn't always know Ogg/Opus or WebM — be explicit so browsers treat
+# these as playable media instead of a generic download (or, worse, silently
+# refuse to play a <source> whose real Content-Type doesn't match its
+# declared `type` attribute — confirmed live: hero.webm was serving as
+# text/plain, and since it's listed first in HeroVideo's <source> order, that
+# broke the whole element instead of cleanly falling back to the mp4 source).
 <IfModule mod_mime.c>
   AddType audio/ogg .ogg
   AddType audio/ogg .opus
+  AddType video/webm .webm
 </IfModule>
 
 # Everything under /_next/static/ has a content hash in its filename, so a
