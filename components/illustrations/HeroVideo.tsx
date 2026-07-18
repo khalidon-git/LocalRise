@@ -56,6 +56,10 @@ export function HeroVideo({ className }: { className?: string }) {
             aria-label={VIDEO_LABEL}
             className="block h-auto w-full"
           >
+            {/* WebM (VP9) first — smaller at equal quality on browsers that
+                support it; MP4 (H.264) fallback for the rest. Both stripped
+                of the unused audio track (video is always muted). */}
+            <source src="/hero.webm" type="video/webm" />
             <source src="/hero.mp4" type="video/mp4" />
           </video>
         )}
