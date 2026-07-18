@@ -8,6 +8,44 @@ in hPanel. See [deployment.md](./deployment.md).
 
 ---
 
+## 2026-07-18
+
+### Indexing fixes + GA4/Google Ads conversion tracking
+An audit found `localrise.in` had **zero pages indexed by Google** despite the
+site being technically crawlable — most likely fallout from the historical
+403 ([BUG-005](../knowledge/bugs/005-hostinger-served-source-403.md)), plus a
+few real gaps fixed here: `www.localrise.in` was serving a live duplicate of
+every page instead of redirecting to the canonical non-www host (fixed via a
+301 in `public/.htaccess`); `FAQPage` schema had been silently dropped from
+`layout.tsx` during the `/why-us/` restructure and was never re-added — moved
+there as a page-level script, built from the same `faqs` it displays; service
+pages had no `BreadcrumbList` schema, now added alongside the existing
+`Service` node; and the long-standing missing OG/Twitter share image is now a
+static `app/opengraph-image.png` (the "proper" `next/og`-generated route hits
+a Windows-only crash in `@vercel/og`, documented in `docs/seo.md`).
+
+Also added **GA4 + Google Ads conversion tracking** (`lib/analytics/config.ts`,
+`components/analytics/GoogleTag.tsx`) — a second, deliberate exception to the
+zero-external-request rule, scoped to `gtag.js` only, since LocalRise is
+running outbound Google Ads and needs to attribute leads
+([ADR-008](../knowledge/decisions/008-analytics-conversion-tracking.md)).
+Ships with obvious placeholder IDs; inert (zero external requests) until the
+owner pastes real ones. WhatsApp conversation starts now fire a conversion
+event via the existing `lib/communication/` layer.
+
+### Channel-agnostic communication layer — `12c9672`
+New `lib/communication/` is now the single entrypoint for every "start a
+conversation" CTA site-wide (contact form, cart, package/service/industry/
+concept CTAs). `StartConversationInput` is a discriminated union on `type`;
+`buildMessage()` composes the plain-text body; `openWhatsApp()` picks between
+`brand.whatsappHref`/`whatsappAltHref` once per session (persisted in
+`sessionStorage`) and opens `wa.me`. Shaped so a second channel (email, a
+future chatbot) is a new case, not a rewrite — see `Channel` type. The contact
+form moved off the homepage to its own `/contact/` route
+(`components/contact/ContactForm.tsx`); it has no submission backend, matching
+the static-export constraint — submitting opens WhatsApp with the fields
+pre-filled, same pattern the cart already used.
+
 ## 2026-07-17
 
 ### Concept live sites + subagent workflow

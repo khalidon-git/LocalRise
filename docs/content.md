@@ -15,9 +15,10 @@ lib/content/
   services.ts     services (detail-page routes only) + serviceDetails (pages) + individualServices (homepage carousel)
   packages.ts     packages, Package/Feature types
   industries.ts   industries + accent colours
-  projects.ts     demo portfolio projects
+  concepts.ts     Concept Website previews (mock) — replaced the old projects.ts portfolio
+  conceptSites.ts full "live" content for each concept, keyed by the same slug
   process.ts      process steps, whyChooseUs
-  faqs.ts         faqs (also feeds FAQPage JSON-LD)
+  faqs.ts         faqs (feeds FAQPage JSON-LD on /why-us/ — see docs/seo.md)
 ```
 
 ```ts

@@ -51,16 +51,31 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Service",
-    name: service.title,
-    description: detail.sub,
-    serviceType: service.title,
-    areaServed: "IN",
-    provider: { "@type": "ProfessionalService", "@id": `${siteUrl}/#organization`, name: brand.name },
-    url: `${siteUrl}/services/${service.id}`,
-    ...(detail.priceFrom
-      ? { offers: { "@type": "Offer", price: detail.priceFrom, priceCurrency: "INR", availability: "https://schema.org/InStock" } }
-      : {}),
+    "@graph": [
+      {
+        "@type": "Service",
+        name: service.title,
+        description: detail.sub,
+        serviceType: service.title,
+        areaServed: "IN",
+        provider: { "@type": "ProfessionalService", "@id": `${siteUrl}/#organization`, name: brand.name },
+        url: `${siteUrl}/services/${service.id}`,
+        ...(detail.priceFrom
+          ? { offers: { "@type": "Offer", price: detail.priceFrom, priceCurrency: "INR", availability: "https://schema.org/InStock" } }
+          : {}),
+      },
+      {
+        // Mirrors the visible breadcrumb below: Home → Services (/#services) →
+        // this service. "Services" points at the homepage anchor because there
+        // is no /services/ index route.
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${siteUrl}/` },
+          { "@type": "ListItem", position: 2, name: "Services", item: `${siteUrl}/#services` },
+          { "@type": "ListItem", position: 3, name: service.title },
+        ],
+      },
+    ],
   };
 
   return (

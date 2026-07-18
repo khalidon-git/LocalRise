@@ -71,9 +71,11 @@ it can't fight the mobile menu.
 
 ## Submission
 
-The drawer composes the cart into a prefilled `wa.me` message — same pattern as
-the contact form in `components/sections/Contact.tsx`. There is no backend; the
-lead lands in WhatsApp.
+The drawer composes the cart into a prefilled `wa.me` message via
+`startConversation()` in `lib/communication/` — the same channel-agnostic
+entrypoint used by the contact form (`components/contact/ContactForm.tsx`) and
+every other "start a conversation" CTA site-wide. There is no backend; the lead
+lands in WhatsApp.
 
 ## Extending
 

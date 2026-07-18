@@ -3,6 +3,18 @@
 # Serve the site's own 404 page instead of Apache's default.
 ErrorDocument 404 /404.html
 
+# Canonical host: force the bare apex (non-www). www.localrise.in otherwise
+# serves an identical copy of every page (same content, same ETag), which
+# splits Google's canonical signal across two hosts and can suppress indexing.
+# 301 so link equity consolidates on the apex — the host used by metadataBase
+# (app/layout.tsx), app/sitemap.ts and app/robots.ts. %{REQUEST_URI} preserves
+# the full path incl. the trailing slash, so /services/websites/ still lands.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.localrise\.in$ [NC]
+  RewriteRule ^ https://localrise.in%{REQUEST_URI} [R=301,L,NE]
+</IfModule>
+
 # Apache doesn't always know Ogg/Opus — be explicit so browsers accept the
 # intro audio instead of getting it as a generic download.
 <IfModule mod_mime.c>

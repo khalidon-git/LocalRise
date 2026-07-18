@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { faqs } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Process } from "@/components/sections/Process";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
@@ -22,9 +23,27 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: `${title} · LocalRise`, description },
 };
 
+// FAQPage schema lives here — the page that actually renders <FAQ />, built
+// from the same `faqs` array it displays so the two can't drift. It moved off
+// the global @graph in app/layout.tsx (where it emitted on every page,
+// including the homepage) to sit only where the questions are visible, matching
+// the per-page inline pattern used by app/concepts/[slug]/ and services.
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${siteUrl}/why-us/#faq`,
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
 export default function WhyUsPage() {
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+
       <section className="section-pad !pb-0 !pt-32 sm:!pt-36">
         <div className="container-x">
           <SectionHeading

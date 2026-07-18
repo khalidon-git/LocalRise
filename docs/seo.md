@@ -31,17 +31,29 @@ canonical and robots directives.
 
 ## JSON-LD
 
-A single `@graph` in `layout.tsx` with three linked nodes:
+`layout.tsx` emits a global `@graph` with two linked nodes, built from `brand`
+so **contact details can never drift out of sync with the visible page**:
 
 | Node | Notes |
 | --- | --- |
 | `ProfessionalService` | Name, description, `email`, `telephone` (both numbers), `areaServed: "IN"`, `priceRange`, `sameAs: [instagram]` |
 | `WebSite` | Publisher → the organisation node |
-| `FAQPage` | Generated from `faqs` in `lib/content` |
 
-It's built from `brand` and `faqs`, so **contact details and FAQs can never drift
-out of sync with the visible page** — that's the whole point of sourcing it from
-content rather than duplicating literals.
+Per-page schema is added inline on the page that actually renders the matching
+content, not the global graph — so nothing emits on a page where a visitor
+can't see it:
+
+| Page | Schema | Source |
+| --- | --- | --- |
+| `/why-us/` | `FAQPage` | `faqs` in `lib/content` — the only page rendering `<FAQ />` |
+| `/services/[slug]/` | `Service` + `BreadcrumbList` (Home → Services → title) | `serviceDetails` |
+| `/concepts/` | `CollectionPage` | `concepts` |
+| `/concepts/[slug]/` | `CreativeWork` + `BreadcrumbList` | `concepts` |
+
+`FAQPage` briefly lived in the global graph and was emitting on every page
+(including the homepage, where no FAQ is visible) after Process/WhyChooseUs/FAQ
+moved to `/why-us/` — fixed by moving the schema there too, following the same
+per-page pattern already used by the concept pages.
 
 Injected via `<script type="application/ld+json">` with `dangerouslySetInnerHTML`.
 Safe here: the input is our own build-time content, not user data.
@@ -60,13 +72,45 @@ static export; a slug missing from it simply won't exist.
 static `sitemap.xml` / `robots.txt`. The sitemap enumerates `/` plus each service
 route from `lib/content`, so new services appear automatically.
 
+## OG / Twitter image
+
+`app/opengraph-image.png` (1200×630, static file) — Next's file convention
+auto-wires `og:image` **and** `twitter:image` (Twitter inherits the OG image
+when `twitter` declares none of its own, which is the case in `layout.tsx`).
+Pure static-file copy, so it's fully `output: export`-compatible on any OS.
+
+> We tried `app/opengraph-image.tsx` with `next/og`'s `ImageResponse` first —
+> it's the more "proper" convention since it stays in sync with content
+> automatically. It crashes at import on Windows (`@vercel/og`'s Node runtime
+> does a `fileURLToPath` call that breaks under Windows path handling), and
+> `runtime: "edge"` — the workaround — isn't allowed under `output: "export"`.
+> If that gets fixed upstream, or builds move to Linux-only, it's worth
+> revisiting. Until then, regenerate the static PNG by hand when the brand
+> visuals change.
+
 ## Known gaps
 
-- **No OG image.** `openGraph` declares no `images`, so link previews render
-  without artwork. Add `app/opengraph-image.png` (1200×630) — Next picks it up by
-  convention. Worth doing; it's the highest-value SEO item outstanding.
 - **Calendly link is still a placeholder** (`calendly.com/localrise`) in
-  `components/sections/Contact.tsx`.
+  `components/contact/ContactMethods.tsx`. Blocked on the owner setting up a
+  real Calendly account — can't be fixed in code.
+
+## Analytics & conversion tracking
+
+GA4 + Google Ads conversion tracking via `components/analytics/GoogleTag.tsx`
+(mounted in `layout.tsx`, still a server component) and
+`lib/analytics/config.ts`. This is a **second, deliberate exception** to the
+site's zero-external-request rule — see
+[ADR-008](../knowledge/decisions/008-analytics-conversion-tracking.md) for the
+full reasoning (ADR-007 was the first, for concept-site imagery).
+
+Ships with placeholder IDs — the tag renders nothing and the site makes no
+external request until real GA4/Google Ads IDs are pasted into
+`lib/analytics/config.ts`. `lib/communication/index.ts`'s
+`trackConversationStart()` fires the conversion event once enabled.
+**Before enabling in production, add a cookie/consent notice** — loading
+`gtag.js` sets Google cookies, which typically requires visitor consent under
+Indian (DPDP Act) and EU (GDPR) rules depending on audience. Not yet built;
+flagged here so it isn't missed.
 
 ## Performance (SEO-adjacent)
 
@@ -89,5 +133,8 @@ copy *and* JSON-LD update together.
 automatically. Note `serviceDetails.faqPicks` are **array indices** — reordering
 FAQs repoints them. See [content.md](./content.md).
 
-**More schema** (e.g. `BreadcrumbList`) → add a node to the `@graph` and link it
-by `@id`, rather than emitting a second script tag.
+**More schema** on an existing page → add it as a page-level inline
+`<script type="application/ld+json">` (a `@graph` of related nodes if there's
+more than one), following the pattern in `services/[slug]/page.tsx` or
+`concepts/[slug]/page.tsx` — not the global graph in `layout.tsx`, which should
+stay limited to things true on every page.

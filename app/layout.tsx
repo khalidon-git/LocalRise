@@ -2,10 +2,11 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/space-grotesk";
 import "./globals.css";
-import { brand, faqs } from "@/lib/content";
+import { brand } from "@/lib/content";
 import { AudioProvider } from "@/providers/AudioProvider";
 import { CartProvider } from "@/providers/CartProvider";
 import { SiteChrome } from "@/components/layout/SiteChrome";
+import { GoogleTag } from "@/components/analytics/GoogleTag";
 
 const siteUrl = "https://localrise.in";
 const description =
@@ -74,17 +75,10 @@ const jsonLd = {
       name: brand.name,
       publisher: { "@id": `${siteUrl}/#organization` },
     },
-    {
-      "@type": "FAQPage",
-      // The FAQ section itself now renders on /why-us/, not the homepage —
-      // see app/why-us/page.tsx. Keep this in sync if that ever moves again.
-      "@id": `${siteUrl}/why-us/#faq`,
-      mainEntity: faqs.map((f) => ({
-        "@type": "Question",
-        name: f.q,
-        acceptedAnswer: { "@type": "Answer", text: f.a },
-      })),
-    },
+    // FAQPage schema is NOT global — it renders as a page-level script on
+    // /why-us/ (see app/why-us/page.tsx), the only page showing <FAQ />. Keeping
+    // it out of this graph avoids emitting FAQ schema on the homepage and every
+    // other page, where no FAQ is visible.
   ],
 };
 
@@ -96,6 +90,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* Google tag (gtag.js) — GA4 + Google Ads conversion tracking. Renders
+            nothing until real IDs are set in lib/analytics/config.ts, so the
+            site keeps making zero external requests until the owner opts in.
+            It's a server component (next/script works fine from one), so this
+            layout stays a server component — see knowledge/decisions/008. */}
+        <GoogleTag />
         {/* AudioProvider sits at the root so its <audio> element is mounted once
             and survives every client-side navigation — never recreated, never
             restarted. */}
