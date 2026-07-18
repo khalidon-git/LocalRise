@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { HeroScene } from "@/components/illustrations/HeroScene";
+import { HeroVideo } from "@/components/illustrations/HeroVideo";
 import { Button } from "@/components/ui/Button";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { Icon } from "@/components/ui/Icon";
@@ -75,7 +75,7 @@ export function Hero() {
           transition={{ duration: 1 }}
           className="relative"
         >
-          <HeroScene />
+          <HeroVideo />
         </motion.div>
       </div>
 
