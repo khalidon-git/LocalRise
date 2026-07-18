@@ -34,6 +34,7 @@ backend, no database, no API routes.
 app/
   layout.tsx              root layout: metadata, JSON-LD, providers, chrome
   page.tsx                homepage — composes sections in order
+  why-us/page.tsx         Process, WhyChooseUs, FAQ — moved off the homepage
   services/[slug]/page.tsx  per-service pages (generateStaticParams)
   sitemap.ts robots.ts globals.css icon.svg
 
@@ -62,7 +63,9 @@ docs/            you are here
 
 ### Why this shape, and not `features/` + `services/`
 
-This is a **2-route**, ~50-file site with no backend. An enterprise scaffold
+This is a small, ~50-file site with no backend (`/`, `/why-us`,
+`/services/[slug]`, `/concepts/**` — still just static pages, no dynamic
+backend). An enterprise scaffold
 (`features/`, `services/`, `constants/`, `assets/`) was considered and
 deliberately rejected: each folder would hold one file and add import depth
 without adding a seam. Structure should track real complexity.

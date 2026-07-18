@@ -76,7 +76,9 @@ const jsonLd = {
     },
     {
       "@type": "FAQPage",
-      "@id": `${siteUrl}/#faq`,
+      // The FAQ section itself now renders on /why-us/, not the homepage —
+      // see app/why-us/page.tsx. Keep this in sync if that ever moves again.
+      "@id": `${siteUrl}/why-us/#faq`,
       mainEntity: faqs.map((f) => ({
         "@type": "Question",
         name: f.q,

@@ -7,9 +7,9 @@
 A refactor brief asked for `features/`, `services/`, `contexts/`, `providers/`,
 `constants/`, `types/`, `assets/` — a standard enterprise layout.
 
-LocalRise is a **2-route** (`/`, `/services/[slug]`; now `/concepts` too),
-~50-file, statically exported marketing site. No backend, no API, no auth, no
-domain model.
+LocalRise is a **2-route** (`/`, `/services/[slug]`; now `/concepts` and
+`/why-us` too), ~50-file, statically exported marketing site. No backend, no
+API, no auth, no domain model.
 
 ## Decision
 

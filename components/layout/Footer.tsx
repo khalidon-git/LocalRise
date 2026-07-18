@@ -16,6 +16,16 @@ const footerServices = [
   { label: "Branding", href: "/services/logo/" },
 ];
 
+// Process, WhyChooseUs and FAQ live on /why-us/ now (see app/why-us/page.tsx),
+// each with its own anchor — a dedicated link per section, not one link to
+// the top of the page, so someone looking for FAQ specifically isn't stuck
+// scrolling past the other two first.
+const whyUsLinks = [
+  { label: "How It Works", href: "/why-us/#process" },
+  { label: "Why Us", href: "/why-us/#why" },
+  { label: "FAQ", href: "/why-us/#faq" },
+];
+
 // Only live profiles belong here — a dead social link costs more trust than a
 // missing one. Add Facebook / LinkedIn / X back once those accounts exist.
 const socials = [
@@ -75,7 +85,15 @@ export function Footer() {
           <nav aria-label="Footer navigation">
             <h3 className="text-label font-semibold uppercase tracking-wider text-ink-inverse-3">Explore</h3>
             <ul className="mt-4 flex flex-col gap-3">
-              {nav.map((n) => (
+              {/* nav's own "Process"/"FAQ" entries point at /why-us/ too — skip
+                  them here so FAQ isn't listed twice; whyUsLinks below covers
+                  all three of that page's sections individually. */}
+              {nav.filter((n) => !n.href.startsWith("/why-us")).map((n) => (
+                <li key={n.href}>
+                  <SmartLink href={n.href} className="text-body-sm text-ink-inverse-2 transition-colors hover:text-white">{n.label}</SmartLink>
+                </li>
+              ))}
+              {whyUsLinks.map((n) => (
                 <li key={n.href}>
                   <SmartLink href={n.href} className="text-body-sm text-ink-inverse-2 transition-colors hover:text-white">{n.label}</SmartLink>
                 </li>

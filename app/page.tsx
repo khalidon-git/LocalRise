@@ -3,9 +3,6 @@ import { TrustBar } from "@/components/sections/TrustBar";
 import { Packages } from "@/components/sections/Packages";
 import { IndividualServices } from "@/components/sections/IndividualServices";
 import { Industries } from "@/components/sections/Industries";
-import { Process } from "@/components/sections/Process";
-import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
-import { FAQ } from "@/components/sections/FAQ";
 import { Contact } from "@/components/sections/Contact";
 
 // Nav, Footer and WhatsAppButton live in app/layout.tsx so every page —
@@ -18,9 +15,6 @@ export default function Home() {
       <Packages />
       <IndividualServices />
       <Industries />
-      <Process />
-      <WhyChooseUs />
-      <FAQ />
       <Contact />
     </main>
   );

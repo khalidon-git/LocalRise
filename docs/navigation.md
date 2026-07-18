@@ -16,12 +16,13 @@ speed concern: a full page load destroys the audio engine and every provider.
 
 ## Routes
 
-Only two:
-
 | Route | File | Notes |
 | --- | --- | --- |
-| `/` | `app/page.tsx` | Homepage; all sections composed here |
+| `/` | `app/page.tsx` | Homepage; conversion-focused sections only |
+| `/why-us/` | `app/why-us/page.tsx` | Process, WhyChooseUs (`#why`) and FAQ — moved off the homepage, see the file header |
 | `/services/[slug]` | `app/services/[slug]/page.tsx` | 7 pages via `generateStaticParams` |
+| `/concepts/`, `/concepts/[slug]/` | `app/concepts/**` | See `docs/concepts.md` |
+| `/concepts/[slug]/live/` | `app/concepts/[slug]/live/page.tsx` | Chrome-free; `noindex` — see `docs/concepts.md` |
 
 Slugs come from `services` in `lib/content/services.ts`, with page content from
 `serviceDetails` (keyed by the same id). Adding a service to both automatically
