@@ -28,7 +28,7 @@ SaaS Startup, Wedding Photography Studio.
 
 Both are keyed by the same `slug` — adding concept #11 means appending one
 object to **each** file. Everything else (listing, detail page, live route,
-homepage industry panel) derives from these two arrays.
+homepage teaser) derives from these two arrays.
 
 ## Key files
 
@@ -39,7 +39,7 @@ homepage industry panel) derives from these two arrays.
 | `components/concepts/ConceptMock.tsx` | Code-rendered desktop preview (6 layouts) |
 | `components/concepts/ConceptPhone.tsx` | Code-rendered mobile preview |
 | `components/concepts/ConceptCard.tsx` | Listing card — mock preview + Live Preview + Build Something Similar |
-| `components/sections/Industries.tsx` | Homepage industry picker — click a category, see a real screenshot of that concept's live site (merged with the old standalone Concepts teaser) |
+| `components/sections/FeaturedConcepts.tsx` | Homepage teaser — two curated concept cards (real screenshots) plus a CTA to the full `/concepts/` library |
 | `components/concepts/ScreenshotMock.tsx` / `ScreenshotPhone.tsx` | Real-screenshot framing — same browser-chrome/phone-bezel language as `ConceptMock`/`ConceptPhone`, but renders a captured `<img>` instead of code-rendered markup |
 | `scripts/capture-concept-screenshots.mjs` | Regenerates `public/concepts-shots/*.jpg` — **run this after any change to a concept's live site** |
 | `app/concepts/page.tsx` | Listing page |
@@ -58,25 +58,24 @@ homepage industry panel) derives from these two arrays.
 
 The listing and detail routes feed `app/sitemap.ts`; live routes are
 deliberately **excluded** from the sitemap (noindex pages shouldn't be listed).
-Nav "Work" → `/#concepts` (the homepage industry panel, `Industries.tsx`).
-The panel is driven directly by `concepts` (all ten), not by the separate
-9-category `industries` list `Contact.tsx`'s business-type dropdown uses — an
-earlier version mapped concepts onto that list and could only cover 4 of 10;
-driving the sidebar from `concepts` itself means every entry always has a
-real concept, with no coverage gap and no placeholder state.
+Nav "Work" → `/#concepts` (the homepage teaser section, `FeaturedConcepts.tsx`).
+The homepage only ever shows two curated concepts (`noir-and-vine` and
+`meridian-dental`, picked directly by `slug`) — the full ten live at
+`/concepts/`, driven directly by `concepts` (all ten), not by the separate
+9-category `industries` list `Contact.tsx`'s business-type dropdown uses.
 
 ## Real screenshots on the homepage (a deliberate, scoped exception)
 
-`Industries.tsx`'s panel shows a **real screenshot** of the active concept's
+`FeaturedConcepts.tsx` shows a **real screenshot** of each featured concept's
 live site — `ScreenshotMock` + `ScreenshotPhone`, both just a captured
 `<img>` inside the same chrome framing `ConceptMock`/`ConceptPhone` use.
 This is a further, deliberate extension of the photography exception
 [ADR-007](../knowledge/decisions/007-concept-live-sites.md) established for
-live concept pages — for the first time it puts real image weight on the
-**homepage itself**, not just on `/concepts/*/live/` pages a visitor opts
-into. Kept acceptable by: only one concept's pair of images (desktop +
-mobile, ~60–130 KB each) loads at a time, they're `loading="lazy"`, and the
-total set is ~1.2 MB across all 10 concepts, never all loaded at once.
+live concept pages — it puts real image weight on the **homepage itself**,
+not just on `/concepts/*/live/` pages a visitor opts into. Kept acceptable
+by: only two concepts' pairs of images (desktop + mobile, ~60–130 KB each)
+ever load on the homepage, they're `loading="lazy"`, and the total is under
+~400 KB — well below the ~1.2 MB full set across all 10 concepts.
 
 **These are static captures, not generated at build time** —
 `scripts/capture-concept-screenshots.mjs` drives a headless browser against
@@ -218,8 +217,9 @@ one to `conceptSites` in `conceptSites.ts`, same `slug` in both. Choose:
    `gallery`, `testimonials`, `faq`, `contact`.
 5. Verify every image URL returns `200` before committing it.
 6. Add the new `slug` to the list in `scripts/capture-concept-screenshots.mjs`
-   and run it, so `Industries.tsx`'s homepage panel has a real screenshot for
-   it instead of a broken image.
+   and run it, so any concept referenced by a real screenshot (the homepage
+   `FeaturedConcepts.tsx` teaser, or elsewhere) has one instead of a broken
+   image.
 
 **Add a live-site layout variant** — extend `LiveTheme["heroStyle"]` and add a
 branch in `components/live/LiveHero.tsx`, the same way `ConceptMock` grows a

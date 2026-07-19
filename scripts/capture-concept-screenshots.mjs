@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // Regenerates public/concepts-shots/<slug>-{desktop,mobile}.jpg — the real
 // screenshots shown in the homepage "Built around your kind of business"
-// panel (components/sections/Industries.tsx) and available for reuse
+// section (components/sections/FeaturedConcepts.tsx) and available for reuse
 // wherever a concept needs a real (not code-rendered) preview.
 //
 // These are STATIC CAPTURES, not generated at build time. If a concept's

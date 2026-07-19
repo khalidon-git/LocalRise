@@ -2,7 +2,7 @@ import { Hero } from "@/components/sections/Hero";
 import { TrustBar } from "@/components/sections/TrustBar";
 import { Packages } from "@/components/sections/Packages";
 import { IndividualServices } from "@/components/sections/IndividualServices";
-import { Industries } from "@/components/sections/Industries";
+import { FeaturedConcepts } from "@/components/sections/FeaturedConcepts";
 
 // Nav, Footer and WhatsAppButton live in app/layout.tsx so every page —
 // including the /services/[slug] pages — shares the same chrome.
@@ -13,7 +13,7 @@ export default function Home() {
       <TrustBar />
       <Packages />
       <IndividualServices />
-      <Industries />
+      <FeaturedConcepts />
     </main>
   );
 }
