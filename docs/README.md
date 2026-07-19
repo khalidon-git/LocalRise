@@ -20,7 +20,10 @@ and how to extend it safely.
 | [content.md](./content.md) | `lib/content` — the single source of site copy |
 | [seo.md](./seo.md) | Metadata, JSON-LD, sitemap, robots |
 | [seo-audit.md](./seo-audit.md) | Audit findings + prioritised remediation plan |
+| [responsive-sizing.md](./responsive-sizing.md) | The fluid spacing/typography system — section recipes, card padding, breakpoints |
 | [deployment.md](./deployment.md) | Hostinger, the `deploy` branch, and a real size limit |
+| [changelog.md](./changelog.md) | Notable changes, newest first, with the *why* |
+| [repository-structure.md](./repository-structure.md) | Full folder-by-folder map, naming/import conventions, where new files belong |
 
 ## The five things that bite newcomers
 

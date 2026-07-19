@@ -137,7 +137,8 @@ export function HeroVideo({
 
   return (
     <div className={cx("relative mx-auto w-full", frame.wrap, className)}>
-      {/* soft accent glow behind the panel, echoes HeroScene's colour blobs */}
+      {/* soft accent glow behind the panel, echoing the coloured blobs of the
+          illustrated hero this replaced */}
       <div
         className={cx(
           "pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20",

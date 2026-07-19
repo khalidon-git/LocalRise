@@ -112,11 +112,11 @@ that matter.
 
 ### 4. Placeholder Calendly link
 
-- **Problem**: `components/sections/Contact.tsx` links to
+- **Problem**: `components/contact/ContactMethods.tsx` links to
   `https://calendly.com/localrise` — almost certainly a 404.
 - **Why it matters**: A broken outbound link on the primary conversion section.
   This is a lost booking and a trust hit, not an algorithm problem.
-- **Files**: `components/sections/Contact.tsx`
+- **Files**: `components/contact/ContactMethods.tsx`
 - **Fix**: Real Calendly URL, or remove the tile and let WhatsApp/phone carry it.
   **Needs your input** — I can't invent the URL.
 - **Priority**: **High** · **Impact**: Medium (conversion) · **Effort**: Easy
@@ -276,7 +276,7 @@ Checked directly against the built output — **no action needed**:
 | `app/apple-icon.png` *(new)* | 180×180 |
 | `app/services/[slug]/page.tsx` | `BreadcrumbList` JSON-LD + visible breadcrumb; import `siteUrl` |
 | `lib/content/brand.ts` | Export `siteUrl` |
-| `components/sections/Contact.tsx` | Real Calendly URL or remove the tile |
+| `components/contact/ContactMethods.tsx` | Real Calendly URL or remove the tile |
 | `app/robots.ts` | Import `siteUrl` |
 
 ## Verification checklist (after deploy)

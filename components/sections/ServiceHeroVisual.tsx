@@ -1,5 +1,5 @@
 import { Icon } from "@/components/ui/Icon";
-import { BrowserMock } from "@/components/BrowserMock";
+import { BrowserMock } from "@/components/illustrations/BrowserMock";
 
 // A calm, code-rendered hero scene for each service page: the shared
 // BrowserMock plus one floating card themed to the service. CSS float

@@ -36,6 +36,8 @@ broke in a way that wasn't obvious from the code.
 | [005](./decisions/005-no-live-demo-button.md) | No "Live Demo" button; the detail page *is* the demo |
 | [006](./decisions/006-docs-structure.md) | Flat `docs/` + minimal `knowledge/` |
 | [007](./decisions/007-concept-live-sites.md) | Concept Websites get real, browsable "live" sites — supersedes 005 |
+| [008](./decisions/008-analytics-conversion-tracking.md) | GA4 + Google Ads conversion tracking — second zero-external-request exception |
+| [009](./decisions/009-hero-video-source-resolution.md) | Hero video stays at its source resolution; no further sharpening |
 
 ---
 

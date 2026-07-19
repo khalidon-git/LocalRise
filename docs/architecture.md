@@ -30,12 +30,19 @@ backend, no database, no API routes.
 
 ## Folder layout
 
+A quick-reference sketch — see [repository-structure.md](./repository-structure.md)
+for the exhaustive, kept-current version (every subfolder, naming/import
+conventions, "where does a new X go").
+
 ```
 app/
   layout.tsx              root layout: metadata, JSON-LD, providers, chrome
   page.tsx                homepage — composes sections in order
   why-us/page.tsx         Process, WhyChooseUs, FAQ — moved off the homepage
+  contact/page.tsx        the contact page
   services/[slug]/page.tsx  per-service pages (generateStaticParams)
+  concepts/**              Concept Websites gallery + live sites (docs/concepts.md)
+  lp/website-design/page.tsx  a standalone ads landing page
   sitemap.ts robots.ts globals.css icon.svg
 
 components/
@@ -44,21 +51,32 @@ components/
   layout/        site chrome rendered by the root layout: Nav, Footer,
                  WhatsAppButton
   sections/      homepage/service page content blocks
-  illustrations/ inline SVG artwork: HeroScene, SpotScenes
+  illustrations/ code-rendered/inline-SVG artwork: BrowserMock, ServiceVisual,
+                 SpotScenes, HeroVideo
+  concepts/      Concept Websites card + real-screenshot preview components
+  live/          the Concept Websites "live site" rendering engine
+  contact/       the /contact/ page's own sections
   cart/          CartDrawer
   audio/         AudioToggle (UI only)
   onboarding/    WelcomeModal
+  analytics/     GoogleTag (gtag.js loader)
 
 providers/       AudioProvider, CartProvider  (React context + engines)
 hooks/           useScrollLock, useCarousel
 lib/
   content/       all site copy, split by domain, re-exported via index.ts
+  communication/ the "start a conversation" (WhatsApp) layer
+  analytics/     GA4 / Google Ads config
   utils.ts       cx(), formatINR()
   palette.ts     rotating brand gradients
   navigation.ts  isInternalHref()
   onboarding.ts  localStorage preference
-public/          intro.ogg, intro.mp3, .htaccess
+public/          served as-is: fonts pull in via @fontsource, hero video,
+                 concept screenshots, service photos, .htaccess
+assets/          committed source files public/ assets are derived from
+temp/            intake-only staging folder — always empty besides its README
 docs/            you are here
+knowledge/       why things are the way they are, and what already broke
 ```
 
 ### Why this shape, and not `features/` + `services/`

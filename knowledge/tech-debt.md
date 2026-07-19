@@ -4,7 +4,7 @@ Known-but-unfixed issues, worst first. Each says **why it's deferred** — debt 
 a decision, not an accident. Something with no reason to be deferred should be
 fixed, not listed.
 
-Last reviewed: **2026-07-17**
+Last reviewed: **2026-07-19**
 
 ---
 
@@ -68,7 +68,7 @@ preview *is* the first impression.
 
 ## 4. Placeholder Calendly link
 
-`components/sections/Contact.tsx` links to `https://calendly.com/localrise` —
+`components/contact/ContactMethods.tsx` links to `https://calendly.com/localrise` —
 almost certainly a 404, on the primary conversion section.
 
 **Deferred because**: **blocked on the owner** — needs the real URL, or a
@@ -140,6 +140,23 @@ Only `app/icon.svg`. iOS home-screen bookmarks want a PNG.
 [seo-audit.md](../docs/seo-audit.md) #7–8.
 
 **Effort**: Easy · **Impact**: Low
+
+---
+
+## 10. Hero video is source-resolution-limited (soft on large screens)
+
+The homepage hero background video is a 1280×720 source stretched via
+`object-fit: cover` to fill up to ~3840px of physical width on large/high-DPI
+screens — reads as slightly soft. Already sharpened as far as is safe without
+visible ringing artifacts.
+
+**Deferred because**: fixing it for real needs either a higher-resolution
+source export from whoever produced the animation, or AI video
+super-resolution — neither is a quick code change. See
+[ADR-009](./decisions/009-hero-video-source-resolution.md) for the full
+diagnosis and options considered.
+
+**Effort**: Medium (needs a new source asset or an upscaling pass) · **Impact**: Low–Medium (polish, most visible on large desktop displays)
 
 ---
 

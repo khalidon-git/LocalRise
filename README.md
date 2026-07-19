@@ -33,35 +33,35 @@ npm run start
 ## Project structure
 
 ```
-app/
-  layout.tsx        Fonts, SEO metadata, JSON-LD structured data
-  page.tsx          Composes every section in order
-  globals.css       Design tokens, base styles, utilities
-  icon.svg          Favicon (LocalRise mark)
-  sitemap.ts robots.ts
-components/
-  Icon.tsx          Dependency-free line-icon set
-  ui/               Button, Reveal/Stagger, Magnetic, SectionHeading, Logo
-  sections/         Nav, Hero, HeroDashboard, TrustBar, Services, Packages,
-                    PackageCard, IndividualServices, Industries, Portfolio,
-                    Process, WhyChooseUs, Testimonials, FAQ, Contact,
-                    Footer, WhatsAppButton
-lib/
-  data.ts           ALL site content (copy, pricing, services, FAQs…)
-  utils.ts          cx() + formatINR()
+app/          routes — homepage, /why-us/, /contact/, /services/[slug]/, /concepts/**
+components/   ui/, layout/, sections/, illustrations/, concepts/, live/, contact/,
+              cart/, audio/, onboarding/, analytics/
+lib/          content/ (all site copy), communication/, analytics/, + small
+              single-purpose modules (utils, palette, navigation, onboarding)
+providers/    AudioProvider, CartProvider
+hooks/        useScrollLock, useCarousel
+public/       served as-is (images, video, audio, fonts pulled in via @fontsource)
+assets/       committed source files public/ assets are derived from
+temp/         intake-only staging folder for new assets — always empty besides a README
+docs/         how the systems work
+knowledge/    why they're that way, and what already broke
 ```
+
+Full breakdown, naming conventions, and "where does a new file go" guidance:
+[docs/repository-structure.md](./docs/repository-structure.md).
 
 ## Customising
 
-Almost everything you'll want to change lives in **`lib/data.ts`** — copy, prices, services, packages, industries, FAQs, and the `brand` object.
+Almost everything you'll want to change lives in **`lib/content/`** (a barrel
+of files split by domain — see `lib/content/index.ts`) — copy, prices,
+services, packages, industries, FAQs, and the `brand` object.
 
 ### ⚠️ Still placeholders
 
-Contact details in `lib/data.ts` → `brand` (phone, WhatsApp, email, Instagram) are live. Remaining:
+Contact details in `lib/content/brand.ts` → `brand` (phone, WhatsApp, email, Instagram) are live. Remaining:
 
-- "Schedule a meeting" link → `components/sections/Contact.tsx` (currently `calendly.com/localrise`)
-- Canonical domain / site URL → `app/layout.tsx`, `app/sitemap.ts`, `app/robots.ts` (currently `https://localrise.in`)
-- Add a real `opengraph-image` (e.g. `app/opengraph-image.png`) for rich link previews
+- "Schedule a meeting" link → `components/contact/ContactMethods.tsx` (currently `calendly.com/localrise`)
+- Canonical domain / site URL — hard-coded per-file rather than centralised; see [knowledge/tech-debt.md](./knowledge/tech-debt.md) #5
 
 ### Design tokens
 
@@ -70,7 +70,7 @@ Contact details in `lib/data.ts` → `brand` (phone, WhatsApp, email, Instagram)
 
 ## How the contact form works
 
-There is no backend. On submit, the form composes the visitor's details into a message and **opens WhatsApp** (`wa.me`) pre-filled — so leads land directly in the owner's chat. Swap `onSubmit` in `Contact.tsx` if you'd rather POST to an API/CRM.
+There is no backend. On submit, `components/contact/ContactForm.tsx` composes the visitor's details into a message via `lib/communication/` and **opens WhatsApp** (`wa.me`) pre-filled — so leads land directly in the owner's chat. Every other "start a conversation" CTA site-wide (cart, package/service/concept buttons) goes through the same layer. Swap `openWhatsApp()` in `lib/communication/` if you'd rather POST to an API/CRM.
 
 ## Accessibility & performance
 

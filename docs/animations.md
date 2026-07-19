@@ -51,7 +51,7 @@ Defined in `tailwind.config.ts` → `theme.extend.keyframes` / `animation`:
 
 | Class | Used by |
 | --- | --- |
-| `animate-float-soft` / `animate-float-slow` | Illustration elements (`HeroScene`, `SpotScenes`) |
+| `animate-float-soft` / `animate-float-slow` | Illustration elements (`SpotScenes`, `ServiceHeroVisual`) |
 | `animate-marquee` | `TrustBar` |
 | `animate-pulse-ring` | `WhatsAppButton` |
 | `animate-eq` | `AudioToggle` equaliser bars |

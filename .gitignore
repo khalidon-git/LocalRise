@@ -33,3 +33,13 @@ next-env.d.ts
 
 # deploy archives (temporary)
 *.tar.gz
+
+# claude code — local/per-machine settings (also covered by a global
+# gitignore, but listed here too so a fresh clone is safe without it)
+.claude/settings.local.json
+
+# temp/ is an intake-only staging folder — files dropped here for
+# processing shouldn't get auto-committed. Move anything worth keeping to
+# public/ (served) or assets/originals/ (source) instead. See temp/README.md.
+/temp/*
+!/temp/README.md
