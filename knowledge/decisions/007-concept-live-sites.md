@@ -90,5 +90,16 @@ This is a deliberate, scoped exception:
 Scope concept #11+ the same way: one data object in
 `lib/content/conceptSites.ts`, reusing the `components/live/*` primitives.
 Adding a genuinely new *layout personality* (not just new theme tokens) means
-adding a new variant to the relevant `Live*` component, mirroring how
-`ConceptMock` added layout variants.
+adding a new variant to the relevant `Live*` component.
+
+## Update — 2026-07-19: card/detail mocks replaced with real screenshots
+
+The "old code-rendered `ConceptMock`/`ConceptPhone` previews **stay**" call
+above was revisited: they were removed from `ConceptCard` and the
+`/concepts/[slug]/` hero, replaced by the same real-screenshot treatment
+(`ScreenshotMock`/`ScreenshotPhone`) already used on the homepage's
+`FeaturedConcepts` teaser, so every concept preview surface is now visually
+consistent. `ConceptMock.tsx`/`ConceptPhone.tsx` had no remaining consumers
+after the swap and were deleted. See [concepts.md](../../docs/concepts.md)
+for the current state — this note exists so the original trade-off reasoning
+above isn't read as still-current.

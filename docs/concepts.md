@@ -23,7 +23,7 @@ SaaS Startup, Wedding Photography Studio.
 
 | Layer | File | Powers |
 | --- | --- | --- |
-| **Mock preview** | `lib/content/concepts.ts` | Card + detail-page code-rendered preview (`ConceptMock`/`ConceptPhone`) |
+| **Card/detail data** | `lib/content/concepts.ts` | Copy (`name`, `industry`, `summary`, `description`, `features`, `designNotes`) plus `identity` (palette/type chip) and `preview.domain` (the browser-chrome URL bar on `ScreenshotMock`) |
 | **Live site** | `lib/content/conceptSites.ts` | The full, independent site at `/concepts/<slug>/live/` |
 
 Both are keyed by the same `slug` — adding concept #11 means appending one
@@ -34,13 +34,11 @@ homepage teaser) derives from these two arrays.
 
 | File | Role |
 | --- | --- |
-| `lib/content/concepts.ts` | Mock preview data + types (`Concept`, `ConceptIdentity`, `ConceptPreview`) |
+| `lib/content/concepts.ts` | Concept data + types (`Concept`, `ConceptIdentity`, `ConceptPreview`) — `identity`/`preview` still drive the palette chip and `/concepts/[slug]/live/` isn't affected by this file |
 | `lib/content/conceptSites.ts` | Live-site data + types (`ConceptSite`, `LiveTheme`, …) — verified real photography from Unsplash, per-brand copy |
-| `components/concepts/ConceptMock.tsx` | Code-rendered desktop preview (6 layouts) |
-| `components/concepts/ConceptPhone.tsx` | Code-rendered mobile preview |
-| `components/concepts/ConceptCard.tsx` | Listing card — mock preview + Live Preview + Build Something Similar |
+| `components/concepts/ConceptCard.tsx` | Listing card — real screenshot + Live Preview + Build Something Similar |
 | `components/sections/FeaturedConcepts.tsx` | Homepage teaser — two curated concept cards (real screenshots) plus a CTA to the full `/concepts/` library |
-| `components/concepts/ScreenshotMock.tsx` / `ScreenshotPhone.tsx` | Real-screenshot framing — same browser-chrome/phone-bezel language as `ConceptMock`/`ConceptPhone`, but renders a captured `<img>` instead of code-rendered markup |
+| `components/concepts/ScreenshotMock.tsx` / `ScreenshotPhone.tsx` | Real-screenshot framing — a captured `<img>` inside browser-chrome/phone-bezel markup. Used everywhere a concept preview is shown: `ConceptCard`, the `/concepts/[slug]/` hero, and `FeaturedConcepts` |
 | `scripts/capture-concept-screenshots.mjs` | Regenerates `public/concepts-shots/*.jpg` — **run this after any change to a concept's live site** |
 | `app/concepts/page.tsx` | Listing page |
 | `app/concepts/[slug]/page.tsx` | Detail page (mock preview, features, design notes) |
@@ -64,18 +62,23 @@ The homepage only ever shows two curated concepts (`noir-and-vine` and
 `/concepts/`, driven directly by `concepts` (all ten), not by the separate
 9-category `industries` list `Contact.tsx`'s business-type dropdown uses.
 
-## Real screenshots on the homepage (a deliberate, scoped exception)
+## Real screenshots everywhere a concept is previewed
 
-`FeaturedConcepts.tsx` shows a **real screenshot** of each featured concept's
-live site — `ScreenshotMock` + `ScreenshotPhone`, both just a captured
-`<img>` inside the same chrome framing `ConceptMock`/`ConceptPhone` use.
-This is a further, deliberate extension of the photography exception
-[ADR-007](../knowledge/decisions/007-concept-live-sites.md) established for
-live concept pages — it puts real image weight on the **homepage itself**,
-not just on `/concepts/*/live/` pages a visitor opts into. Kept acceptable
-by: only two concepts' pairs of images (desktop + mobile, ~60–130 KB each)
-ever load on the homepage, they're `loading="lazy"`, and the total is under
-~400 KB — well below the ~1.2 MB full set across all 10 concepts.
+Every place a concept gets previewed — `FeaturedConcepts.tsx` (homepage),
+`ConceptCard.tsx` (the `/concepts/` grid and detail-page "more concepts"),
+and the `/concepts/[slug]/` hero — uses `ScreenshotMock` + `ScreenshotPhone`:
+a captured `<img>` inside browser-chrome/phone-bezel framing. There is no
+code-rendered fallback anymore; the earlier `ConceptMock`/`ConceptPhone`
+components (six layout variants driven by `identity`/`preview`) were deleted
+once nothing consumed them.
+
+This started as a scoped exception for the homepage only, extending the
+photography exception [ADR-007](../knowledge/decisions/007-concept-live-sites.md)
+established for live concept pages — see that ADR's "Update" note for why it
+was widened to every card/detail surface. Payload stays bounded because
+`loading="lazy"` means only the screenshots actually scrolled into view ever
+load (~60–130 KB per image, ~1.2 MB total across all 10 concepts if every
+card were visible at once).
 
 **These are static captures, not generated at build time** —
 `scripts/capture-concept-screenshots.mjs` drives a headless browser against
@@ -87,30 +90,14 @@ pattern as the `ffmpeg-static` audio recipe in
 [deployment.md](./deployment.md)) whenever a concept's copy, theme, or layout
 changes in `conceptSites.ts`.
 
-`ConceptCard` (the `/concepts/` listing and detail-page "more concepts")
-still uses the code-rendered `ConceptMock`/`ConceptPhone`, not real
-screenshots — that's an intentional scope boundary for now, not an
-oversight. Extending the same real-screenshot treatment there is a
-reasonable next step if the inconsistency is worth fixing.
-
-## How the mock preview works (`ConceptCard`, listing/detail pages)
-
-Each concept carries an `identity` (colour, typography, corner radius) and a
-`preview` (layout variant + fake copy). `ConceptMock` is **one component with
-six layouts** — `centered`, `bold`, `editorial`, `grid`, `dark`, `split` — so
-the previews read as genuinely different studios rather than one template
-recoloured. See the table in git history / `concepts.ts` comments for the
-current layout assignment per concept.
-
-### Two constraints worth knowing (mock preview only)
-
-**Typography uses system stacks.** `font-serif` (Georgia), `font-mono` and
-`font-display` are existing Tailwind tokens — zero bytes, no external request.
-
-**Every colour is a literal Tailwind class string** in `concepts.ts`
-(`"bg-[#C6F24E]"`). Tailwind's JIT scans source text, so a computed
-`` `bg-[${hex}]` `` produces **no CSS** and fails silently. Keep them literal.
-See [content.md](./content.md).
+`concepts.ts`'s `identity` (colour/type/radius) still drives the small
+gradient icon chip on `FeaturedConcepts` and the palette swatch on the
+detail page. `preview.domain` is the only `preview` field still consumed
+(the URL shown in `ScreenshotMock`'s browser-chrome bar) — the rest of
+`ConceptPreview` (`layout`, `nav`, `heroKicker`, `heroTitle`, `heroSub`,
+`cta`, `cards`) is unused now that nothing code-renders a mock from it. It's
+left in place rather than stripped out with this change; trimming the type
+and all ten data entries is a separate cleanup if it's ever worth doing.
 
 ## How the live site works
 
@@ -119,7 +106,7 @@ them up is the most likely mistake when adding a concept:
 
 - **`font` / `headFont` / `radius` / `tracking`** — literal Tailwind class
   names (`"font-serif"`, `"rounded-2xl"`), applied directly as `className`.
-  Same pattern as `ConceptMock`'s `identity`.
+  Same pattern as `concepts.ts`'s `identity`.
 - **`bg` / `ink` / `brand` / … (colours)** — raw hex/rgba strings, applied as
   CSS custom properties via inline `style` on the page root
   (`components/live/LiveNav.tsx`'s `themeVars()`), then consumed through
@@ -200,7 +187,8 @@ explains what changed.
 - Live-site images: `loading="eager"` + `fetchPriority="high"` on the hero
   image only; everything else `loading="lazy"`. Explicit `width`/`height` to
   reserve aspect ratio and avoid layout shift.
-- Mock text is real text (not images), so it scales and is selectable.
+- Card/detail copy (name, industry, summary) is real text (not images), so it
+  scales and is selectable; only the site preview itself is an `<img>`.
 
 ## Extending
 
@@ -208,7 +196,9 @@ explains what changed.
 one to `conceptSites` in `conceptSites.ts`, same `slug` in both. Choose:
 
 1. A `slug`, `industry`, and honest `summary`/`description` (`concepts.ts`).
-2. A mock `identity` + `preview.layout` from the six `ConceptMock` variants.
+2. An `identity` (colour/type/radius, for the gradient icon chip and palette
+   swatch) and a `preview.domain` (shown in `ScreenshotMock`'s browser-chrome
+   bar) — the rest of `preview` is currently unused, see above.
 3. A live `theme` — colours as raw hex/rgba, `font`/`headFont`/`radius` as
    **literal** Tailwind class names, a `heroStyle` (full-bleed / split /
    editorial-grid / centered-stat / product).
@@ -217,13 +207,11 @@ one to `conceptSites` in `conceptSites.ts`, same `slug` in both. Choose:
    `gallery`, `testimonials`, `faq`, `contact`.
 5. Verify every image URL returns `200` before committing it.
 6. Add the new `slug` to the list in `scripts/capture-concept-screenshots.mjs`
-   and run it, so any concept referenced by a real screenshot (the homepage
-   `FeaturedConcepts.tsx` teaser, or elsewhere) has one instead of a broken
-   image.
+   and run it — every card/detail/homepage preview depends on that capture,
+   so a missing entry is a broken image, not a graceful fallback.
 
 **Add a live-site layout variant** — extend `LiveTheme["heroStyle"]` and add a
-branch in `components/live/LiveHero.tsx`, the same way `ConceptMock` grows a
-layout variant.
+branch in `components/live/LiveHero.tsx`.
 
 **Never** add fake testimonials with real people's names/photos, invented
 metrics that could mislead, or drop the "Design Concept by LocalRise"

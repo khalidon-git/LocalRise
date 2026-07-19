@@ -2,8 +2,8 @@ import type { Concept } from "@/lib/content";
 import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
 import { ConversationButton } from "@/components/ui/ConversationButton";
-import { ConceptMock } from "@/components/concepts/ConceptMock";
-import { ConceptPhone } from "@/components/concepts/ConceptPhone";
+import { ScreenshotMock } from "@/components/concepts/ScreenshotMock";
+import { ScreenshotPhone } from "@/components/concepts/ScreenshotPhone";
 import { SmartLink } from "@/components/ui/SmartLink";
 
 // Listing card. Two explicit CTAs (Live Preview / Build Something Similar) —
@@ -21,8 +21,8 @@ export function ConceptCard({ concept }: { concept: Concept }) {
           Design Concept
         </span>
         <div className="relative transition-transform duration-700 ease-premium group-hover:scale-[1.015]">
-          <ConceptMock concept={concept} />
-          <ConceptPhone
+          <ScreenshotMock concept={concept} />
+          <ScreenshotPhone
             concept={concept}
             className="absolute -bottom-4 -right-2 hidden w-20 shrink-0 sm:block"
           />

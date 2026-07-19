@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/Button";
 import { ConversationButton } from "@/components/ui/ConversationButton";
 import { SmartLink } from "@/components/ui/SmartLink";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
-import { ConceptMock } from "@/components/concepts/ConceptMock";
-import { ConceptPhone } from "@/components/concepts/ConceptPhone";
+import { ScreenshotMock } from "@/components/concepts/ScreenshotMock";
+import { ScreenshotPhone } from "@/components/concepts/ScreenshotPhone";
 import { ConceptCard } from "@/components/concepts/ConceptCard";
 import { cx } from "@/lib/utils";
 
@@ -132,9 +132,9 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
             {/* Live preview: desktop + mobile together */}
             <Reveal delay={0.1}>
               <div className="relative">
-                <ConceptMock concept={concept} className="w-full" />
+                <ScreenshotMock concept={concept} className="w-full" />
                 <div className="mt-4 flex items-end gap-4 sm:absolute sm:-bottom-6 sm:-right-2 sm:mt-0 sm:w-32 lg:w-36">
-                  <ConceptPhone concept={concept} className="w-24 shrink-0 sm:w-full" />
+                  <ScreenshotPhone concept={concept} className="w-24 shrink-0 sm:w-full" />
                   <p className="pb-2 text-label text-ink-3 sm:hidden">Mobile view</p>
                 </div>
               </div>
