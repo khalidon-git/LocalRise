@@ -18,12 +18,24 @@ import { useCart } from "@/providers/CartProvider";
 // either of those. See docs/architecture.md.
 export function IndividualServices() {
   const { addToCart } = useCart();
+  const dotsRef = useRef<HTMLDivElement>(null);
   const indicatorRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const { containerRef, activeIndex, canScrollLeft, canScrollRight, scrollByCard, scrollToIndex } =
     useCarousel<HTMLDivElement>({ autoplay: true, intervalMs: 5000 });
 
+  // Keep the active dot centred within its own horizontal strip — but scroll
+  // ONLY that strip, never the page. The previous `scrollIntoView` walked up to
+  // the document scroller, so on load (and again on every autoplay advance while
+  // this section sat below the fold) it yanked the whole page down to here. That
+  // was the homepage "opens scrolled to a lower section" bug.
   useEffect(() => {
-    indicatorRefs.current[activeIndex]?.scrollIntoView({ block: "nearest", inline: "center" });
+    const strip = dotsRef.current;
+    const dot = indicatorRefs.current[activeIndex];
+    if (!strip || !dot) return;
+    strip.scrollTo({
+      left: dot.offsetLeft - strip.clientWidth / 2 + dot.clientWidth / 2,
+      behavior: "smooth",
+    });
   }, [activeIndex]);
 
   return (
@@ -130,7 +142,10 @@ export function IndividualServices() {
         </div>
 
         {/* Carousel Dots Indicator */}
-        <div className="no-scrollbar mt-5 flex max-w-full items-center justify-start gap-2 overflow-x-auto px-1 sm:mt-6 sm:justify-center">
+        <div
+          ref={dotsRef}
+          className="no-scrollbar mt-5 flex max-w-full items-center justify-start gap-2 overflow-x-auto px-1 sm:mt-6 sm:justify-center"
+        >
           {homepageServices.map((_, index) => (
             <button
               key={index}
