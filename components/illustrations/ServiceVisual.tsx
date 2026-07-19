@@ -3,13 +3,13 @@ import { Icon } from "@/components/ui/Icon";
 import { cx } from "@/lib/utils";
 
 // The banner visual for each individual-service card (components/sections/
-// IndividualServices.tsx). "website" is a real captured screenshot of a
-// concept live site (see docs/concepts.md). Six more kinds (maps, chat,
-// brand, brandkit, automation, marketplace) use real supplied photos from
+// IndividualServices.tsx). Seven kinds (website, maps, chat, brand,
+// brandkit, automation, marketplace) use real supplied photos from
 // public/services/ — see PHOTO_BY_KIND. "shop" and "reviews" have no source
 // photo yet, so they keep a code-rendered illustrative mockup rather than
 // showing nothing.
 const PHOTO_BY_KIND: Partial<Record<ServiceVisualKind, { src: string; alt: string; width: number; height: number }>> = {
+  website: { src: "/services/website.jpg", alt: "Business website design", width: 900, height: 542 },
   maps: { src: "/services/google.jpg", alt: "Google Business Profile setup", width: 900, height: 673 },
   chat: { src: "/services/whatsapp.jpg", alt: "WhatsApp Business setup", width: 900, height: 506 },
   brand: { src: "/services/logo.jpg", alt: "Logo design", width: 900, height: 578 },
@@ -19,8 +19,6 @@ const PHOTO_BY_KIND: Partial<Record<ServiceVisualKind, { src: string; alt: strin
 };
 
 export function ServiceVisual({ kind, accent, className }: { kind: ServiceVisualKind; accent: string; className?: string }) {
-  if (kind === "website") return <WebsiteVisual className={className} />;
-
   const photo = PHOTO_BY_KIND[kind];
   if (photo) return <PhotoVisual {...photo} className={className} />;
 
@@ -57,30 +55,6 @@ function PhotoVisual({
         loading="lazy"
         decoding="async"
         className="h-full w-full object-cover"
-      />
-    </div>
-  );
-}
-
-function WebsiteVisual({ className }: { className?: string }) {
-  return (
-    <div className={cx("relative h-full w-full overflow-hidden bg-white", className)}>
-      <div className="flex items-center gap-1.5 border-b border-line bg-white px-3 py-2">
-        <span className="h-2 w-2 rounded-full bg-[#FF5F57]" />
-        <span className="h-2 w-2 rounded-full bg-[#FEBC2E]" />
-        <span className="h-2 w-2 rounded-full bg-[#28C840]" />
-        <span className="ml-2 flex-1 truncate rounded bg-bg-subtle px-2 py-0.5 text-[9px] text-ink-3">
-          a real business site we built
-        </span>
-      </div>
-      <img
-        src="/concepts-shots/casa-alma-desktop.jpg"
-        alt="A real website LocalRise built — example homepage"
-        width={1120}
-        height={720}
-        loading="lazy"
-        decoding="async"
-        className="h-[calc(100%-33px)] w-full object-cover object-top"
       />
     </div>
   );

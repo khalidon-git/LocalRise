@@ -1,5 +1,10 @@
 import { cx } from "@/lib/utils";
 
+// The real logo mark (public/logo.png) is dark navy/blue on a transparent
+// background — legible on light surfaces (Nav, which never sits on a dark
+// background) but nearly invisible on dark ones. Footer is the one dark
+// surface that uses this component, so tone="dark" sets it inside a small
+// white card instead of inventing a second dark-safe logo asset.
 export function Logo({
   tone = "light",
   className,
@@ -7,24 +12,20 @@ export function Logo({
   tone?: "light" | "dark";
   className?: string;
 }) {
-  return (
-    <span className={cx("inline-flex items-center gap-2.5", className)}>
-      <span className="relative grid h-8 w-8 place-items-center rounded-[10px] bg-accent shadow-[0_6px_16px_-4px_rgba(47,91,255,0.6)]">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M6 16.5 11 11l3.2 3.2L19 8.5" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M14.6 8.5H19V13" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </span>
-      <span
-        className={cx(
-          "font-display text-[1.28rem] font-semibold tracking-tight",
-          tone === "dark" ? "text-white" : "text-ink",
-        )}
-      >
-        Local<span className="text-accent">Rise</span>
-      </span>
-    </span>
+  const img = (
+    // eslint-disable-next-line @next/next/no-img-element -- output: export has no image loader
+    <img src="/logo.png" alt="LocalRise" width={752} height={328} className="h-9 w-auto" />
   );
+
+  if (tone === "dark") {
+    return (
+      <span className={cx("inline-flex items-center rounded-xl bg-white px-3 py-1.5 shadow-sm", className)}>
+        {img}
+      </span>
+    );
+  }
+
+  return <span className={cx("inline-flex items-center", className)}>{img}</span>;
 }
 
 export default Logo;
