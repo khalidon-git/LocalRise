@@ -8,7 +8,17 @@ import { cx } from "@/lib/utils";
 // that's how real OS/browser chrome behaves, so it reads as more authentic,
 // not less. See knowledge/decisions/007-concept-live-sites.md and
 // docs/concepts.md for why real images are used here.
-export function ScreenshotMock({ concept, className }: { concept: Concept; className?: string }) {
+export function ScreenshotMock({
+  concept,
+  className,
+  priority = false,
+}: {
+  concept: Concept;
+  className?: string;
+  /** Skip the lazy-load deferral for a slide that's already visible on mount
+   * (e.g. the first slide of a carousel) — everything else stays lazy. */
+  priority?: boolean;
+}) {
   return (
     <div className={cx("relative overflow-hidden rounded-xl border border-line shadow-lg", className)}>
       <div className="flex items-center gap-1.5 border-b border-line bg-white px-3 py-2">
@@ -24,7 +34,7 @@ export function ScreenshotMock({ concept, className }: { concept: Concept; class
         alt={`${concept.name} website — real screenshot of the live concept site`}
         width={1120}
         height={720}
-        loading="lazy"
+        loading={priority ? "eager" : "lazy"}
         decoding="async"
         className="block w-full"
       />

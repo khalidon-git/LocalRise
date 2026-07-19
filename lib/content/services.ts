@@ -235,6 +235,7 @@ export type IndividualService = {
   visual: ServiceVisualKind;
 };
 
+/** Full catalogue — every card, in the order they were introduced. */
 export const individualServices: IndividualService[] = [
   {
     title: "Business Website",
@@ -331,4 +332,19 @@ export const individualServices: IndividualService[] = [
     visual: "marketplace",
   },
 ];
+
+/**
+ * Homepage carousel only — a scoped subset, not a content removal. Excludes
+ * "Online Store" (`visual: "shop"`) and "Reviews & Reputation"
+ * (`visual: "reviews"`) from the homepage carousel by design; both keep
+ * their full entries in `individualServices` above, and their
+ * `/services/store/` and `/services/reviews/` detail pages (`services` +
+ * `serviceDetails`, untouched) remain reachable exactly as before.
+ * Filters on `visual` rather than `title` because it's already a unique,
+ * stable key per entry — a title edit can't silently change which cards
+ * this excludes.
+ */
+export const homepageServices: IndividualService[] = individualServices.filter(
+  (s) => s.visual !== "shop" && s.visual !== "reviews",
+);
 

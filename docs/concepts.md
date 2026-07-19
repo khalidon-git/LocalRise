@@ -37,7 +37,7 @@ homepage teaser) derives from these two arrays.
 | `lib/content/concepts.ts` | Concept data + types (`Concept`, `ConceptIdentity`, `ConceptPreview`) — `identity`/`preview` still drive the palette chip and `/concepts/[slug]/live/` isn't affected by this file |
 | `lib/content/conceptSites.ts` | Live-site data + types (`ConceptSite`, `LiveTheme`, …) — verified real photography from Unsplash, per-brand copy |
 | `components/concepts/ConceptCard.tsx` | Listing card — real screenshot + Live Preview + Build Something Similar |
-| `components/sections/FeaturedConcepts.tsx` | Homepage teaser — two curated concept cards (real screenshots) plus a CTA to the full `/concepts/` library |
+| `components/sections/FeaturedConcepts.tsx` | Homepage teaser — an autoplaying carousel of three curated concept cards (real screenshots) plus a CTA to the full `/concepts/` library |
 | `components/concepts/ScreenshotMock.tsx` / `ScreenshotPhone.tsx` | Real-screenshot framing — a captured `<img>` inside browser-chrome/phone-bezel markup. Used everywhere a concept preview is shown: `ConceptCard`, the `/concepts/[slug]/` hero, and `FeaturedConcepts` |
 | `scripts/capture-concept-screenshots.mjs` | Regenerates `public/concepts-shots/*.jpg` — **run this after any change to a concept's live site** |
 | `app/concepts/page.tsx` | Listing page |
@@ -57,10 +57,20 @@ homepage teaser) derives from these two arrays.
 The listing and detail routes feed `app/sitemap.ts`; live routes are
 deliberately **excluded** from the sitemap (noindex pages shouldn't be listed).
 Nav "Work" → `/#concepts` (the homepage teaser section, `FeaturedConcepts.tsx`).
-The homepage only ever shows two curated concepts (`noir-and-vine` and
-`meridian-dental`, picked directly by `slug`) — the full ten live at
-`/concepts/`, driven directly by `concepts` (all ten), not by the separate
-9-category `industries` list `Contact.tsx`'s business-type dropdown uses.
+The homepage shows a curated, autoplaying carousel of three concepts
+(`featuredConceptSlugs` in `app/page.tsx` — currently `noir-and-vine`,
+`meridian-dental`, `casa-alma`, picked directly by `slug`; three, not two, so
+the carousel's "peek of the next slide" has a real next slide at every
+position) — the full ten live at `/concepts/`, driven directly by `concepts`
+(all ten), not by the separate 9-category `industries` list `Contact.tsx`'s
+business-type dropdown uses.
+
+`FeaturedConcepts` is a client component (it drives the carousel's scroll
+state), but the featured concepts themselves are resolved server-side in
+`app/page.tsx` and passed in as a `featured` prop — importing the full
+`concepts` data array directly into `FeaturedConcepts.tsx` would bundle all
+ten concepts' prose into the homepage's client JS even though only three
+ever render. `FeaturedConcepts.tsx` imports only the `Concept` **type**.
 
 ## Real screenshots everywhere a concept is previewed
 

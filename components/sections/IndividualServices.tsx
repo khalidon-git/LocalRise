@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useCarousel } from "@/hooks/useCarousel";
-import { individualServices } from "@/lib/content";
+import { homepageServices } from "@/lib/content";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Stagger, StaggerItem } from "@/components/ui/Reveal";
@@ -20,7 +20,7 @@ export function IndividualServices() {
   const { addToCart } = useCart();
   const indicatorRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const { containerRef, activeIndex, canScrollLeft, canScrollRight, scrollByCard, scrollToIndex } =
-    useCarousel<HTMLDivElement>();
+    useCarousel<HTMLDivElement>({ autoplay: true, intervalMs: 5000 });
 
   useEffect(() => {
     indicatorRefs.current[activeIndex]?.scrollIntoView({ block: "nearest", inline: "center" });
@@ -49,7 +49,7 @@ export function IndividualServices() {
               ref={containerRef}
               className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-1 pb-6 sm:gap-5 lg:gap-6"
             >
-              {individualServices.map((s) => (
+              {homepageServices.map((s) => (
                 <StaggerItem
                   key={s.title}
                   className="h-auto basis-[86%] shrink-0 snap-start sm:basis-[44%] lg:basis-[calc(33.333%_-_1rem)]"
@@ -131,7 +131,7 @@ export function IndividualServices() {
 
         {/* Carousel Dots Indicator */}
         <div className="no-scrollbar mt-5 flex max-w-full items-center justify-start gap-2 overflow-x-auto px-1 sm:mt-6 sm:justify-center">
-          {individualServices.map((_, index) => (
+          {homepageServices.map((_, index) => (
             <button
               key={index}
               ref={(node) => {

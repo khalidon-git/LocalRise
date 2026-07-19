@@ -49,7 +49,7 @@ if it's ever needed — one place, every overlay benefits.
 ## `useCarousel<T>()`
 
 **File**: `hooks/useCarousel.ts`
-**Used by**: `components/sections/IndividualServices.tsx`
+**Used by**: `components/sections/IndividualServices.tsx`, `components/sections/FeaturedConcepts.tsx`
 
 ```tsx
 const {
@@ -59,7 +59,10 @@ const {
   canScrollRight,
   scrollByCard,      // (direction: "left" | "right")
   scrollToIndex,     // (index: number)
-} = useCarousel<HTMLDivElement>();
+  isAutoplayPaused,  // true while autoplay is suspended, for any reason
+  pause,             // manually suspend autoplay
+  resume,            // release a manual pause()
+} = useCarousel<HTMLDivElement>({ autoplay: true, intervalMs: 5000 });
 ```
 
 Expects a horizontally scrolling container whose **direct children are the
@@ -79,11 +82,41 @@ pitch, read from the DOM.
 whichever child's left edge is nearest the container's. Scroll and resize
 listeners are `passive`.
 
+### Autoplay (`autoplay: true`)
+
+Opt-in per carousel via the options object; off by default. One `setInterval`,
+cleared and re-created whenever any pause condition changes — never more than
+one timer alive per carousel, and it's gone on unmount.
+
+Every pause trigger the hook wires up **on `containerRef` itself**, so a
+consumer only passes `autoplay: true` and renders the container — no extra
+`onMouseEnter`/`onFocus` props needed anywhere:
+
+- Pointer hover (mouse/pen only — a touch tap isn't treated as "hover
+  forever").
+- Keyboard focus anywhere inside the container (`focusin`/`focusout`, so
+  tabbing between two cards' buttons doesn't flicker the pause on and off).
+- Active interaction — `pointerdown`/`touchstart`/`wheel` pause immediately;
+  release is debounced ~1.2s after the last one, so a scroll that just ended
+  isn't immediately overridden by the next tick.
+- A hidden browser tab (`visibilitychange`).
+- `prefers-reduced-motion: reduce` — autoplay never starts at all, not just
+  paused.
+- A manual `pause()`/`resume()` call, independent of the automatic triggers.
+
+Each tick reads `scrollLeft`/`scrollWidth`/`clientWidth` **fresh from the
+DOM** rather than trusting `activeIndex`/`canScrollRight` state — those can be
+a tick stale inside a `setInterval` closure. At the last card it loops to
+`scrollToIndex(0)`; otherwise `scrollByCard("right")`.
+
+The container's own `scroll` event is deliberately **not** one of the
+interaction triggers — it fires for the hook's own `scrollBy`/`scrollTo`
+calls too, and using it would make autoplay pause itself on every automatic
+advance.
+
 ### Extending
 
 - **Keyboard/drag support** → add here; every carousel benefits.
-- **Autoplay** → keep the timer in the hook, expose `pause()`/`resume()`, and
-  respect `prefers-reduced-motion` ([animations.md](./animations.md)).
 - **A second carousel** → just call the hook; it's already generic. Don't copy
   the scroll maths into a component.
 
