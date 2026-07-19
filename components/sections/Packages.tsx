@@ -11,11 +11,11 @@ export function Packages() {
     <section id="packages" className="section-pad bg-bg-subtle">
       <div className="container-x">
         <SectionHeading
-          title="Simple pricing. No surprises."
-          description="Pick the package that fits where your business is today. One-time price, clearly explained — tap any feature to see what it means."
+          title="Simple pricing."
+          description="Clear packages. One-time prices."
         />
 
-        <div className="mt-10 grid items-stretch gap-[var(--card-gap)] sm:mt-12 lg:grid-cols-3 lg:mt-14">
+        <div className="mt-6 grid items-stretch gap-[var(--card-gap)] sm:mt-8 lg:grid-cols-3 lg:mt-10">
           {packages.map((pkg, i) => (
             <Reveal key={pkg.id} delay={i * 0.08} className="h-full">
               <PackageCard pkg={pkg} />

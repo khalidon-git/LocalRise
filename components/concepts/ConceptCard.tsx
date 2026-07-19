@@ -13,8 +13,12 @@ import { SmartLink } from "@/components/ui/SmartLink";
 // <a>-in-<a>; the two buttons are siblings, both reachable by keyboard.
 export function ConceptCard({ concept }: { concept: Concept }) {
   return (
-    <article className="card group flex h-full flex-col overflow-hidden p-2.5 sm:p-3">
-      <SmartLink href={`/concepts/${concept.slug}`} className="relative block overflow-hidden rounded-xl sm:rounded-2xl">
+    // No overflow-hidden on the card or the screenshot link: the phone
+    // mockup deliberately overhangs the screenshot's corner, and clipping it
+    // here was cutting it off. Rounding/clipping for the screenshot image
+    // itself lives inside ScreenshotMock, which is the actual media frame.
+    <article className="card group flex h-full flex-col p-2.5 sm:p-3">
+      <SmartLink href={`/concepts/${concept.slug}`} className="relative block">
         {/* Honest badge: these are design concepts, never client work. */}
         <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-ink/80 px-2.5 py-1 text-label font-semibold text-white backdrop-blur">
           <span className="h-1.5 w-1.5 rounded-full bg-accent-bright" />

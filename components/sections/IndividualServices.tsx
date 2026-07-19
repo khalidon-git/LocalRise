@@ -29,12 +29,9 @@ export function IndividualServices() {
   return (
     <section id="services" className="section-pad overflow-hidden">
       <div className="container-x">
-        <SectionHeading
-          title="Everything your business needs to grow online"
-          description="Every service is a clear, fixed offer — you always see the price, the delivery time and exactly what's included before you decide."
-        />
+        <SectionHeading title="Everything your business needs online." />
 
-        <div className="relative mt-10 sm:mt-12 lg:mt-14">
+        <div className="relative mt-6 sm:mt-8 lg:mt-10">
           {/* Navigation Arrow - Left */}
           <button
             type="button"
@@ -57,9 +54,12 @@ export function IndividualServices() {
                   key={s.title}
                   className="h-auto basis-[86%] shrink-0 snap-start sm:basis-[44%] lg:basis-[calc(33.333%_-_1rem)]"
                 >
-                  <article className="card-standard group flex h-full flex-col overflow-hidden p-0">
-                    {/* Visual banner — the card's visual anchor, not an icon chip */}
-                    <div className="card-media shrink-0">
+                  <article className="card-standard group flex h-full flex-col p-0">
+                    {/* Visual banner — the card's visual anchor, not an icon chip.
+                        overflow-hidden + rounding live here (the media frame),
+                        not on the outer article, so long card copy below is
+                        never at risk of being clipped by the card boundary. */}
+                    <div className="card-media shrink-0 rounded-t-2xl">
                       <ServiceVisual kind={s.visual} accent={s.accent} />
                       <span className="absolute left-3 top-3 grid h-9 w-9 place-items-center rounded-xl bg-white/95 text-ink shadow-md backdrop-blur">
                         <Icon name={s.icon as IconName} size={18} strokeWidth={1.8} />

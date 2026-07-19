@@ -29,20 +29,24 @@ export function FeaturedConcepts() {
     <section id="concepts" className="section-pad bg-bg-subtle">
       <div className="container-x">
         <SectionHeading
-          title="Built around your kind of business"
-          description="We understand what customers look for in your field — and design your online presence to bring them in. Real screenshots of real concept sites, not stock illustrations."
+          title="Built for your business."
+          description="Real concepts for different industries."
         />
 
-        <Stagger amount={0.15} className="mt-10 grid gap-6 sm:mt-12 lg:grid-cols-2 lg:gap-8 lg:mt-14">
+        <Stagger amount={0.15} className="mt-6 grid gap-6 sm:mt-8 lg:grid-cols-2 lg:gap-8 lg:mt-10">
           {featured.map((concept) => {
             const liveHref = `/concepts/${concept.slug}/live`;
             const icon = iconBySlug[concept.slug];
 
             return (
               <StaggerItem key={concept.slug}>
-                <article className="card group flex h-full flex-col overflow-hidden p-3 sm:p-4">
-                  {/* Screenshot — the visual focus, clickable to the same place as Live Preview */}
-                  <SmartLink href={liveHref} className="relative block overflow-hidden rounded-xl sm:rounded-2xl" aria-label={`Open the ${concept.name} live preview`}>
+                {/* No overflow-hidden on the card or the screenshot link: the
+                    phone mockup deliberately overhangs the screenshot's
+                    corner, and clipping it here was cutting it off. Rounding/
+                    clipping for the screenshot image itself lives inside
+                    ScreenshotMock, which is the actual media frame. */}
+                <article className="card group flex h-full flex-col p-3 sm:p-4">
+                  <SmartLink href={liveHref} className="relative block" aria-label={`Open the ${concept.name} live preview`}>
                     <div className="relative transition-transform duration-700 ease-premium group-hover:scale-[1.015]">
                       <ScreenshotMock concept={concept} />
                       <ScreenshotPhone

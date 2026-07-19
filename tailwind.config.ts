@@ -64,6 +64,10 @@ const config: Config = {
         "display-xl": ["clamp(2.75rem, 2rem + 4vw, 5rem)", { lineHeight: "1.02", letterSpacing: "-0.03em", fontWeight: "600" }],
         "display-lg": ["clamp(2.25rem, 1.75rem + 2.6vw, 3.75rem)", { lineHeight: "1.05", letterSpacing: "-0.025em", fontWeight: "600" }],
         "heading-1": ["clamp(2rem, 1.65rem + 1.8vw, 3.125rem)", { lineHeight: "1.08", letterSpacing: "-0.02em", fontWeight: "600" }],
+        // Section headings (SectionHeading component): tuned to ~30-36px on
+        // mobile, ~44-52px on desktop — smaller/tighter than heading-1 so a
+        // one-line headline fits without forcing extra vertical rhythm.
+        "heading-section": ["clamp(1.75rem, 1.4rem + 1.9vw, 3.25rem)", { lineHeight: "1.15", letterSpacing: "-0.02em", fontWeight: "600" }],
         "heading-2": ["clamp(1.625rem, 1.4rem + 1.2vw, 2.375rem)", { lineHeight: "1.12", letterSpacing: "-0.02em", fontWeight: "600" }],
         "heading-3": ["clamp(1.3rem, 1.18rem + 0.65vw, 1.75rem)", { lineHeight: "1.2", letterSpacing: "-0.015em", fontWeight: "600" }],
         "body-lg": ["clamp(1.0625rem, 1.025rem + 0.2vw, 1.125rem)", { lineHeight: "1.6", letterSpacing: "-0.01em" }],

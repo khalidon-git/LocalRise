@@ -20,15 +20,19 @@ export function SectionHeading({
   return (
     <div
       className={cx(
-        "flex flex-col gap-3 sm:gap-4",
-        align === "center" ? "mx-auto max-w-reading items-center text-center" : "max-w-reading items-start text-left",
+        "flex flex-col gap-2 sm:gap-3",
+        align === "center" ? "mx-auto items-center text-center" : "items-start text-left",
         className,
       )}
     >
       <Reveal delay={0.05}>
+        {/* No max-width (unlike the narrower reading/prose column below):
+            the heading sits in a flex column with items-center, which
+            shrink-wraps to content — a max-width here would cap that below
+            the container's real available width and force early wraps. */}
         <h2
           className={cx(
-            "text-heading-1 font-display",
+            "text-heading-section font-display",
             tone === "dark" ? "text-white" : "text-ink",
           )}
         >
@@ -39,7 +43,7 @@ export function SectionHeading({
         <Reveal delay={0.1}>
           <p
             className={cx(
-              "max-w-prose text-body-lg",
+              "max-w-prose text-body-sm sm:text-body-lg",
               tone === "dark" ? "text-ink-inverse-2" : "text-ink-2",
             )}
           >
