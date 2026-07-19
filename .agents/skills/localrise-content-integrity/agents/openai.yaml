@@ -1,0 +1,4 @@
+interface:
+  display_name: "LocalRise Content Integrity"
+  short_description: "Audit LocalRise content coupling."
+  default_prompt: "Use this skill to keep LocalRise content models synchronized and honest."

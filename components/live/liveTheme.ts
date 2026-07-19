@@ -19,3 +19,17 @@ export function themeVars(site: ConceptSite): React.CSSProperties {
     "--lv-brand-soft": t.brandSoft,
   } as React.CSSProperties;
 }
+
+const responsiveImageWidths = [480, 720, 960, 1280, 1600] as const;
+
+/**
+ * Unsplash is an approved concept-site exception; give the browser real width
+ * choices so narrow cards and phones do not download desktop-sized images.
+ */
+export function responsiveImageProps(src: string, sizes: string) {
+  const withWidth = (width: number) => src.replace(/([?&])w=\d+/, `$1w=${width}`);
+  return {
+    srcSet: responsiveImageWidths.map((width) => `${withWidth(width)} ${width}w`).join(", "),
+    sizes,
+  };
+}

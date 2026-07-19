@@ -1,0 +1,4 @@
+interface:
+  display_name: "SmartLink Navigation Guardian"
+  short_description: "Prevent raw internal anchors."
+  default_prompt: "Use this skill to protect LocalRise navigation and audio continuity."

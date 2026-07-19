@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "verify": "npm run typecheck && npm run build",
     "start": "next start"
   },
   "dependencies": {

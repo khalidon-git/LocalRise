@@ -44,7 +44,7 @@ export default function WhyUsPage() {
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
-      <section className="section-pad !pb-0 !pt-32 sm:!pt-36">
+      <section className="section-pad !pb-0 !pt-28 sm:!pt-32">
         <div className="container-x">
           <SectionHeading
             title="How we work, and why businesses stick with us"

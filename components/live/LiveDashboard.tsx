@@ -99,10 +99,10 @@ export function LiveDashboardSection({ site }: { site: ConceptSite }) {
     <section id="work" className="lv-section">
       <div className="lv-container">
         <Reveal>
-          <h2 className={cx("text-[clamp(1.75rem,3.4vw,2.75rem)] font-semibold text-[var(--lv-ink)]", site.theme.headFont, site.theme.tracking)}>
+          <h2 className={cx("text-heading-2 font-semibold text-[var(--lv-ink)]", site.theme.headFont, site.theme.tracking)}>
             {d.heading}
           </h2>
-          <p className="mt-2 max-w-lg text-[15px] text-[var(--lv-ink-muted)]">{d.subheading}</p>
+          <p className="mt-2 max-w-lg text-body-sm text-[var(--lv-ink-muted)]">{d.subheading}</p>
         </Reveal>
         <Reveal delay={0.1} className="mt-10">
           <LiveDashboardPanel site={site} />

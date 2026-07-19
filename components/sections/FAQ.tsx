@@ -16,7 +16,7 @@ export function FAQ() {
   return (
     <section id="faq" className="section-pad">
       <div className="container-x">
-        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
           {/* Left intro */}
           <div className="lg:sticky lg:top-28 lg:self-start">
             <Reveal delay={0.05}>
@@ -45,12 +45,12 @@ export function FAQ() {
               </div>
             </Reveal>
             <Reveal delay={0.2}>
-              <HelpScene className="mt-10 hidden h-auto w-full max-w-[240px] lg:block" />
+              <HelpScene className="mt-8 hidden h-auto w-full max-w-56 lg:block" />
             </Reveal>
           </div>
 
           {/* Accordion */}
-          <div className="divide-y divide-line rounded-2xl border border-line bg-white px-5 shadow-xs sm:px-7">
+          <div className="divide-y divide-line rounded-2xl border border-line bg-white px-4 shadow-xs sm:px-6">
             {faqs.map((f, i) => {
               const isOpen = open === i;
               return (
@@ -59,9 +59,9 @@ export function FAQ() {
                     type="button"
                     onClick={() => setOpen(isOpen ? null : i)}
                     aria-expanded={isOpen}
-                    className="flex w-full items-center gap-4 py-5 text-left"
+                    className="flex min-h-14 w-full items-center gap-3 py-4 text-left sm:gap-4 sm:py-5"
                   >
-                    <span className={cx("flex-1 font-display text-lg font-medium tracking-tight transition-colors", isOpen ? "text-accent" : "text-ink")}>
+                    <span className={cx("flex-1 font-display text-base font-medium tracking-tight transition-colors sm:text-lg", isOpen ? "text-accent" : "text-ink")}>
                       {f.q}
                     </span>
                     <span
@@ -82,7 +82,7 @@ export function FAQ() {
                         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden"
                       >
-                        <p className="max-w-xl pb-5 pr-12 text-body text-ink-2">{f.a}</p>
+                        <p className="max-w-xl pb-5 pr-2 text-body text-ink-2 sm:pr-12">{f.a}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>

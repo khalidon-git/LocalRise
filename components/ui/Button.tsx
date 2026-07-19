@@ -7,7 +7,7 @@ type Variant = "primary" | "secondary" | "ghost" | "dark" | "whatsapp";
 type Size = "md" | "lg";
 
 const base =
-  "group relative inline-flex select-none items-center justify-center gap-2 rounded-full font-medium tracking-tight transition-all duration-300 ease-premium focus-visible:outline-none disabled:opacity-60";
+  "group relative inline-flex min-w-0 select-none items-center justify-center gap-2 rounded-full font-medium tracking-tight transition-all duration-300 ease-premium disabled:opacity-60";
 
 const variants: Record<Variant, string> = {
   primary:
@@ -21,8 +21,8 @@ const variants: Record<Variant, string> = {
 };
 
 const sizes: Record<Size, string> = {
-  md: "h-11 px-5 text-body-sm",
-  lg: "h-[54px] px-7 text-body",
+  md: "h-12 px-5 text-body-sm",
+  lg: "h-[var(--control-lg)] px-6 text-body sm:px-7",
 };
 
 type CommonProps = {

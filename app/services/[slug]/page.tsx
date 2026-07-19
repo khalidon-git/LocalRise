@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { services, serviceDetails, packages, faqs, brand } from "@/lib/content";
 import { Icon, type IconName } from "@/components/ui/Icon";
@@ -85,12 +84,12 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
       {/* Hero */}
       <section className="relative overflow-hidden mesh-hero">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-full dotgrid opacity-[0.5] [mask-image:radial-gradient(70%_50%_at_50%_0%,#000,transparent)]" />
-        <div className="container-x relative grid items-center gap-12 pb-16 pt-32 sm:pt-36 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pb-24 lg:pt-40">
+        <div className="container-x relative grid items-center gap-10 pb-14 pt-28 sm:pb-16 sm:pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:pb-20 lg:pt-36">
           <div className="flex flex-col items-start">
             <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-body-sm text-ink-3">
-              <Link href="/" className="transition-colors hover:text-ink">Home</Link>
+              <SmartLink href="/" className="transition-colors hover:text-ink">Home</SmartLink>
               <Icon name="arrow-right" size={14} />
-              <Link href="/#services" className="transition-colors hover:text-ink">Services</Link>
+              <SmartLink href="/#services" className="transition-colors hover:text-ink">Services</SmartLink>
               <Icon name="arrow-right" size={14} />
               <span className="text-ink-2">{service.title}</span>
             </nav>
@@ -103,7 +102,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
             <h1 className="mt-5 text-display-lg font-display text-ink">{detail.headline}</h1>
             <p className="mt-5 max-w-xl text-body-lg text-ink-2">{detail.sub}</p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
               <Magnetic>
                 <Button href="/contact" size="lg" arrow>Get Free Consultation</Button>
               </Magnetic>
@@ -138,10 +137,10 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
             title={`What ${service.title} does for you`}
             description={detail.who}
           />
-          <Stagger className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <Stagger className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
             {detail.benefits.map((b) => (
               <StaggerItem key={b.title}>
-                <div className="card card-hover h-full p-6 lg:p-7">
+                <div className="card card-hover h-full p-5 sm:p-6">
                   <span className="grid h-12 w-12 place-items-center rounded-2xl border border-line bg-white text-accent shadow-xs">
                     <Icon name={b.icon} size={22} strokeWidth={1.7} />
                   </span>
@@ -156,7 +155,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
 
       {/* Included + Outcomes */}
       <section className="section-pad bg-bg-subtle">
-        <div className="container-x grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="container-x grid gap-10 lg:grid-cols-2 lg:gap-14">
           <Reveal>
             <h2 className="font-display text-heading-2 font-semibold text-ink">What&apos;s included</h2>
             <ul className="mt-6 flex flex-col gap-3">
@@ -194,7 +193,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
               title="Often part of a package"
               description="Bundle it and save — here's the package this service fits into."
             />
-            <div className="mx-auto mt-14 max-w-md">
+            <div className="mx-auto mt-10 max-w-md sm:mt-12">
               <PackageCard pkg={pkg} />
             </div>
             <Reveal delay={0.1} className="mt-8 text-center">
@@ -212,7 +211,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
         <section className="section-pad bg-bg-subtle">
           <div className="container-x max-w-3xl">
             <SectionHeading title="Good questions" />
-            <div className="mt-12">
+            <div className="mt-8 sm:mt-10">
               <ServiceFAQ items={serviceFaqs} />
             </div>
           </div>
@@ -222,7 +221,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
       {/* Closing CTA */}
       <section className="section-pad">
         <div className="container-x">
-          <div className="relative overflow-hidden rounded-3xl bg-bg-inverse p-10 text-center sm:p-14">
+          <div className="relative overflow-hidden rounded-2xl bg-bg-inverse p-6 text-center sm:rounded-3xl sm:p-10 lg:p-12">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-40 [background:radial-gradient(50%_100%_at_50%_0%,rgba(47,91,255,0.25),transparent_70%)]" />
             <h2 className="relative mx-auto max-w-xl font-display text-heading-2 font-semibold text-white">
               Ready to get started with {service.title}?

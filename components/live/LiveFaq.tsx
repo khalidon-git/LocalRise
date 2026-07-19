@@ -14,7 +14,7 @@ export function LiveFaq({ site }: { site: ConceptSite }) {
     <section id="faq" className="lv-section">
       <div className="lv-container max-w-2xl">
         <Reveal>
-          <h2 className={cx("text-[clamp(1.75rem,3.4vw,2.75rem)] font-semibold text-[var(--lv-ink)]", theme.headFont, theme.tracking)}>
+          <h2 className={cx("text-heading-2 font-semibold text-[var(--lv-ink)]", theme.headFont, theme.tracking)}>
             {faq.heading}
           </h2>
         </Reveal>
@@ -22,14 +22,14 @@ export function LiveFaq({ site }: { site: ConceptSite }) {
           {faq.items.map((item, i) => {
             const open = openIndex === i;
             return (
-              <div key={item.q} className="border-b py-4" style={{ borderColor: "var(--lv-line)" }}>
+              <div key={item.q} className="border-b py-5" style={{ borderColor: "var(--lv-line)" }}>
                 <button
                   type="button"
                   onClick={() => setOpenIndex(open ? null : i)}
                   aria-expanded={open}
-                  className="flex w-full items-center justify-between gap-4 text-left"
+                  className="flex min-h-11 w-full items-center justify-between gap-4 text-left"
                 >
-                  <span className="text-[15px] font-medium text-[var(--lv-ink)]">{item.q}</span>
+                  <span className="text-base font-medium text-[var(--lv-ink)]">{item.q}</span>
                   <Icon
                     name="plus"
                     size={16}
@@ -38,7 +38,7 @@ export function LiveFaq({ site }: { site: ConceptSite }) {
                     style={{ color: "var(--lv-brand)" }}
                   />
                 </button>
-                {open && <p className="mt-3 text-[14px] leading-relaxed text-[var(--lv-ink-muted)]">{item.a}</p>}
+                {open && <p className="mt-3 text-body-sm leading-relaxed text-[var(--lv-ink-muted)]">{item.a}</p>}
               </div>
             );
           })}

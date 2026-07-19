@@ -39,9 +39,9 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden bg-bg-inverse text-white">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-64 [background:radial-gradient(50%_100%_at_70%_0%,rgba(47,91,255,0.18),transparent_70%)]" />
-      <div className="container-x relative pt-20">
+      <div className="container-x relative pt-[var(--section-standard)]">
         {/* Final CTA */}
-        <div className="flex flex-col items-start justify-between gap-8 rounded-3xl border border-white/10 bg-white/[0.03] p-8 sm:p-10 lg:flex-row lg:items-center lg:p-12">
+        <div className="flex flex-col items-start justify-between gap-7 rounded-2xl border border-white/10 bg-white/[0.03] p-[var(--card-pad)] sm:rounded-3xl sm:p-8 lg:flex-row lg:items-center lg:p-10">
           <div>
             <h2 className="max-w-xl font-display text-heading-2 font-semibold text-white">
               Ready to bring more customers to your business?
@@ -50,14 +50,15 @@ export function Footer() {
               Book a free consultation today. No pressure, no jargon — just a clear next step.
             </p>
           </div>
-          <GrowScene className="hidden h-auto w-[230px] shrink-0 xl:block" />
-          <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-            <Button href="/contact" size="lg" arrow>Get Free Consultation</Button>
+          <GrowScene className="hidden h-auto w-52 shrink-0 xl:block" />
+          <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row">
+            <Button href="/contact" size="lg" arrow className="w-full sm:w-auto">Get Free Consultation</Button>
             <ConversationButton
               start={{ channel: "whatsapp", type: "consultation", meta: { section: "footer", button: "whatsapp-us" } }}
               variant="whatsapp"
               size="lg"
               icon="whatsapp"
+              className="w-full sm:w-auto"
             >
               WhatsApp us
             </ConversationButton>
@@ -65,7 +66,7 @@ export function Footer() {
         </div>
 
         {/* Link columns */}
-        <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.2fr]">
+        <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:mt-16 lg:grid-cols-[minmax(14rem,1.6fr)_1fr_1fr_minmax(13rem,1.2fr)]">
           <div>
             <Logo tone="dark" />
             <p className="mt-4 max-w-xs text-body-sm text-ink-inverse-2">
@@ -79,7 +80,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-ink-inverse-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:text-white"
+                  className="grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-ink-inverse-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:text-white"
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d={s.path} />
@@ -149,14 +150,14 @@ export function Footer() {
         </div>
 
         {/* Oversized wordmark */}
-        <div className="mt-16 select-none border-t border-white/10 pt-8">
-          <p className="bg-gradient-to-b from-white/[0.08] to-white/[0.02] bg-clip-text text-center font-display text-[16vw] font-semibold leading-none tracking-tight text-transparent lg:text-[13rem]">
+        <div className="mt-12 select-none border-t border-white/10 pt-7 sm:mt-16 sm:pt-8">
+          <p className="bg-gradient-to-b from-white/[0.08] to-white/[0.02] bg-clip-text text-center font-display text-[clamp(4rem,16vw,12rem)] font-semibold leading-none tracking-tight text-transparent">
             LocalRise
           </p>
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-7 text-[13px] text-ink-inverse-3 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 pb-[max(1.75rem,env(safe-area-inset-bottom))] pt-7 text-label text-ink-inverse-3 sm:flex-row">
           <p>© {year} {brand.name}. All rights reserved.</p>
           <p className="inline-flex items-center gap-1.5">
             Made with <Icon name="heart" size={13} className="text-accent-bright" /> for local businesses in India

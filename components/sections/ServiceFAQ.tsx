@@ -11,7 +11,7 @@ export function ServiceFAQ({ items }: { items: { q: string; a: string }[] }) {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <div className="divide-y divide-line rounded-2xl border border-line bg-white px-5 shadow-xs sm:px-7">
+    <div className="divide-y divide-line rounded-2xl border border-line bg-white px-4 shadow-xs sm:px-6">
       {items.map((f, i) => {
         const isOpen = open === i;
         return (
@@ -20,9 +20,9 @@ export function ServiceFAQ({ items }: { items: { q: string; a: string }[] }) {
               type="button"
               onClick={() => setOpen(isOpen ? null : i)}
               aria-expanded={isOpen}
-              className="flex w-full items-center gap-4 py-5 text-left"
+              className="flex min-h-14 w-full items-center gap-3 py-4 text-left sm:gap-4 sm:py-5"
             >
-              <span className={cx("flex-1 font-display text-lg font-medium tracking-tight transition-colors", isOpen ? "text-accent" : "text-ink")}>
+              <span className={cx("flex-1 font-display text-base font-medium tracking-tight transition-colors sm:text-lg", isOpen ? "text-accent" : "text-ink")}>
                 {f.q}
               </span>
               <span
@@ -43,7 +43,7 @@ export function ServiceFAQ({ items }: { items: { q: string; a: string }[] }) {
                   transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   className="overflow-hidden"
                 >
-                  <p className="max-w-xl pb-5 pr-12 text-body text-ink-2">{f.a}</p>
+                  <p className="max-w-xl pb-5 pr-2 text-body text-ink-2 sm:pr-12">{f.a}</p>
                 </motion.div>
               )}
             </AnimatePresence>

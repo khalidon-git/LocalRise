@@ -32,7 +32,7 @@ export function ContactForm() {
     "w-full rounded-xl border border-line-2 bg-white px-4 py-3 text-body-sm text-ink placeholder:text-ink-4 transition-colors focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10";
 
   return (
-    <div className="p-8 sm:p-10 lg:p-12">
+    <div className="p-5 sm:p-8 lg:p-10">
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="flex flex-col gap-1.5">
@@ -68,7 +68,7 @@ export function ContactForm() {
         <Button type="submit" size="lg" icon="whatsapp" className="mt-1 w-full">
           Get my free consultation
         </Button>
-        <p className="text-center text-[12px] text-ink-3">
+        <p className="text-center text-label text-ink-3">
           Opens WhatsApp with your details ready to send. We&apos;ll only use them to help your business.
         </p>
       </form>

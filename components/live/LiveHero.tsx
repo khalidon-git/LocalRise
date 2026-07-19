@@ -5,6 +5,7 @@ import type { ConceptSite } from "@/lib/content";
 import { LiveButton } from "@/components/live/LiveButton";
 import { LiveDashboardPanel } from "@/components/live/LiveDashboard";
 import { cx } from "@/lib/utils";
+import { responsiveImageProps } from "@/components/live/liveTheme";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -27,7 +28,7 @@ function Kicker({ children }: { children: React.ReactNode }) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease }}
-      className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[var(--lv-brand)]"
+      className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--lv-brand)]"
     >
       {children}
     </motion.p>
@@ -37,7 +38,7 @@ function Kicker({ children }: { children: React.ReactNode }) {
 function FullBleedHero({ site }: { site: ConceptSite }) {
   const { hero, theme } = site;
   return (
-    <section id="top" className="relative flex min-h-[92vh] items-end overflow-hidden">
+    <section id="top" className="relative flex min-h-[min(52rem,100svh)] items-end overflow-hidden">
       {hero.image && (
         <div className="absolute inset-0">
           <img
@@ -47,6 +48,7 @@ function FullBleedHero({ site }: { site: ConceptSite }) {
             height={1000}
             fetchPriority="high"
             loading="eager"
+            {...responsiveImageProps(hero.image.src, "100vw")}
             className="lv-kenburns h-full w-full object-cover"
           />
           {/* Always a dark scrim, regardless of theme.bg — the headline below is
@@ -59,7 +61,7 @@ function FullBleedHero({ site }: { site: ConceptSite }) {
           />
         </div>
       )}
-      <div className="lv-container relative pb-16 pt-40 sm:pb-24">
+      <div className="lv-container relative pb-14 pt-36 sm:pb-20 sm:pt-40 lg:pb-24">
         <Kicker>{hero.kicker}</Kicker>
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
@@ -73,7 +75,7 @@ function FullBleedHero({ site }: { site: ConceptSite }) {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease, delay: 0.2 }}
-          className="mt-5 max-w-lg text-[17px] leading-relaxed text-white/85"
+          className="mt-5 max-w-lg text-[clamp(1rem,0.96rem+0.2vw,1.125rem)] leading-relaxed text-white/85"
         >
           {hero.sub}
         </motion.p>
@@ -96,8 +98,8 @@ function FullBleedHero({ site }: { site: ConceptSite }) {
 function SplitHero({ site }: { site: ConceptSite }) {
   const { hero, theme } = site;
   return (
-    <section id="top" className="grid min-h-[90vh] pt-20 lg:grid-cols-2">
-      <div className="flex flex-col justify-center px-6 py-16 sm:px-10 lg:px-16">
+    <section id="top" className="grid pt-20 lg:min-h-[min(52rem,100svh)] lg:grid-cols-2">
+      <div className="flex min-w-0 flex-col justify-center px-5 py-14 sm:px-8 sm:py-16 lg:px-12 xl:px-16">
         <Kicker>{hero.kicker}</Kicker>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -107,15 +109,15 @@ function SplitHero({ site }: { site: ConceptSite }) {
         >
           {hero.title}
         </motion.h1>
-        <p className="mt-5 max-w-md text-[16px] leading-relaxed text-[var(--lv-ink-muted)]">{hero.sub}</p>
+        <p className="mt-5 max-w-md text-base leading-relaxed text-[var(--lv-ink-muted)]">{hero.sub}</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <LiveButton href="#contact" radius={theme.radius} arrow>{hero.cta}</LiveButton>
           <LiveButton href="#work" radius={theme.radius} variant="outline">{hero.secondaryCta}</LiveButton>
         </div>
       </div>
       {hero.image && (
-        <div className="relative min-h-[50vh] lg:min-h-0">
-          <img src={hero.image.src} alt={hero.image.alt} width={1200} height={1400} fetchPriority="high" loading="eager" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="relative min-w-0 aspect-[4/3] lg:aspect-auto lg:min-h-0">
+          <img src={hero.image.src} alt={hero.image.alt} width={1200} height={1400} fetchPriority="high" loading="eager" {...responsiveImageProps(hero.image.src, "(min-width: 1024px) 50vw, 100vw")} className="absolute inset-0 h-full w-full object-cover" />
         </div>
       )}
     </section>
@@ -125,7 +127,7 @@ function SplitHero({ site }: { site: ConceptSite }) {
 function EditorialHero({ site }: { site: ConceptSite }) {
   const { hero, theme } = site;
   return (
-    <section id="top" className="pt-32 sm:pt-40">
+    <section id="top" className="pt-28 sm:pt-36 lg:pt-40">
       <div className="lv-container">
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-6">
           <div>
@@ -140,7 +142,7 @@ function EditorialHero({ site }: { site: ConceptSite }) {
             </motion.h1>
           </div>
           <div className="flex flex-col gap-5 lg:pb-2">
-            <p className="text-[16px] leading-relaxed text-[var(--lv-ink-muted)]">{hero.sub}</p>
+            <p className="text-base leading-relaxed text-[var(--lv-ink-muted)]">{hero.sub}</p>
             <div className="flex flex-wrap gap-3">
               <LiveButton href="#contact" radius={theme.radius} arrow>{hero.cta}</LiveButton>
               <LiveButton href="#work" radius={theme.radius} variant="outline">{hero.secondaryCta}</LiveButton>
@@ -154,7 +156,7 @@ function EditorialHero({ site }: { site: ConceptSite }) {
             transition={{ duration: 0.8, ease, delay: 0.15 }}
             className={cx("mt-10 aspect-[16/8] w-full overflow-hidden", theme.radius)}
           >
-            <img src={hero.image.src} alt={hero.image.alt} width={1400} height={700} fetchPriority="high" loading="eager" className="h-full w-full object-cover" />
+            <img src={hero.image.src} alt={hero.image.alt} width={1400} height={700} fetchPriority="high" loading="eager" {...responsiveImageProps(hero.image.src, "(min-width: 1280px) 1200px, 100vw")} className="h-full w-full object-cover" />
           </motion.div>
         )}
       </div>
@@ -165,7 +167,7 @@ function EditorialHero({ site }: { site: ConceptSite }) {
 function CenteredHero({ site }: { site: ConceptSite }) {
   const { hero, theme } = site;
   return (
-    <section id="top" className="pt-36 sm:pt-44">
+    <section id="top" className="pt-28 sm:pt-36 lg:pt-40">
       <div className="lv-container text-center">
         <Kicker>{hero.kicker}</Kicker>
         <motion.h1
@@ -176,7 +178,7 @@ function CenteredHero({ site }: { site: ConceptSite }) {
         >
           {hero.title}
         </motion.h1>
-        <p className="mx-auto mt-5 max-w-xl text-[16px] leading-relaxed text-[var(--lv-ink-muted)]">{hero.sub}</p>
+        <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-[var(--lv-ink-muted)]">{hero.sub}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <LiveButton href="#contact" radius={theme.radius} arrow>{hero.cta}</LiveButton>
           <LiveButton href="#work" radius={theme.radius} variant="outline">{hero.secondaryCta}</LiveButton>
@@ -187,10 +189,10 @@ function CenteredHero({ site }: { site: ConceptSite }) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease, delay: 0.15 }}
-          className="lv-container mt-14"
+          className="lv-container mt-10 sm:mt-14"
         >
           <div className={cx("aspect-[16/7] w-full overflow-hidden border border-[var(--lv-line)]", theme.radius)}>
-            <img src={hero.image.src} alt={hero.image.alt} width={1600} height={700} fetchPriority="high" loading="eager" className="h-full w-full object-cover" />
+            <img src={hero.image.src} alt={hero.image.alt} width={1600} height={700} fetchPriority="high" loading="eager" {...responsiveImageProps(hero.image.src, "(min-width: 1280px) 1200px, 100vw")} className="h-full w-full object-cover" />
           </div>
         </motion.div>
       )}
@@ -201,10 +203,10 @@ function CenteredHero({ site }: { site: ConceptSite }) {
 function ProductHero({ site }: { site: ConceptSite }) {
   const { hero, theme } = site;
   return (
-    <section id="top" className="relative overflow-hidden pt-36 sm:pt-44">
+    <section id="top" className="relative overflow-hidden pt-28 sm:pt-36 lg:pt-40">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[600px]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[clamp(20rem,50vw,37.5rem)]"
         style={{ background: `radial-gradient(60% 60% at 50% 0%, ${theme.brandSoft} 0%, transparent 70%)` }}
       />
       <div className="lv-container relative text-center">
@@ -217,7 +219,7 @@ function ProductHero({ site }: { site: ConceptSite }) {
         >
           {hero.title}
         </motion.h1>
-        <p className="mx-auto mt-5 max-w-xl text-[16px] leading-relaxed text-[var(--lv-ink-muted)]">{hero.sub}</p>
+        <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-[var(--lv-ink-muted)]">{hero.sub}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <LiveButton href="#contact" radius={theme.radius} arrow>{hero.cta}</LiveButton>
           <LiveButton href="#work" radius={theme.radius} variant="outline">{hero.secondaryCta}</LiveButton>
@@ -228,7 +230,7 @@ function ProductHero({ site }: { site: ConceptSite }) {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease, delay: 0.2 }}
-          className="lv-container relative mt-14"
+          className="lv-container relative mt-10 sm:mt-14"
         >
           <LiveDashboardPanel site={site} />
         </motion.div>

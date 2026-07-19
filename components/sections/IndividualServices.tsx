@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useCarousel } from "@/hooks/useCarousel";
 import { individualServices } from "@/lib/content";
 import { Icon, type IconName } from "@/components/ui/Icon";
@@ -17,8 +18,13 @@ import { useCart } from "@/providers/CartProvider";
 // either of those. See docs/architecture.md.
 export function IndividualServices() {
   const { addToCart } = useCart();
+  const indicatorRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const { containerRef, activeIndex, canScrollLeft, canScrollRight, scrollByCard, scrollToIndex } =
     useCarousel<HTMLDivElement>();
+
+  useEffect(() => {
+    indicatorRefs.current[activeIndex]?.scrollIntoView({ block: "nearest", inline: "center" });
+  }, [activeIndex]);
 
   return (
     <section id="services" className="section-pad overflow-hidden">
@@ -28,14 +34,14 @@ export function IndividualServices() {
           description="Every service is a clear, fixed offer — you always see the price, the delivery time and exactly what's included before you decide."
         />
 
-        <div className="relative mt-14">
+        <div className="relative mt-10 sm:mt-12 lg:mt-14">
           {/* Navigation Arrow - Left */}
           <button
             type="button"
             onClick={() => scrollByCard("left")}
             disabled={!canScrollLeft}
             aria-label="Previous services"
-            className="absolute -left-6 top-[40%] z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-line bg-white shadow-md transition-all hover:bg-bg-subtle disabled:pointer-events-none disabled:opacity-0 lg:flex h-12 w-12 text-ink active:scale-95"
+            className="absolute -left-5 top-[40%] z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-white text-ink shadow-md transition-all hover:bg-bg-subtle active:scale-95 disabled:pointer-events-none disabled:opacity-0 lg:flex"
           >
             <Icon name="arrow-right" size={20} className="rotate-180 text-ink-2" />
           </button>
@@ -44,23 +50,23 @@ export function IndividualServices() {
           <Stagger className="w-full">
             <div
               ref={containerRef}
-              className="no-scrollbar flex gap-3 md:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 px-1"
+              className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-1 pb-6 sm:gap-5 lg:gap-6"
             >
               {individualServices.map((s) => (
                 <StaggerItem
                   key={s.title}
-                  className="w-[calc((100%-12px)/1.15)] md:w-[calc((100%-24px)/2.25)] lg:w-[calc((100%-48px)/3)] shrink-0 snap-start h-auto"
+                  className="h-auto basis-[86%] shrink-0 snap-start sm:basis-[44%] lg:basis-[calc(33.333%_-_1rem)]"
                 >
-                  <article className="card card-hover group flex h-full flex-col overflow-hidden p-0">
+                  <article className="card-standard group flex h-full flex-col overflow-hidden p-0">
                     {/* Visual banner — the card's visual anchor, not an icon chip */}
-                    <div className="relative aspect-[16/10] w-full shrink-0">
+                    <div className="card-media shrink-0">
                       <ServiceVisual kind={s.visual} accent={s.accent} />
                       <span className="absolute left-3 top-3 grid h-9 w-9 place-items-center rounded-xl bg-white/95 text-ink shadow-md backdrop-blur">
                         <Icon name={s.icon as IconName} size={18} strokeWidth={1.8} />
                       </span>
                     </div>
 
-                    <div className="flex flex-1 flex-col p-5">
+                    <div className="flex flex-1 flex-col p-[var(--card-pad)]">
                       <div className="flex items-start justify-between gap-3">
                         <h3 className="font-display text-lg font-semibold tracking-tight text-ink">
                           {s.title}
@@ -68,11 +74,11 @@ export function IndividualServices() {
                         <div className="shrink-0 text-right">
                           <div className="font-display text-lg font-semibold text-ink">
                             {s.priceNote === "starting" && (
-                              <span className="mr-1 text-[12px] font-normal text-ink-3">from</span>
+                              <span className="mr-1 text-label font-normal text-ink-3">from</span>
                             )}
                             {formatINR(s.price)}
                           </div>
-                          <span className="mt-1 inline-flex items-center gap-1 text-[12px] text-ink-3">
+                          <span className="mt-1 inline-flex items-center gap-1 text-label text-ink-3">
                             <Icon name="clock" size={12} /> {s.delivery}
                           </span>
                         </div>
@@ -117,24 +123,27 @@ export function IndividualServices() {
             onClick={() => scrollByCard("right")}
             disabled={!canScrollRight}
             aria-label="Next services"
-            className="absolute -right-6 top-[40%] z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-line bg-white shadow-md transition-all hover:bg-bg-subtle disabled:pointer-events-none disabled:opacity-0 lg:flex h-12 w-12 text-ink active:scale-95"
+            className="absolute -right-5 top-[40%] z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-white text-ink shadow-md transition-all hover:bg-bg-subtle active:scale-95 disabled:pointer-events-none disabled:opacity-0 lg:flex"
           >
             <Icon name="arrow-right" size={20} className="text-ink-2" />
           </button>
         </div>
 
         {/* Carousel Dots Indicator */}
-        <div className="mt-8 flex justify-center items-center gap-2">
+        <div className="no-scrollbar mt-5 flex max-w-full items-center justify-start gap-2 overflow-x-auto px-1 sm:mt-6 sm:justify-center">
           {individualServices.map((_, index) => (
             <button
               key={index}
+              ref={(node) => {
+                indicatorRefs.current[index] = node;
+              }}
               type="button"
               onClick={() => scrollToIndex(index)}
               aria-label={`Go to service ${index + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 ${
+              className={`grid min-h-11 min-w-11 shrink-0 place-items-center rounded-full before:block before:h-2 before:w-8 before:origin-center before:rounded-full before:transition-[transform,background-color] before:duration-300 ${
                 activeIndex === index
-                  ? "w-8 bg-accent"
-                  : "w-2 bg-line-2 hover:bg-ink-3"
+                  ? "before:scale-x-100 before:bg-accent"
+                  : "before:scale-x-25 before:bg-line-2 hover:before:bg-ink-3"
               }`}
             />
           ))}

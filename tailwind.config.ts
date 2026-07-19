@@ -15,7 +15,7 @@ const config: Config = {
         lg: "2rem",
       },
       screens: {
-        "2xl": "1200px",
+        "2xl": "1280px",
       },
     },
     extend: {
@@ -30,11 +30,11 @@ const config: Config = {
         ink: {
           DEFAULT: "#0A0A0C",
           2: "#4B4F57",
-          3: "#878C95",
+          3: "#6B717B",
           4: "#A9AEB6",
           inverse: "#FFFFFF",
           "inverse-2": "#A6ABB5",
-          "inverse-3": "#6A6F79",
+          "inverse-3": "#8B909A",
         },
         line: {
           DEFAULT: "#ECEDF1",
@@ -61,12 +61,12 @@ const config: Config = {
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
       },
       fontSize: {
-        "display-xl": ["clamp(2.75rem, 6.2vw, 5rem)", { lineHeight: "1.02", letterSpacing: "-0.03em", fontWeight: "600" }],
-        "display-lg": ["clamp(2.25rem, 4.8vw, 3.75rem)", { lineHeight: "1.05", letterSpacing: "-0.025em", fontWeight: "600" }],
-        "heading-1": ["clamp(2rem, 3.8vw, 3rem)", { lineHeight: "1.08", letterSpacing: "-0.02em", fontWeight: "600" }],
-        "heading-2": ["clamp(1.65rem, 2.8vw, 2.35rem)", { lineHeight: "1.12", letterSpacing: "-0.02em", fontWeight: "600" }],
-        "heading-3": ["clamp(1.35rem, 2vw, 1.75rem)", { lineHeight: "1.2", letterSpacing: "-0.015em", fontWeight: "600" }],
-        "body-lg": ["1.125rem", { lineHeight: "1.6", letterSpacing: "-0.01em" }],
+        "display-xl": ["clamp(2.75rem, 2rem + 4vw, 5rem)", { lineHeight: "1.02", letterSpacing: "-0.03em", fontWeight: "600" }],
+        "display-lg": ["clamp(2.25rem, 1.75rem + 2.6vw, 3.75rem)", { lineHeight: "1.05", letterSpacing: "-0.025em", fontWeight: "600" }],
+        "heading-1": ["clamp(2rem, 1.65rem + 1.8vw, 3.125rem)", { lineHeight: "1.08", letterSpacing: "-0.02em", fontWeight: "600" }],
+        "heading-2": ["clamp(1.625rem, 1.4rem + 1.2vw, 2.375rem)", { lineHeight: "1.12", letterSpacing: "-0.02em", fontWeight: "600" }],
+        "heading-3": ["clamp(1.3rem, 1.18rem + 0.65vw, 1.75rem)", { lineHeight: "1.2", letterSpacing: "-0.015em", fontWeight: "600" }],
+        "body-lg": ["clamp(1.0625rem, 1.025rem + 0.2vw, 1.125rem)", { lineHeight: "1.6", letterSpacing: "-0.01em" }],
         "body": ["1rem", { lineHeight: "1.6" }],
         "body-sm": ["0.9375rem", { lineHeight: "1.55" }],
         "label": ["0.8125rem", { lineHeight: "1.4", letterSpacing: "0.02em" }],
@@ -91,8 +91,12 @@ const config: Config = {
         "inner-line": "inset 0 0 0 1px rgba(255,255,255,0.08)",
       },
       maxWidth: {
-        content: "1200px",
+        content: "1280px",
         prose: "42rem",
+        reading: "68ch",
+        "card-sm": "20rem",
+        "card-md": "25rem",
+        media: "40rem",
       },
       spacing: {
         18: "4.5rem",

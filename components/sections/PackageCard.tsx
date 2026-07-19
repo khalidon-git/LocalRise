@@ -15,10 +15,10 @@ export function PackageCard({ pkg }: { pkg: Package }) {
   return (
     <div
       className={cx(
-        "relative flex h-full flex-col rounded-2xl border p-7 transition-all duration-500 ease-premium",
+        "card-package relative flex h-full flex-col transition-all duration-500 ease-premium",
         best
-          ? "border-accent/30 bg-white shadow-xl ring-1 ring-accent/20 lg:-translate-y-4"
-          : "card card-hover",
+          ? "border-accent/30 bg-white shadow-xl ring-1 ring-accent/20 lg:-translate-y-3"
+          : "card-hover",
       )}
     >
       {best && (
@@ -32,7 +32,7 @@ export function PackageCard({ pkg }: { pkg: Package }) {
 
       <div className="flex items-center justify-between">
         <h3 className="font-display text-xl font-semibold text-ink">{pkg.name}</h3>
-        <span className="chip !py-1 text-[12px]">
+        <span className="chip !py-1 text-label">
           <Icon name="clock" size={13} className="text-accent" />
           {pkg.delivery.replace("Ready in ", "")}
         </span>
@@ -40,7 +40,7 @@ export function PackageCard({ pkg }: { pkg: Package }) {
       <p className="mt-1.5 text-body-sm text-ink-2">{pkg.tagline}</p>
 
       <div className="mt-6 flex items-end gap-1.5">
-        <span className={cx("font-display text-4xl font-semibold tracking-tight", best ? "text-accent" : "text-ink")}>
+        <span className={cx("font-display text-3xl font-semibold tracking-tight sm:text-4xl", best ? "text-accent" : "text-ink")}>
           {formatINR(pkg.price)}
         </span>
         <span className="mb-1 text-body-sm text-ink-3">{pkg.priceNote}</span>
@@ -112,7 +112,7 @@ export function PackageCard({ pkg }: { pkg: Package }) {
                     transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                     className="overflow-hidden"
                   >
-                    <p className="px-1.5 pb-2 pl-9 text-[13px] leading-relaxed text-ink-2">{f.hint}</p>
+                    <p className="px-1.5 pb-2 pl-9 text-label leading-relaxed text-ink-2">{f.hint}</p>
                   </motion.div>
                 )}
               </AnimatePresence>

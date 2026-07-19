@@ -1,0 +1,4 @@
+interface:
+  display_name: "Responsive Sizing System QA"
+  short_description: "Audit and standardize responsive UI sizing"
+  default_prompt: "Use $responsive-sizing-system-qa to audit and standardize this site across all target viewports."

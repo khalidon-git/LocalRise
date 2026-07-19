@@ -9,20 +9,20 @@ import { cx } from "@/lib/utils";
 // public/services/ — see PHOTO_BY_KIND. "shop" and "reviews" have no source
 // photo yet, so they keep a code-rendered illustrative mockup rather than
 // showing nothing.
-const PHOTO_BY_KIND: Partial<Record<ServiceVisualKind, { src: string; alt: string }>> = {
-  maps: { src: "/services/google.jpg", alt: "Google Business Profile setup" },
-  chat: { src: "/services/whatsapp.jpg", alt: "WhatsApp Business setup" },
-  brand: { src: "/services/logo.jpg", alt: "Logo design" },
-  brandkit: { src: "/services/brandkit.jpg", alt: "Business branding kit" },
-  automation: { src: "/services/automation.jpg", alt: "Business automation" },
-  marketplace: { src: "/services/marketplace.jpg", alt: "Marketplace registration" },
+const PHOTO_BY_KIND: Partial<Record<ServiceVisualKind, { src: string; alt: string; width: number; height: number }>> = {
+  maps: { src: "/services/google.jpg", alt: "Google Business Profile setup", width: 900, height: 673 },
+  chat: { src: "/services/whatsapp.jpg", alt: "WhatsApp Business setup", width: 900, height: 506 },
+  brand: { src: "/services/logo.jpg", alt: "Logo design", width: 900, height: 578 },
+  brandkit: { src: "/services/brandkit.jpg", alt: "Business branding kit", width: 900, height: 544 },
+  automation: { src: "/services/automation.jpg", alt: "Business automation", width: 900, height: 502 },
+  marketplace: { src: "/services/marketplace.jpg", alt: "Marketplace registration", width: 900, height: 491 },
 };
 
 export function ServiceVisual({ kind, accent, className }: { kind: ServiceVisualKind; accent: string; className?: string }) {
   if (kind === "website") return <WebsiteVisual className={className} />;
 
   const photo = PHOTO_BY_KIND[kind];
-  if (photo) return <PhotoVisual src={photo.src} alt={photo.alt} className={className} />;
+  if (photo) return <PhotoVisual {...photo} className={className} />;
 
   return (
     <div className={cx("relative flex h-full w-full items-center justify-center overflow-hidden bg-gradient-to-br", accent, className)}>
@@ -33,15 +33,27 @@ export function ServiceVisual({ kind, accent, className }: { kind: ServiceVisual
   );
 }
 
-function PhotoVisual({ src, alt, className }: { src: string; alt: string; className?: string }) {
+function PhotoVisual({
+  src,
+  alt,
+  width,
+  height,
+  className,
+}: {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  className?: string;
+}) {
   return (
     <div className={cx("relative h-full w-full overflow-hidden bg-bg-subtle", className)}>
       {/* eslint-disable-next-line @next/next/no-img-element -- output: export has no image loader */}
       <img
         src={src}
         alt={alt}
-        width={900}
-        height={520}
+        width={width}
+        height={height}
         loading="lazy"
         decoding="async"
         className="h-full w-full object-cover"

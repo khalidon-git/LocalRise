@@ -24,10 +24,10 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <main>
-      <section className="section-pad pt-32 sm:pt-36">
+      <section className="section-pad pt-28 sm:pt-32">
         <div className="container-x">
           <ContactHero />
-          <div className="mt-14 overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-white to-bg-subtle shadow-lg">
+          <div className="mx-auto mt-10 max-w-6xl overflow-hidden rounded-2xl border border-line bg-gradient-to-br from-white to-bg-subtle shadow-lg sm:mt-12 sm:rounded-3xl">
             <div className="grid lg:grid-cols-2">
               <ContactMethods />
               <ContactForm />

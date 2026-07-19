@@ -42,21 +42,21 @@ function PriceTier({ pkg, highlight }: { pkg: Package; highlight?: boolean }) {
     <div
       className={
         highlight
-          ? "relative flex h-full flex-col rounded-2xl border border-accent/30 bg-white p-7 shadow-xl ring-1 ring-accent/20"
-          : "card flex h-full flex-col p-7"
+          ? "relative flex h-full flex-col rounded-2xl border border-accent/30 bg-white p-5 shadow-xl ring-1 ring-accent/20 sm:p-6"
+          : "card flex h-full flex-col p-5 sm:p-6"
       }
     >
       {highlight && (
         <>
           <div className="absolute inset-x-0 -top-px h-1 rounded-t-2xl accent-gradient" />
-          <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white shadow-md">
+          <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent px-3 py-1 text-label font-semibold uppercase tracking-wider text-white shadow-md">
             Most Popular
           </span>
         </>
       )}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h3 className="font-display text-xl font-semibold text-ink">{pkg.name}</h3>
-        <span className="chip !py-1 text-[12px]">
+        <span className="chip !py-1 text-label">
           <Icon name="clock" size={13} className="text-accent" />
           {pkg.delivery.replace("Ready in ", "")}
         </span>
@@ -65,7 +65,7 @@ function PriceTier({ pkg, highlight }: { pkg: Package; highlight?: boolean }) {
       <div className="mt-5 flex items-end gap-1.5">
         <span
           className={
-            "font-display text-4xl font-semibold tracking-tight " +
+            "font-display text-3xl font-semibold tracking-tight sm:text-4xl " +
             (highlight ? "text-accent" : "text-ink")
           }
         >
@@ -140,7 +140,7 @@ export default function WebsiteDesignLandingPage() {
           </span>
         </div>
 
-        <div className="container-x relative grid items-center gap-12 pb-16 pt-12 sm:pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pb-24 lg:pt-20">
+        <div className="container-x relative grid items-center gap-10 pb-14 pt-10 sm:pb-16 sm:pt-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:pb-20 lg:pt-16">
           <div className="flex flex-col items-start">
             <span className="chip">
               <Icon name={service.icon as IconName} size={14} className="text-accent" />
@@ -163,7 +163,7 @@ export default function WebsiteDesignLandingPage() {
               ))}
             </ul>
 
-            <div className="mt-8">
+            <div className="mt-8 w-full sm:w-auto">
               <Magnetic className="inline-flex">
                 <ConversationButton start={heroCta} variant="whatsapp" size="lg" icon="whatsapp" arrow>
                   Get your website on WhatsApp
@@ -186,10 +186,10 @@ export default function WebsiteDesignLandingPage() {
       <section className="section-pad">
         <div className="container-x">
           <SectionHeading title="Why a LocalRise website works harder" description={detail.who} />
-          <Stagger className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <Stagger className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-2 lg:grid-cols-4">
             {detail.benefits.map((b) => (
               <StaggerItem key={b.title}>
-                <div className="card card-hover h-full p-6 lg:p-7">
+                <div className="card card-hover h-full p-5 sm:p-6">
                   <span className="grid h-12 w-12 place-items-center rounded-2xl border border-line bg-white text-accent shadow-xs">
                     <Icon name={b.icon} size={22} strokeWidth={1.7} />
                   </span>
@@ -204,7 +204,7 @@ export default function WebsiteDesignLandingPage() {
 
       {/* Included + Outcomes */}
       <section className="section-pad bg-bg-subtle">
-        <div className="container-x grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="container-x grid gap-10 lg:grid-cols-2 lg:gap-14">
           <Reveal>
             <h2 className="font-display text-heading-2 font-semibold text-ink">What&apos;s included</h2>
             <ul className="mt-6 flex flex-col gap-3">
@@ -242,7 +242,7 @@ export default function WebsiteDesignLandingPage() {
             title="Simple, published pricing"
             description="No quotes to chase and no hidden charges — start with a website, or take the popular all-in package."
           />
-          <div className="mx-auto mt-14 grid max-w-3xl gap-6 sm:grid-cols-2">
+          <div className="mx-auto mt-10 grid max-w-3xl gap-6 sm:mt-12 sm:grid-cols-2">
             <Reveal>
               <PriceTier pkg={starter} />
             </Reveal>
@@ -258,7 +258,7 @@ export default function WebsiteDesignLandingPage() {
         <section className="section-pad bg-bg-subtle">
           <div className="container-x max-w-3xl">
             <SectionHeading title="Good questions" />
-            <div className="mt-12">
+            <div className="mt-8 sm:mt-10">
               <ServiceFAQ items={serviceFaqs} />
             </div>
           </div>
@@ -268,7 +268,7 @@ export default function WebsiteDesignLandingPage() {
       {/* Closing CTA — same single objective, repeated */}
       <section className="section-pad">
         <div className="container-x">
-          <div className="relative overflow-hidden rounded-3xl bg-bg-inverse p-10 text-center sm:p-14">
+          <div className="relative overflow-hidden rounded-2xl bg-bg-inverse p-6 text-center sm:rounded-3xl sm:p-10 lg:p-12">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-40 [background:radial-gradient(50%_100%_at_50%_0%,rgba(47,91,255,0.25),transparent_70%)]" />
             <h2 className="relative mx-auto max-w-xl font-display text-heading-2 font-semibold text-white">
               Ready for a website that brings you customers?

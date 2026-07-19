@@ -15,7 +15,7 @@ function Stars({ n = 5 }: { n?: number }) {
   );
 }
 
-const cardShell = "rounded-2xl border border-line bg-white/95 p-3.5 shadow-lg backdrop-blur";
+const cardShell = "rounded-xl border border-line bg-white/95 p-3 shadow-lg backdrop-blur sm:rounded-2xl sm:p-3.5";
 
 function FloatingCard({ id }: { id: string }) {
   switch (id) {
@@ -116,13 +116,13 @@ function FloatingCard({ id }: { id: string }) {
 
 export function ServiceHeroVisual({ id, title, accent }: { id: string; title: string; accent: string }) {
   return (
-    <div className="relative mx-auto w-full max-w-[440px]">
+    <div className="relative mx-auto w-full max-w-md px-4 pt-4 sm:px-0 sm:pt-0">
       {/* soft accent glow */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20 blur-[80px]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20 blur-3xl sm:h-64 sm:w-64" />
       <div className="animate-float-soft">
         <BrowserMock accent={accent} title={title} className="shadow-float" />
       </div>
-      <div className="absolute -right-3 -top-6 w-[196px] animate-float-slow sm:-right-6">
+      <div className="absolute right-0 top-0 w-36 animate-float-slow sm:-right-4 sm:-top-5 sm:w-48">
         <FloatingCard id={id} />
       </div>
     </div>

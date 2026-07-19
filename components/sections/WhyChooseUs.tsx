@@ -8,7 +8,7 @@ import { cx } from "@/lib/utils";
 export function WhyChooseUs() {
   return (
     <section id="why" className="relative overflow-hidden bg-bg-inverse section-pad text-white">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] [background:radial-gradient(60%_100%_at_50%_0%,rgba(47,91,255,0.22),transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-80 sm:h-96 [background:radial-gradient(60%_100%_at_50%_0%,rgba(47,91,255,0.22),transparent_70%)]" />
       <div className="container-x relative">
         <div className="mx-auto max-w-2xl text-center">
           <Reveal delay={0.05}>
@@ -24,10 +24,10 @@ export function WhyChooseUs() {
         </div>
 
         {/* stats */}
-        <Stagger className="mt-14 grid grid-cols-2 gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:gap-6 lg:grid-cols-4 lg:p-8">
+        <Stagger className="mt-10 grid grid-cols-2 gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:mt-12 sm:gap-6 sm:p-6 lg:grid-cols-4">
           {stats.map((s) => (
             <StaggerItem key={s.label} className="text-center">
-              <p className="font-display text-4xl font-semibold tracking-tight text-white lg:text-5xl">{s.value}</p>
+              <p className="font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">{s.value}</p>
               <p className="mt-1.5 text-body-sm text-ink-inverse-2">{s.label}</p>
             </StaggerItem>
           ))}
@@ -39,7 +39,7 @@ export function WhyChooseUs() {
             const feature = i === 0;
             return (
               <StaggerItem key={r.title} className={cx(feature && "sm:col-span-2 lg:col-span-2")}>
-                <div className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-all duration-500 ease-premium hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.06]">
+                <div className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm transition-all duration-500 ease-premium hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.06] sm:p-6">
                   <span className={cx("grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br text-white shadow-md", gradient(i))}>
                     <Icon name={r.icon as IconName} size={22} strokeWidth={1.7} />
                   </span>
@@ -56,7 +56,7 @@ export function WhyChooseUs() {
           <StaggerItem>
             <SmartLink
               href="/contact"
-              className="group flex h-full flex-col justify-between rounded-2xl accent-gradient p-6 text-white shadow-glow transition-transform duration-500 ease-premium hover:-translate-y-0.5"
+              className="group flex min-h-48 h-full flex-col justify-between rounded-2xl accent-gradient p-5 text-white shadow-glow transition-transform duration-500 ease-premium hover:-translate-y-0.5 sm:p-6"
             >
               <div>
                 <p className="font-display text-xl font-semibold">Ready to grow?</p>

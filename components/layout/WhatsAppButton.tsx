@@ -28,11 +28,11 @@ export function WhatsAppButton() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.6, y: 20 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="group fixed bottom-5 right-5 z-40 flex items-center gap-0 sm:bottom-6 sm:right-6"
+          className="safe-floating-bottom group fixed right-4 z-40 flex items-center gap-0 sm:right-6"
         >
-          <span className="relative grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_12px_32px_-8px_rgba(37,211,102,0.7)] transition-transform duration-300 group-hover:scale-105">
+          <span className="relative grid h-12 w-12 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_12px_32px_-8px_rgba(37,211,102,0.7)] transition-transform duration-300 group-hover:scale-105 sm:h-14 sm:w-14">
             <span className="absolute inset-0 animate-pulse-ring rounded-full bg-[#25D366]/50" />
-            <Icon name="whatsapp" size={28} className="relative" />
+            <Icon name="whatsapp" size={26} className="relative sm:h-7 sm:w-7" />
           </span>
           <span className="pointer-events-none absolute right-16 hidden max-w-0 overflow-hidden whitespace-nowrap rounded-full bg-ink px-0 py-2.5 text-body-sm font-medium text-white opacity-0 shadow-lg transition-all duration-300 group-hover:max-w-[180px] group-hover:px-4 group-hover:opacity-100 sm:block">
             Chat with us

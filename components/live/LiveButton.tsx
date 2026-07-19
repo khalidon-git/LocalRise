@@ -30,7 +30,7 @@ export function LiveButton({ children, variant = "solid", radius, arrow, classNa
   };
 
   const classes = cx(
-    "group inline-flex items-center justify-center gap-2 px-6 py-3.5 text-[14px] font-medium tracking-tight transition-all duration-300 ease-premium",
+    "group inline-flex min-h-12 items-center justify-center gap-2 px-6 py-3 text-body-sm font-medium tracking-tight transition-all duration-300 ease-premium",
     variants[variant],
     radius,
     className,

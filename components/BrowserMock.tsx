@@ -25,7 +25,7 @@ export function BrowserMock({
       </div>
       <div className="p-3.5">
         {/* hero banner */}
-        <div className={cx("relative flex h-[46%] min-h-[92px] items-end overflow-hidden rounded-lg bg-gradient-to-br p-3.5", accent)}>
+        <div className={cx("relative flex min-h-20 items-end overflow-hidden rounded-lg bg-gradient-to-br p-3 sm:min-h-24 sm:p-3.5", accent)}>
           <div className="noise absolute inset-0 opacity-[0.12]" />
           <div className="relative">
             <div className="h-1.5 w-14 rounded-full bg-white/60" />
@@ -45,7 +45,7 @@ export function BrowserMock({
         </div>
       </div>
       {/* floating phone (responsive hint) */}
-      <div className="absolute bottom-3 right-3 w-[52px] overflow-hidden rounded-[10px] border-2 border-white bg-white shadow-lg">
+      <div className="absolute bottom-2.5 right-2.5 w-12 overflow-hidden rounded-lg border-2 border-white bg-white shadow-lg sm:bottom-3 sm:right-3 sm:w-14">
         <div className={cx("h-9 bg-gradient-to-br", accent)} />
         <div className="space-y-1 p-1.5">
           <div className="h-1 w-full rounded-full bg-line-2" />

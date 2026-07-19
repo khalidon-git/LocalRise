@@ -69,7 +69,7 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <section className="section-pad pt-32 sm:pt-36">
+      <section className="section-pad pt-28 sm:pt-32">
         <div className="container-x">
           {/* Visible breadcrumb — matches the BreadcrumbList above */}
           <Reveal>
@@ -86,17 +86,17 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
             </nav>
           </Reveal>
 
-          <div className="mt-8 grid items-start gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14">
+          <div className="mt-8 grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12">
             {/* Intro */}
             <div>
               <Reveal>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1 text-[12px] font-semibold text-white">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1 text-label font-semibold text-white">
                   <span className="h-1.5 w-1.5 rounded-full bg-accent-bright" />
                   Design Concept
                 </span>
               </Reveal>
               <Reveal delay={0.05}>
-                <p className="mt-5 text-eyebrow uppercase text-accent">{concept.industry}</p>
+                <p className="mt-5 text-label font-semibold uppercase tracking-wider text-accent">{concept.industry}</p>
                 <h1 className="mt-2 font-display text-display-lg text-ink">{concept.name}</h1>
               </Reveal>
               <Reveal delay={0.1}>
@@ -104,7 +104,7 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
               </Reveal>
 
               <Reveal delay={0.15}>
-                <div className="mt-7 flex flex-wrap gap-3">
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                   <Button href={`/concepts/${concept.slug}/live`} size="lg" variant="dark" icon="browser" arrow>
                     Live Preview
                   </Button>
@@ -116,13 +116,13 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
                     Build something similar
                   </ConversationButton>
                 </div>
-                <p className="mt-3 text-[13px] text-ink-3">
+                <p className="mt-3 max-w-2xl text-body-sm text-ink-3">
                   Live Preview opens {concept.name}&apos;s full concept site — independent, no LocalRise branding.
                 </p>
               </Reveal>
 
               <Reveal delay={0.2}>
-                <p className="mt-5 text-body-sm text-ink-3">
+                <p className="mt-5 max-w-2xl text-body-sm text-ink-3">
                   {concept.name} is a fictional business created to explore this design direction.
                   It isn&apos;t a real client, and nothing here claims a real result.
                 </p>
@@ -132,10 +132,10 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
             {/* Live preview: desktop + mobile together */}
             <Reveal delay={0.1}>
               <div className="relative">
-                <ConceptMock concept={concept} />
-                <div className="mt-4 flex items-end gap-4 sm:absolute sm:-bottom-8 sm:-right-4 sm:mt-0 sm:w-[150px]">
-                  <ConceptPhone concept={concept} className="w-[120px] shrink-0 sm:w-full" />
-                  <p className="pb-2 text-[12px] text-ink-3 sm:hidden">Mobile view</p>
+                <ConceptMock concept={concept} className="w-full" />
+                <div className="mt-4 flex items-end gap-4 sm:absolute sm:-bottom-6 sm:-right-2 sm:mt-0 sm:w-32 lg:w-36">
+                  <ConceptPhone concept={concept} className="w-24 shrink-0 sm:w-full" />
+                  <p className="pb-2 text-label text-ink-3 sm:hidden">Mobile view</p>
                 </div>
               </div>
             </Reveal>
@@ -146,7 +146,7 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
       {/* Design style */}
       <section className="section-pad bg-bg-subtle">
         <div className="container-x">
-          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12">
             <div>
               <h2 className="font-display text-heading-2 font-semibold text-ink">The design thinking</h2>
               <p className="mt-3 text-body-lg text-ink-2">{concept.tagline}.</p>
@@ -168,7 +168,7 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
             <Stagger className="grid gap-3">
               {concept.designNotes.map((note) => (
                 <StaggerItem key={note}>
-                  <div className="flex items-start gap-3 rounded-2xl border border-line bg-white p-5">
+                  <div className="flex items-start gap-3 rounded-2xl border border-line bg-white p-4 sm:p-5">
                     <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-accent-tint text-accent">
                       <Icon name="check" size={13} strokeWidth={2.6} />
                     </span>
@@ -188,7 +188,7 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
           <p className="mt-3 max-w-xl text-body-lg text-ink-2">
             Everything a {concept.industry.toLowerCase()} actually needs — nothing it doesn&apos;t.
           </p>
-          <Stagger className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <Stagger className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
             {concept.features.map((f) => (
               <StaggerItem key={f}>
                 <div className="flex items-center gap-3 rounded-xl border border-line bg-white p-4">
@@ -219,13 +219,13 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
             ))}
           </Stagger>
 
-          <Reveal delay={0.1} className="mt-14 rounded-3xl border border-line bg-white p-8 text-center sm:p-12">
+          <Reveal delay={0.1} className="mt-12 rounded-2xl border border-line bg-white p-6 text-center sm:mt-14 sm:rounded-3xl sm:p-10">
             <h2 className="font-display text-heading-2 font-semibold text-ink">Build something similar</h2>
             <p className="mx-auto mt-3 max-w-lg text-body-lg text-ink-2">
               Every business gets its own look — not a template with the colours swapped. Tell us
               what you do and we&apos;ll show you what it could become.
             </p>
-            <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
               <Button href="/contact" size="lg" arrow>
                 Get a free consultation
               </Button>

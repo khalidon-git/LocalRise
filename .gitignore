@@ -18,6 +18,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/.playwright-cli/
+/output/
 
 # local env files
 .env*.local
@@ -31,4 +33,3 @@ next-env.d.ts
 
 # deploy archives (temporary)
 *.tar.gz
-

@@ -14,7 +14,7 @@ export function AudioToggle() {
       onClick={toggleMute}
       aria-label={isMuted ? "Unmute intro audio" : "Mute intro audio"}
       aria-pressed={!isMuted}
-      className="fixed bottom-6 left-5 z-40 grid h-12 w-12 place-items-center rounded-full border border-line bg-white/90 text-ink shadow-lg backdrop-blur transition-transform duration-300 hover:scale-105 active:scale-95"
+      className="safe-floating-bottom fixed left-4 z-40 grid h-12 w-12 place-items-center rounded-full border border-line bg-white/90 text-ink shadow-lg backdrop-blur transition-transform duration-300 hover:scale-105 active:scale-95 sm:left-6"
     >
       {audible ? (
         <span className="flex items-end gap-[3px]" aria-hidden="true">

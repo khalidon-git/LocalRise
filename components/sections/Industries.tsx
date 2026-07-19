@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { concepts } from "@/lib/content";
 import { Icon, type IconName } from "@/components/ui/Icon";
@@ -40,6 +40,25 @@ export function Industries() {
   const current = concepts[active];
   const icon = iconBySlug[current.slug];
 
+  const selectTabFromKeyboard = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const lastIndex = concepts.length - 1;
+    const nextIndex =
+      event.key === "Home"
+        ? 0
+        : event.key === "End"
+          ? lastIndex
+          : event.key === "ArrowRight" || event.key === "ArrowDown"
+            ? (index + 1) % concepts.length
+            : event.key === "ArrowLeft" || event.key === "ArrowUp"
+              ? (index - 1 + concepts.length) % concepts.length
+              : null;
+
+    if (nextIndex === null) return;
+    event.preventDefault();
+    setActive(nextIndex);
+    document.getElementById(`industry-tab-${nextIndex}`)?.focus();
+  };
+
   return (
     <section id="concepts" className="section-pad bg-bg-subtle">
       <div className="container-x">
@@ -58,7 +77,7 @@ export function Industries() {
           </SmartLink>
         </div>
 
-        <div className="mt-14 grid gap-4 lg:grid-cols-[320px_1fr] lg:gap-6">
+        <div className="mt-10 grid gap-4 sm:mt-12 lg:grid-cols-[minmax(15rem,18rem)_minmax(0,1fr)] lg:gap-6 lg:mt-14">
           {/* Selector */}
           <div
             role="tablist"
@@ -74,9 +93,11 @@ export function Industries() {
                   role="tab"
                   aria-selected={selected}
                   aria-controls="industry-panel"
+                  tabIndex={selected ? 0 : -1}
                   onClick={() => setActive(i)}
+                  onKeyDown={(event) => selectTabFromKeyboard(event, i)}
                   className={cx(
-                    "group flex shrink-0 items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-300 ease-premium",
+                    "group flex min-h-12 shrink-0 items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-300 ease-premium",
                     selected
                       ? "border-accent/30 bg-white shadow-sm"
                       : "border-transparent bg-white/50 hover:bg-white hover:shadow-xs",
@@ -109,26 +130,26 @@ export function Industries() {
             id="industry-panel"
             role="tabpanel"
             aria-labelledby={`industry-tab-${active}`}
-            className="relative overflow-hidden rounded-2xl border border-line bg-white p-6 shadow-sm sm:p-8 lg:p-10"
+            className="relative overflow-hidden rounded-2xl border border-line bg-white p-[var(--card-pad)] shadow-sm sm:p-8 lg:p-10"
           >
             <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accent/10 blur-3xl" />
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
-                initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.4, ease }}
                 className="relative"
               >
                 {/* Real screenshot — the visual anchor */}
-                <div className="relative mx-auto max-w-[560px]">
+                <div className="relative mx-auto max-w-media">
                   <ScreenshotMock concept={current} />
-                  <ScreenshotPhone concept={current} className="absolute -bottom-5 -right-4 hidden w-[110px] shrink-0 sm:block" />
+                  <ScreenshotPhone concept={current} className="absolute -bottom-5 -right-3 hidden w-24 shrink-0 sm:block lg:w-28" />
                 </div>
 
                 {/* Supporting copy — smaller, secondary to the screenshot above */}
-                <div className="mt-10 flex flex-col gap-6 sm:mt-14 sm:flex-row sm:items-start sm:justify-between">
+                <div className="mt-8 flex flex-col gap-6 sm:mt-10 sm:flex-row sm:items-start sm:justify-between lg:mt-12">
                   <div className="max-w-md">
                     <span className={cx("grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br text-white shadow-md", current.identity.gradient)}>
                       <Icon name={icon} size={20} strokeWidth={1.7} />
@@ -137,7 +158,7 @@ export function Industries() {
                     <p className="mt-2 text-body text-ink-2">{current.summary}</p>
                   </div>
 
-                  <div className="flex shrink-0 flex-wrap gap-2.5">
+                  <div className="flex shrink-0 flex-col gap-2.5 sm:flex-row sm:flex-wrap">
                     <Button href={`/concepts/${current.slug}/live`} size="md" variant="dark" icon="browser">
                       Live Preview
                     </Button>
@@ -162,14 +183,14 @@ export function Industries() {
 
                 <ul className="mt-7 grid gap-3 sm:grid-cols-3">
                   {current.features.slice(0, 3).map((f) => (
-                    <li key={f} className="rounded-xl border border-line bg-bg-subtle px-4 py-3.5">
+                    <li key={f} className="card-feature rounded-xl bg-bg-subtle p-4">
                       <Icon name="check" size={18} strokeWidth={2.2} className="text-accent" />
                       <p className="mt-2 text-body-sm font-medium text-ink">{f}</p>
                     </li>
                   ))}
                 </ul>
 
-                <div className="mt-8 flex flex-wrap items-center gap-4">
+                <div className="mt-7 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
                   <Button href="/contact" arrow>
                     Grow my business
                   </Button>

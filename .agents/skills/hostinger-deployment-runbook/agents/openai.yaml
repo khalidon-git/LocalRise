@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hostinger Deployment Runbook"
+  short_description: "Verify LocalRise Hostinger deploys."
+  default_prompt: "Use this skill to deploy or verify LocalRise on Hostinger safely."

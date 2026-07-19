@@ -20,8 +20,8 @@ export function SectionHeading({
   return (
     <div
       className={cx(
-        "flex flex-col gap-4",
-        align === "center" ? "items-center text-center mx-auto max-w-2xl" : "items-start text-left max-w-2xl",
+        "flex flex-col gap-3 sm:gap-4",
+        align === "center" ? "mx-auto max-w-reading items-center text-center" : "max-w-reading items-start text-left",
         className,
       )}
     >
@@ -39,7 +39,7 @@ export function SectionHeading({
         <Reveal delay={0.1}>
           <p
             className={cx(
-              "text-body-lg",
+              "max-w-prose text-body-lg",
               tone === "dark" ? "text-ink-inverse-2" : "text-ink-2",
             )}
           >

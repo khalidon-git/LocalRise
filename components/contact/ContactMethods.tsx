@@ -15,10 +15,10 @@ const methods: { icon: IconName; label: string; value: string; href: string; gra
 
 export function ContactMethods() {
   return (
-    <div className="relative border-b border-line p-8 sm:p-10 lg:border-b-0 lg:border-r lg:p-12">
+    <div className="relative border-b border-line p-5 sm:p-8 lg:border-b-0 lg:border-r lg:p-10">
       <div className="pointer-events-none absolute -left-16 top-10 h-56 w-56 rounded-full bg-accent/10 blur-3xl" />
       <div className="relative">
-        <ConsultScene className="hidden h-auto w-full max-w-[300px] sm:block" />
+        <ConsultScene className="mx-auto hidden h-auto w-full max-w-60 sm:block lg:max-w-64" />
 
         <div className="mt-6 flex flex-col gap-3">
           <ContactWhatsAppCard />
@@ -26,14 +26,14 @@ export function ContactMethods() {
             <a
               key={m.label}
               href={m.href}
-              className="group flex items-center gap-4 rounded-2xl border border-line bg-white p-4 shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+              className="group flex min-h-14 items-center gap-3 rounded-2xl border border-line bg-white p-3.5 shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:gap-4 sm:p-4"
             >
               <span className={`grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br text-white shadow-sm ${m.grad}`}>
                 <Icon name={m.icon} size={20} strokeWidth={1.8} />
               </span>
               <span className="flex-1">
                 <span className="block text-body-sm font-semibold text-ink">{m.label}</span>
-                <span className="block text-[13px] text-ink-2">{m.value}</span>
+                <span className="block break-all text-body-sm text-ink-2 sm:break-normal">{m.value}</span>
               </span>
               <Icon name="arrow-up-right" size={18} className="text-ink-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
@@ -45,8 +45,8 @@ export function ContactMethods() {
             <span className="inline-flex items-center gap-2 text-body-sm font-semibold text-ink">
               <Icon name="clock" size={16} className="text-accent" /> Business hours
             </span>
-            <p className="mt-1.5 text-[13px] text-ink-2">Mon–Sat · 10am – 7pm</p>
-            <p className="text-[13px] text-ink-3">WhatsApp us anytime</p>
+            <p className="mt-1.5 text-body-sm text-ink-2">Mon–Sat · 10am – 7pm</p>
+            <p className="text-body-sm text-ink-3">WhatsApp us anytime</p>
           </div>
           <a
             href="https://calendly.com/localrise"
@@ -57,7 +57,7 @@ export function ContactMethods() {
             <span className="inline-flex items-center gap-2 text-body-sm font-semibold text-ink">
               <Icon name="calendar" size={16} className="text-accent" /> Schedule a meeting
             </span>
-            <span className="mt-1.5 inline-flex items-center gap-1 text-[13px] text-accent">
+            <span className="mt-1.5 inline-flex items-center gap-1 text-body-sm text-accent">
               Pick a time <Icon name="arrow-right" size={13} strokeWidth={2.2} className="transition-transform group-hover:translate-x-0.5" />
             </span>
           </a>

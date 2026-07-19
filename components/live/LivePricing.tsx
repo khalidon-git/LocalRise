@@ -13,17 +13,17 @@ export function LivePricing({ site }: { site: ConceptSite }) {
     <section id="pricing" className="lv-section">
       <div className="lv-container">
         <Reveal className="text-center">
-          <h2 className={cx("text-[clamp(1.75rem,3.4vw,2.75rem)] font-semibold text-[var(--lv-ink)]", theme.headFont, theme.tracking)}>
+          <h2 className={cx("text-heading-2 font-semibold text-[var(--lv-ink)]", theme.headFont, theme.tracking)}>
             {pricing.heading}
           </h2>
-          <p className="mx-auto mt-2 max-w-md text-[15px] text-[var(--lv-ink-muted)]">{pricing.subheading}</p>
+          <p className="mx-auto mt-2 max-w-md text-base text-[var(--lv-ink-muted)]">{pricing.subheading}</p>
         </Reveal>
 
-        <Stagger className="mt-10 grid gap-5 lg:grid-cols-3">
+        <Stagger className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {pricing.tiers.map((tier) => (
             <StaggerItem key={tier.name}>
               <div
-                className={cx("relative flex h-full flex-col border p-7", theme.radius, tier.highlighted && "shadow-xl")}
+                className={cx("relative flex h-full flex-col border p-5 sm:p-6 lg:p-7", theme.radius, tier.highlighted && "shadow-xl")}
                 style={{
                   borderColor: tier.highlighted ? "var(--lv-brand)" : "var(--lv-line)",
                   background: tier.highlighted ? "var(--lv-brand-soft)" : "var(--lv-surface)",
@@ -31,21 +31,21 @@ export function LivePricing({ site }: { site: ConceptSite }) {
               >
                 {tier.highlighted && (
                   <span
-                    className="absolute -top-3 left-7 rounded-full px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wide"
+                    className="absolute -top-3 left-5 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide sm:left-6"
                     style={{ background: "var(--lv-brand)", color: "var(--lv-brand-ink)" }}
                   >
                     Most popular
                   </span>
                 )}
-                <h3 className="text-[15px] font-semibold text-[var(--lv-ink)]">{tier.name}</h3>
+                <h3 className="text-base font-semibold text-[var(--lv-ink)]">{tier.name}</h3>
                 <p className="mt-3 flex items-baseline gap-1">
                   <span className={cx("text-[2.1rem] font-semibold text-[var(--lv-ink)]", theme.headFont)}>{tier.price}</span>
-                  {tier.period && <span className="text-[13px] text-[var(--lv-ink-muted)]">{tier.period}</span>}
+                  {tier.period && <span className="text-sm text-[var(--lv-ink-muted)]">{tier.period}</span>}
                 </p>
-                <p className="mt-2 text-[13.5px] text-[var(--lv-ink-muted)]">{tier.description}</p>
+                <p className="mt-2 text-body-sm leading-relaxed text-[var(--lv-ink-muted)]">{tier.description}</p>
                 <ul className="mt-5 flex flex-1 flex-col gap-2.5">
                   {tier.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-[13.5px] text-[var(--lv-ink)]">
+                    <li key={f} className="flex items-start gap-2 text-body-sm text-[var(--lv-ink)]">
                       <Icon name="check" size={14} strokeWidth={2.4} className="mt-0.5 shrink-0 text-[var(--lv-brand)]" />
                       {f}
                     </li>

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Static Export Safety Gate"
+  short_description: "Check static export safety."
+  default_prompt: "Use this skill to validate that LocalRise changes preserve static export behavior."

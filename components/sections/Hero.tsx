@@ -22,7 +22,7 @@ const quickPoints = ["Free consultation", "Ready in days", "No hidden charges"];
 
 export function Hero() {
   return (
-    <section id="top" className="relative isolate min-h-[640px] overflow-hidden bg-bg-subtle sm:min-h-[680px] lg:min-h-[760px]">
+    <section id="top" className="relative isolate flex min-h-[min(46rem,100svh)] overflow-hidden bg-bg-subtle">
       {/* Full-bleed background: the shop-to-city clip plays behind the whole
           section, not beside it. HeroVideo's own "bg" scrim keeps the
           overlaid heading/CTAs legible — see components/illustrations/HeroVideo.tsx.
@@ -37,7 +37,7 @@ export function Hero() {
         <HeroVideo size="bg" />
       </motion.div>
 
-      <div className="container-x relative z-10 flex flex-col items-start pb-16 pt-32 sm:pt-36 lg:pb-24 lg:pt-40">
+      <div className="container-x section-hero relative z-10 flex flex-1 flex-col items-start justify-center">
         <motion.div variants={container} initial="hidden" animate="show" className="flex max-w-2xl flex-col items-start">
           <motion.h1
             variants={item}
@@ -58,13 +58,13 @@ export function Hero() {
             designed to help your business attract more customers.
           </motion.p>
 
-          <motion.div variants={item} className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <motion.div variants={item} className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
             <Magnetic>
-              <Button href="/contact" size="lg" arrow>
+              <Button href="/contact" size="lg" arrow className="w-full sm:w-auto">
                 Get Free Consultation
               </Button>
             </Magnetic>
-            <Button href="#packages" size="lg" variant="secondary">
+            <Button href="#packages" size="lg" variant="secondary" className="w-full sm:w-auto">
               View Packages
             </Button>
           </motion.div>

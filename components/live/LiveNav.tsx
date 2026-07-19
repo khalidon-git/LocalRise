@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { ConceptSite } from "@/lib/content";
 import { SmartLink } from "@/components/ui/SmartLink";
@@ -20,6 +20,8 @@ const ease = [0.22, 1, 0.36, 1] as const;
 export function LiveNav({ site }: { site: ConceptSite }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
   const overlay = site.theme.navStyle === "overlay";
 
   useEffect(() => {
@@ -32,10 +34,30 @@ export function LiveNav({ site }: { site: ConceptSite }) {
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const focusable = drawerRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      menuButtonRef.current?.focus();
+    };
   }, [open]);
 
   useScrollLock(open);
@@ -64,7 +86,7 @@ export function LiveNav({ site }: { site: ConceptSite }) {
               <li key={item.href}>
                 <SmartLink
                   href={item.href}
-                  className="rounded-full px-3.5 py-2 text-[13.5px] font-medium text-[var(--lv-ink-muted)] transition-colors hover:text-[var(--lv-ink)]"
+                  className="inline-flex min-h-11 items-center rounded-full px-3.5 py-2 text-sm font-medium text-[var(--lv-ink-muted)] transition-colors hover:text-[var(--lv-ink)]"
                 >
                   {item.label}
                 </SmartLink>
@@ -78,9 +100,12 @@ export function LiveNav({ site }: { site: ConceptSite }) {
             </LiveButton>
             <button
               type="button"
+              ref={menuButtonRef}
               onClick={() => setOpen(true)}
               aria-label="Open menu"
-              className="grid h-10 w-10 place-items-center rounded-full border border-[var(--lv-line)] text-[var(--lv-ink)] lg:hidden"
+              aria-expanded={open}
+              aria-controls="live-mobile-navigation"
+              className="grid h-11 w-11 place-items-center rounded-full border border-[var(--lv-line)] text-[var(--lv-ink)] lg:hidden"
             >
               <Icon name="menu" size={18} />
             </button>
@@ -99,11 +124,16 @@ export function LiveNav({ site }: { site: ConceptSite }) {
           >
             <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} />
             <motion.div
+              id="live-mobile-navigation"
+              ref={drawerRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label={`${site.brandName} mobile navigation`}
               initial={{ y: "-100%" }}
               animate={{ y: 0 }}
               exit={{ y: "-100%" }}
               transition={{ duration: 0.4, ease }}
-              className="absolute inset-x-0 top-0 bg-[var(--lv-surface)] p-6 shadow-xl"
+              className="absolute inset-x-0 top-0 max-h-[100svh] overflow-y-auto bg-[var(--lv-surface)] p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-xl sm:p-6"
             >
               <div className="flex items-center justify-between">
                 <span className={cx("text-[17px] font-semibold text-[var(--lv-ink)]", site.theme.headFont)}>{site.brandName}</span>
@@ -112,7 +142,7 @@ export function LiveNav({ site }: { site: ConceptSite }) {
                   autoFocus
                   onClick={() => setOpen(false)}
                   aria-label="Close menu"
-                  className="grid h-10 w-10 place-items-center rounded-full border border-[var(--lv-line)] text-[var(--lv-ink)]"
+                  className="grid h-11 w-11 place-items-center rounded-full border border-[var(--lv-line)] text-[var(--lv-ink)]"
                 >
                   <Icon name="close" size={18} />
                 </button>

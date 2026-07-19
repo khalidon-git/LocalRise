@@ -44,7 +44,7 @@ export default function ConceptsPage() {
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <section className="section-pad pt-32 sm:pt-36">
+      <section className="section-pad pt-28 sm:pt-32">
         <div className="container-x">
           <SectionHeading
             title="Concept websites for local businesses"
@@ -61,7 +61,7 @@ export default function ConceptsPage() {
             </p>
           </Reveal>
 
-          <Stagger className="mt-14 grid gap-5 sm:grid-cols-2 lg:gap-6">
+          <Stagger amount={0.03} className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-2 lg:gap-6">
             {concepts.map((c) => (
               <StaggerItem key={c.slug}>
                 <ConceptCard concept={c} />
@@ -69,7 +69,7 @@ export default function ConceptsPage() {
             ))}
           </Stagger>
 
-          <Reveal delay={0.1} className="mt-16 rounded-3xl border border-line bg-bg-subtle p-8 text-center sm:p-12">
+          <Reveal delay={0.1} className="mt-12 rounded-2xl border border-line bg-bg-subtle p-6 text-center sm:mt-14 sm:rounded-3xl sm:p-10">
             <h2 className="font-display text-heading-2 font-semibold text-ink">
               Want something like this for your business?
             </h2>
@@ -77,7 +77,7 @@ export default function ConceptsPage() {
               Tell us what you do and we&apos;ll design a look that fits it — with a clear price and
               timeline before we start.
             </p>
-            <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
               <Button href="/contact" size="lg" arrow>
                 Get a free consultation
               </Button>
