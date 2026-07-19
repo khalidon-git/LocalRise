@@ -139,40 +139,64 @@ export function useMarquee<T extends HTMLElement = HTMLDivElement>({
     el.addEventListener("wheel", onTouchOrWheel, { passive: true });
 
     // --- mouse click-drag to scroll (touch uses native scrolling) ---
+    // Threshold in px the pointer must travel before a press becomes a drag.
+    const DRAG_THRESHOLD = 6;
+    let pressed = false; // mouse button is down but not (yet) a drag
+    let startX = 0;
     let prevX = 0;
-    let moved = 0;
+    let pointerId = -1;
     let suppressClick = false;
     const onPointerDown = (e: PointerEvent) => {
       suppressClick = false; // every fresh press starts click-able
       if (e.pointerType === "touch") return;
-      dragging = true;
-      moved = 0;
+      // IMPORTANT: do NOT setPointerCapture here. Capturing on pointerdown
+      // retargets the following `click` to this container, so buttons/links
+      // under the cursor never receive it — that was the "buttons not
+      // clickable" bug. We only capture once a real drag begins (below).
+      pressed = true;
+      dragging = false;
+      startX = e.clientX;
       prevX = e.clientX;
-      el.setPointerCapture(e.pointerId);
-      // Inline style (not a Tailwind class): hooks/ isn't in the Tailwind
-      // content globs, so a `cursor-grabbing` class here would never be emitted.
-      // Clearing it on release falls back to the element's `cursor-grab` class.
-      el.style.cursor = "grabbing";
+      pointerId = e.pointerId;
     };
     const onPointerMove = (e: PointerEvent) => {
-      if (!dragging) return;
+      if (!pressed) return;
+      if (!dragging) {
+        // Stay a click until the pointer clearly moves — then promote to a drag.
+        if (Math.abs(e.clientX - startX) < DRAG_THRESHOLD) return;
+        dragging = true;
+        prevX = e.clientX; // measure the scroll delta from here
+        try {
+          el.setPointerCapture(pointerId);
+        } catch {
+          /* capture unavailable */
+        }
+        // Inline style (not a Tailwind class): hooks/ isn't in the Tailwind
+        // content globs, so a `cursor-grabbing` class here would never be
+        // emitted. Clearing it on release falls back to the `cursor-grab` class.
+        el.style.cursor = "grabbing";
+      }
       const dx = e.clientX - prevX;
       prevX = e.clientX;
-      moved += Math.abs(dx);
       el.scrollLeft -= dx;
       wrap();
     };
     const endDrag = (e: PointerEvent) => {
-      if (!dragging) return;
-      dragging = false;
-      el.style.cursor = "";
-      try {
-        el.releasePointerCapture(e.pointerId);
-      } catch {
-        /* pointer already released */
+      if (!pressed) return;
+      pressed = false;
+      if (dragging) {
+        dragging = false;
+        el.style.cursor = "";
+        try {
+          el.releasePointerCapture(e.pointerId);
+        } catch {
+          /* pointer already released */
+        }
+        settle(500); // don't snap back to drift the instant the mouse lifts
+        suppressClick = true; // a real drag must not open a link/button
       }
-      settle(500); // don't snap back to drift the instant the mouse lifts
-      if (moved > 6) suppressClick = true; // a real drag must not open a link
+      // If it never crossed the threshold it's a plain click — leave
+      // suppressClick false so the button/link activates normally.
     };
     // Capture phase so it beats the link/button before navigation happens.
     const onClickCapture = (e: MouseEvent) => {
