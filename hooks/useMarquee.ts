@@ -70,14 +70,27 @@ export function useMarquee<T extends HTMLElement = HTMLDivElement>({
     };
 
     // --- continuous drift ---
+    // Accumulate the position in a float we own, and write scrollLeft from it.
+    // Doing `el.scrollLeft += speed * dt` instead does NOT work on desktop:
+    // browsers round the scrollLeft *getter* to an integer, so a sub-pixel-per-
+    // frame increment (~0.5px at this speed) is read back rounded and lost every
+    // frame — the strip never moves on a 1x-DPI monitor. (High-DPI phones have
+    // real fractional pixels, which is why it drifted there.) While paused or
+    // being dragged we re-read scrollLeft so `pos` stays in sync with the user.
+    let pos = el.scrollLeft;
     let raf = 0;
     let last = performance.now();
     const tick = (now: number) => {
       const dt = Math.min(now - last, 50) / 1000; // clamp long gaps (tab switch)
       last = now;
-      if (!hover && !focus && !hidden && !interacting && !dragging && !reduced) {
-        el.scrollLeft += speed * dt;
-        wrap();
+      const active = !hover && !focus && !hidden && !interacting && !dragging && !reduced;
+      if (active && wrapWidth > 0) {
+        pos += speed * dt;
+        if (pos >= wrapWidth) pos -= wrapWidth;
+        else if (pos < 0) pos += wrapWidth;
+        el.scrollLeft = pos;
+      } else {
+        pos = el.scrollLeft;
       }
       raf = requestAnimationFrame(tick);
     };
