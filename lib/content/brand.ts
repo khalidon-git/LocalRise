@@ -21,14 +21,14 @@ export const brand = {
 
 // Root-relative (/#...) so these resolve from sub-pages too: from a service
 // page they navigate home then scroll; on the homepage they're a same-path
-// hash change (no reload). "Process" and "FAQ" point at /why-us/ — those
-// sections (plus WhyChooseUs) moved off the homepage; see app/why-us/page.tsx.
+// hash change (no reload). Process, Why Us and FAQ each have one dedicated
+// route so visitors do not need to search through a combined information page.
 export const nav = [
   { label: "Services", href: "/#services" },
   { label: "Packages", href: "/#packages" },
   { label: "Work", href: "/#concepts" },
-  { label: "Process", href: "/why-us/#process" },
-  { label: "FAQ", href: "/why-us/#faq" },
+  { label: "Process", href: "/process/" },
+  { label: "FAQ", href: "/faq/" },
 ] as const;
 
 export const trustItems = [

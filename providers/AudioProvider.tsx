@@ -27,7 +27,7 @@ const STORAGE_KEY = "localrise:audio";
 
 // Gestures that can grant autoplay permission. NOTE: scroll does NOT count as a
 // user activation in Chrome — it's included only as a harmless extra attempt.
-const GESTURES = ["pointerdown", "keydown", "touchstart", "scroll"] as const;
+const GESTURES = ["pointerdown", "keydown", "touchstart"] as const;
 
 type AudioContextValue = {
   /** The element is playing (the timeline is advancing). */
@@ -36,9 +36,8 @@ type AudioContextValue = {
   isMuted: boolean;
   toggleMute: () => void;
   /**
-   * Explicitly begin narration. Called from the welcome modal's
-   * "Start Guided Experience" button — that click is a user gesture, which is
-   * exactly what autoplay policy requires, so playback reliably starts here.
+   * Explicitly begin narration from the non-blocking Listen control. Its click
+   * is the user gesture autoplay policy requires.
    */
   startNarration: () => void;
 };
@@ -86,7 +85,9 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     const applyResume = () => {
       if (resumeTime > 0 && Number.isFinite(audio.duration)) {
         try {
-          audio.currentTime = Math.min(resumeTime, Math.max(audio.duration - 0.25, 0));
+          audio.currentTime = audio.duration - resumeTime <= 0.5
+            ? 0
+            : Math.min(resumeTime, Math.max(audio.duration - 0.25, 0));
         } catch {
           /* seeking not ready — not worth failing playback over */
         }
@@ -135,8 +136,8 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     audio.addEventListener("timeupdate", onTimeUpdate);
 
     // Only visitors who previously opted into the guided experience get audio
-    // without asking again. First-time visitors are handled by WelcomeModal, and
-    // anyone who chose "Browse on My Own" stays silent until they use the toggle.
+    // without asking again. First-time and silent visitors stay quiet until
+    // they deliberately use the Listen control.
     //
     // This gate matters: arming the gesture fallback unconditionally would make
     // the very click on "Browse on My Own" start the narration.
@@ -154,12 +155,15 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  // Begins playback from an explicit user action (the welcome modal). Because
+  // Begins playback from an explicit user action. Because
   // the call originates in a click handler it satisfies autoplay policy, so no
   // gesture fallback is normally needed — it's re-armed only as a safety net.
   const startNarration = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
+    if (audio.ended || (Number.isFinite(audio.duration) && audio.currentTime >= audio.duration - 0.25)) {
+      audio.currentTime = 0;
+    }
     audio.muted = false;
     setIsMuted(false);
     audio.play().catch(() => armFallbackRef.current());
@@ -175,6 +179,9 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     // the narration finished. Treat the click as "play with sound"; muting
     // something inaudible would just cost them a second click to hear anything.
     if (audio.paused) {
+      if (audio.ended || (Number.isFinite(audio.duration) && audio.currentTime >= audio.duration - 0.25)) {
+        audio.currentTime = 0;
+      }
       audio.muted = false;
       setIsMuted(false);
       audio.play().catch(() => {});

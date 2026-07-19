@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
-import { faqs } from "@/lib/content";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Process } from "@/components/sections/Process";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
-import { FAQ } from "@/components/sections/FAQ";
 
 // Formerly three homepage sections (Process, WhyChooseUs, FAQ), relocated
 // here as one page so the homepage stays focused on conversion. Content and
@@ -11,9 +7,9 @@ import { FAQ } from "@/components/sections/FAQ";
 // docs/architecture.md and docs/navigation.md for the nav/footer links that
 // point here.
 const siteUrl = "https://localrise.in";
-const title = "How It Works & FAQ";
+const title = "Why LocalRise";
 const description =
-  "How a project with LocalRise runs from first message to launch, why businesses stick with us, and answers to the questions we hear most.";
+  "A straightforward digital partner for local businesses: clear communication, transparent pricing, fast delivery and friendly support.";
 
 export const metadata: Metadata = {
   title,
@@ -23,38 +19,16 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: `${title} · LocalRise`, description },
 };
 
-// FAQPage schema lives here — the page that actually renders <FAQ />, built
-// from the same `faqs` array it displays so the two can't drift. It moved off
-// the global @graph in app/layout.tsx (where it emitted on every page,
-// including the homepage) to sit only where the questions are visible, matching
-// the per-page inline pattern used by app/concepts/[slug]/ and services.
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "@id": `${siteUrl}/why-us/#faq`,
-  mainEntity: faqs.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
-};
-
 export default function WhyUsPage() {
   return (
     <main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-
       <section className="section-pad !pb-0 !pt-28 sm:!pt-32">
-        <div className="container-x">
-          <SectionHeading
-            title="How we work, and why businesses stick with us"
-            description="From your first message to launch day — plus the questions we hear most, answered simply."
-          />
+        <div className="container-x mx-auto max-w-3xl text-center">
+          <h1 className="font-display text-heading-1 font-semibold text-ink">A practical partner for local business growth</h1>
+          <p className="mt-4 text-body-lg text-ink-2">Clear communication, honest pricing and helpful support — without unnecessary jargon or complexity.</p>
         </div>
       </section>
-      <Process />
       <WhyChooseUs />
-      <FAQ />
     </main>
   );
 }

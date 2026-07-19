@@ -18,7 +18,7 @@ lib/content/
   concepts.ts     Concept Website previews (mock) — replaced the old projects.ts portfolio
   conceptSites.ts full "live" content for each concept, keyed by the same slug
   process.ts      process steps, whyChooseUs
-  faqs.ts         faqs (feeds FAQPage JSON-LD on /why-us/ — see docs/seo.md)
+  faqs.ts         faqs (feeds FAQPage JSON-LD on /faq/ — see docs/seo.md)
 ```
 
 ```ts

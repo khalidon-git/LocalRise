@@ -19,7 +19,10 @@ speed concern: a full page load destroys the audio engine and every provider.
 | Route | File | Notes |
 | --- | --- | --- |
 | `/` | `app/page.tsx` | Homepage; conversion-focused sections only |
-| `/why-us/` | `app/why-us/page.tsx` | Process, WhyChooseUs (`#why`) and FAQ — moved off the homepage, see the file header |
+| `/process/` | `app/process/page.tsx` | Complete delivery process |
+| `/faq/` | `app/faq/page.tsx` | Complete FAQ and page-scoped FAQ schema |
+| `/why-us/` | `app/why-us/page.tsx` | Positioning and differentiators |
+| `/contact/` | `app/contact/page.tsx` | Dedicated enquiry and contact page |
 | `/services/[slug]` | `app/services/[slug]/page.tsx` | 7 pages via `generateStaticParams` |
 | `/concepts/`, `/concepts/[slug]/` | `app/concepts/**` | See `docs/concepts.md` |
 | `/concepts/[slug]/live/` | `app/concepts/[slug]/live/page.tsx` | Chrome-free; `noindex` — see `docs/concepts.md` |

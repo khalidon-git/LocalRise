@@ -38,7 +38,9 @@ conventions, "where does a new X go").
 app/
   layout.tsx              root layout: metadata, JSON-LD, providers, chrome
   page.tsx                homepage — composes sections in order
-  why-us/page.tsx         Process, WhyChooseUs, FAQ — moved off the homepage
+  process/page.tsx        complete project process
+  faq/page.tsx            FAQ plus page-scoped FAQPage schema
+  why-us/page.tsx         positioning and differentiators
   contact/page.tsx        the contact page
   services/[slug]/page.tsx  per-service pages (generateStaticParams)
   concepts/**              Concept Websites gallery + live sites (docs/concepts.md)
@@ -58,7 +60,6 @@ components/
   contact/       the /contact/ page's own sections
   cart/          CartDrawer
   audio/         AudioToggle (UI only)
-  onboarding/    WelcomeModal
   analytics/     GoogleTag (gtag.js loader)
 
 providers/       AudioProvider, CartProvider  (React context + engines)

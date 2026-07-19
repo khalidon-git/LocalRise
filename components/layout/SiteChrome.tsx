@@ -6,7 +6,6 @@ import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { AudioToggle } from "@/components/audio/AudioToggle";
 import { CartDrawer } from "@/components/cart/CartDrawer";
-import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 
 // Two families of routes render chrome-free:
 //   • Concept "live" sites (/concepts/<slug>/live) — standalone fictional
@@ -15,7 +14,7 @@ import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 //     where nav/footer/cart are conversion distractions (see marketing/
 //     ads-strategy.md §5). Matching the whole /lp/ family (not one slug) means
 //     every future landing page gets the bare treatment automatically.
-// LocalRise chrome (nav, footer, floating buttons, welcome modal) is suppressed
+// LocalRise chrome (nav, footer and floating controls) is suppressed
 // for both.
 //
 // Detecting the route in a small CLIENT component keeps app/layout.tsx a SERVER
@@ -36,7 +35,6 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       <WhatsAppButton />
       <AudioToggle />
       <CartDrawer />
-      <WelcomeModal />
     </>
   );
 }

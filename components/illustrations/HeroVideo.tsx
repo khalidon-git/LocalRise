@@ -39,6 +39,10 @@ export function HeroVideo({
 }) {
   const [reduceMotion, setReduceMotion] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  // The homepage background is the requested primary experience and must play
+  // consistently on desktop. Smaller supporting video panels still honour the
+  // operating-system reduced-motion preference with a static poster.
+  const usePoster = reduceMotion && size !== "bg";
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -50,24 +54,52 @@ export function HeroVideo({
 
   useEffect(() => {
     const el = videoRef.current;
-    if (!el || reduceMotion) return;
-    // Belt-and-braces autoplay fix: React's `muted` JSX attribute doesn't
-    // always land on the DOM `muted` *property* before the browser evaluates
-    // its autoplay-requires-muted policy, so the `autoPlay` attribute alone
-    // can get silently rejected in some browsers/versions — the video just
-    // sits on its poster frame forever with no visible error. Setting the
-    // property imperatively and calling `.play()` ourselves sidesteps that.
+    if (!el || usePoster) return;
+    // Desktop browsers can evaluate autoplay before the selected source is
+    // ready. Keep both muted properties set, then retry only at meaningful
+    // lifecycle boundaries. The poster remains the complete fallback when a
+    // browser policy or power-saving mode still declines playback.
     el.muted = true;
-    const playPromise = el.play();
-    if (playPromise && typeof playPromise.catch === "function") {
-      playPromise.catch((err) => {
-        if (process.env.NODE_ENV !== "production") {
-          // eslint-disable-next-line no-console
-          console.warn("HeroVideo: autoplay was rejected", err);
-        }
-      });
-    }
-  }, [reduceMotion]);
+    el.defaultMuted = true;
+
+    let playPending = false;
+    let pauseRecoveryUsed = false;
+    const attemptPlay = () => {
+      if (document.hidden || !el.paused || playPending) return;
+      playPending = true;
+      el.play()
+        .catch(() => {
+          // Expected when browser policy blocks autoplay; keep the poster.
+        })
+        .finally(() => {
+          playPending = false;
+        });
+    };
+    const onVisibilityChange = () => {
+      if (!document.hidden) attemptPlay();
+    };
+    const onUnexpectedPause = () => {
+      if (!el.ended && el.currentTime > 0 && !pauseRecoveryUsed) {
+        pauseRecoveryUsed = true;
+        attemptPlay();
+      }
+    };
+
+    el.addEventListener("loadeddata", attemptPlay);
+    el.addEventListener("canplay", attemptPlay);
+    el.addEventListener("pause", onUnexpectedPause);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    window.addEventListener("pageshow", attemptPlay);
+    if (el.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) attemptPlay();
+
+    return () => {
+      el.removeEventListener("loadeddata", attemptPlay);
+      el.removeEventListener("canplay", attemptPlay);
+      el.removeEventListener("pause", onUnexpectedPause);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("pageshow", attemptPlay);
+    };
+  }, [usePoster]);
 
   // In "bg" mode the video is decorative wallpaper behind a real <h1> that
   // already carries the message — hide it from screen readers rather than
@@ -75,14 +107,13 @@ export function HeroVideo({
   // primary visual content in their spot, so they keep the descriptive label.
   const decorative = size === "bg";
 
-  const media = reduceMotion ? (
+  const media = usePoster ? (
     <img
       src={POSTER}
-      alt={decorative ? "" : VIDEO_LABEL}
-      aria-hidden={decorative || undefined}
+      alt={VIDEO_LABEL}
       width={1280}
       height={720}
-      className={size === "bg" ? "block h-full w-full object-cover" : "block h-auto w-full"}
+      className="block h-auto w-full"
     />
   ) : (
     <video

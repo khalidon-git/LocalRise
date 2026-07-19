@@ -76,7 +76,7 @@ const jsonLd = {
       publisher: { "@id": `${siteUrl}/#organization` },
     },
     // FAQPage schema is NOT global — it renders as a page-level script on
-    // /why-us/ (see app/why-us/page.tsx), the only page showing <FAQ />. Keeping
+    // /faq/ (see app/faq/page.tsx), the only page showing the full FAQ. Keeping
     // it out of this graph avoids emitting FAQ schema on the homepage and every
     // other page, where no FAQ is visible.
   ],
@@ -104,8 +104,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {/* SiteChrome renders Nav/Footer/floating chrome around the page —
                 except on concept "live" routes, which render chrome-free so each
                 fictional brand stands alone. Providers stay mounted either way,
-                so the audio engine and the "Start Guided Experience" gesture
-                still work everywhere they should. */}
+                so the audio engine and its explicit Listen control still work
+                everywhere they should. */}
             <SiteChrome>{children}</SiteChrome>
           </CartProvider>
         </AudioProvider>

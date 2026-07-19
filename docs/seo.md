@@ -45,14 +45,13 @@ can't see it:
 
 | Page | Schema | Source |
 | --- | --- | --- |
-| `/why-us/` | `FAQPage` | `faqs` in `lib/content` — the only page rendering `<FAQ />` |
+| `/faq/` | `FAQPage` | `faqs` in `lib/content` — the only page rendering the complete FAQ |
 | `/services/[slug]/` | `Service` + `BreadcrumbList` (Home → Services → title) | `serviceDetails` |
 | `/concepts/` | `CollectionPage` | `concepts` |
 | `/concepts/[slug]/` | `CreativeWork` + `BreadcrumbList` | `concepts` |
 
 `FAQPage` briefly lived in the global graph and was emitting on every page
-(including the homepage, where no FAQ is visible) after Process/WhyChooseUs/FAQ
-moved to `/why-us/` — fixed by moving the schema there too, following the same
+(including the homepage, where no FAQ is visible). It now lives on `/faq/`, following the same
 per-page pattern already used by the concept pages.
 
 Injected via `<script type="application/ld+json">` with `dangerouslySetInnerHTML`.

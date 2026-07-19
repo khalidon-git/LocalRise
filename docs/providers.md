@@ -21,7 +21,6 @@ Global state and engines that must outlive route changes. Both live in
     <WhatsAppButton />
     <AudioToggle />      {/* consumes useAudio() */}
     <CartDrawer />       {/* consumes useCart() */}
-    <WelcomeModal />     {/* consumes useAudio().startNarration() */}
   </CartProvider>
 </AudioProvider>
 ```
@@ -32,7 +31,7 @@ created exactly once per page load — that's what makes a single audio instance
 guaranteed *by construction* rather than by a manual singleton.
 
 **Why `AudioProvider` is outermost.** It's the longest-lived concern and depends
-on nothing else. `WelcomeModal` must be inside it to call `startNarration()`.
+on nothing else. `AudioToggle` must be inside it to call `startNarration()`.
 `CartProvider` doesn't depend on audio, so the order between them is not load-
 bearing — but don't reorder without reason.
 

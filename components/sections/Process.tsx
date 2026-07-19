@@ -19,19 +19,22 @@ function Node({ step }: { step: (typeof process)[number] }) {
   );
 }
 
-export function Process() {
+export function Process({ showHeading = true }: { showHeading?: boolean }) {
   const reduce = useReducedMotion();
+  const StepTitle = showHeading ? "h3" : "h2";
 
   return (
     <section id="process" className="section-pad">
       <div className="container-x">
-        <SectionHeading
-          title="A clear path from idea to launch"
-          description="No confusion, no jargon. You always know exactly what's happening and what comes next."
-        />
+        {showHeading && (
+          <SectionHeading
+            title="A clear path from idea to launch"
+            description="No confusion, no jargon. You always know exactly what's happening and what comes next."
+          />
+        )}
 
         {/* Desktop: horizontal infographic timeline */}
-        <div className="relative mt-14 hidden xl:block">
+        <div className={showHeading ? "relative mt-14 hidden xl:block" : "relative hidden xl:block"}>
           {/* connector line (draws in on scroll), inset to sit between the first and last node centres */}
           <div className="absolute left-[8.33%] right-[8.33%] top-8 h-0.5 -translate-y-1/2 overflow-hidden rounded-full bg-line" aria-hidden="true">
             <motion.div
@@ -54,7 +57,7 @@ export function Process() {
               >
                 <Node step={step} />
                 <div className="mt-4 h-full w-full rounded-2xl border border-line bg-white p-4 shadow-xs transition-all duration-500 ease-premium group-hover:-translate-y-0.5 group-hover:shadow-md xl:mt-5">
-                  <h3 className="font-display text-base font-semibold tracking-tight text-ink">{step.title}</h3>
+                  <StepTitle className="font-display text-base font-semibold tracking-tight text-ink">{step.title}</StepTitle>
                   <p className="mt-1.5 text-body-sm text-ink-2">{step.desc}</p>
                 </div>
               </motion.li>
@@ -63,7 +66,7 @@ export function Process() {
         </div>
 
         {/* Mobile / tablet: vertical timeline */}
-        <div className="relative mx-auto mt-10 max-w-3xl sm:mt-12 xl:hidden">
+        <div className={showHeading ? "relative mx-auto mt-10 max-w-3xl sm:mt-12 xl:hidden" : "relative mx-auto max-w-3xl xl:hidden"}>
           <div
             className="absolute bottom-6 left-[27px] top-4 w-0.5 bg-gradient-to-b from-accent via-accent/40 to-transparent sm:left-[31px]"
             aria-hidden="true"
@@ -75,7 +78,7 @@ export function Process() {
                   <div className="group relative flex items-start gap-4 sm:gap-6">
                     <Node step={step} />
                     <div className="min-w-0 flex-1 rounded-2xl border border-line bg-white p-4 shadow-xs transition-all duration-500 ease-premium group-hover:-translate-y-0.5 group-hover:shadow-md sm:p-6">
-                      <h3 className="font-display text-lg font-semibold tracking-tight text-ink">{step.title}</h3>
+                      <StepTitle className="font-display text-lg font-semibold tracking-tight text-ink">{step.title}</StepTitle>
                       <p className="mt-1.5 text-body-sm text-ink-2">{step.desc}</p>
                     </div>
                   </div>

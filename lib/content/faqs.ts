@@ -1,4 +1,4 @@
-// Frequently asked questions (also feeds the FAQPage JSON-LD).
+// Frequently asked questions (also feeds FAQPage JSON-LD on /faq/).
 
 export type FAQ = { q: string; a: string };
 
@@ -36,4 +36,3 @@ export const faqs: FAQ[] = [
     a: "Just a short conversation. Book a free consultation and we'll understand your business, suggest the best option, and give you a clear price and timeline — no obligation.",
   },
 ];
-

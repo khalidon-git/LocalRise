@@ -10,15 +10,15 @@ import { HelpScene } from "@/components/illustrations/SpotScenes";
 import { cx } from "@/lib/utils";
 import { startConversation } from "@/lib/communication";
 
-export function FAQ() {
+export function FAQ({ showIntro = true }: { showIntro?: boolean }) {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
     <section id="faq" className="section-pad">
       <div className="container-x">
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
+        <div className={cx("grid gap-10 lg:gap-12", showIntro ? "lg:grid-cols-[0.8fr_1.2fr]" : "mx-auto max-w-4xl")}>
           {/* Left intro */}
-          <div className="lg:sticky lg:top-28 lg:self-start">
+          {showIntro && <div className="lg:sticky lg:top-28 lg:self-start">
             <Reveal delay={0.05}>
               <h2 className="font-display text-heading-1 font-semibold text-ink">
                 Questions? Answered simply.
@@ -47,7 +47,7 @@ export function FAQ() {
             <Reveal delay={0.2}>
               <HelpScene className="mt-8 hidden h-auto w-full max-w-56 lg:block" />
             </Reveal>
-          </div>
+          </div>}
 
           {/* Accordion */}
           <div className="divide-y divide-line rounded-2xl border border-line bg-white px-4 shadow-xs sm:px-6">

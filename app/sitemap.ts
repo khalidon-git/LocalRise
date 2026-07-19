@@ -12,6 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${siteUrl}/`, lastModified: now, changeFrequency: "monthly", priority: 1 },
     { url: `${siteUrl}/contact/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${siteUrl}/process/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/faq/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/why-us/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/concepts/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     ...services.map((s) => ({
