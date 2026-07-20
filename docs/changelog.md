@@ -8,6 +8,18 @@ in hPanel. See [deployment.md](./deployment.md).
 
 ---
 
+## 2026-07-21
+
+### Consent-gated Website WhatsApp Click conversion
+
+Configured the owner-supplied Google Ads conversion destination for genuine
+WhatsApp contact actions. Every production WhatsApp CTA already converges on
+`lib/communication/startConversation()`; that seam now queues exactly one Ads
+conversion per accepted-consent click before opening the unchanged `wa.me`
+destination. Absent or denied consent remains a tracking no-op.
+
+---
+
 ## 2026-07-18
 
 ### Indexing fixes + GA4/Google Ads conversion tracking

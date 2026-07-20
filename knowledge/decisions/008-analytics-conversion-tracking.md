@@ -1,4 +1,4 @@
-# ADR-008 — Google Analytics 4 + Google Ads conversion tracking
+# ADR-008 — Consent-gated Google Ads conversion tracking
 
 **Date**: 2026-07-18 · **Status**: Accepted · **Related**: [ADR-007](./007-concept-live-sites.md) (the first zero-external-request exception)
 
@@ -10,13 +10,11 @@ the site properly indexed and driving paid traffic, LocalRise is running
 **Google Ads** and needs to measure results: which visits become WhatsApp
 conversations, and which ads/keywords produced them.
 
-That requires two Google tags on the site:
-
-- **GA4** (`G-…`) — traffic and behaviour analytics.
-- **Google Ads** (`AW-…` + a conversion label) — so the ad account can attribute
-  conversions and optimise bidding.
-
-Both are delivered by the same script: `googletagmanager.com/gtag/js`.
+The active requirement is **Google Ads** (`AW-…` + a conversion label), so the
+ad account can attribute conversions and optimise bidding. The architecture
+retains dormant GA4 (`G-…`) support for a future owner-supplied measurement ID,
+but GA4 is not currently configured or emitted. Both products would use the
+same `googletagmanager.com/gtag/js` loader; the site never adds a second loader.
 
 This collides head-on with the site's standing rule (CLAUDE.md #8): **zero
 external requests** — self-hosted fonts, inline SVG, no CDNs, no third-party
@@ -27,8 +25,9 @@ documented exceptions."
 
 ## Decision
 
-Load Google's `gtag.js` to run GA4 + Google Ads conversion tracking, as a
-**deliberate, narrowly-scoped exception** to the zero-external-request rule.
+Load Google's `gtag.js` for Google Ads conversion tracking, with dormant GA4
+support, as a **deliberate, narrowly-scoped exception** to the
+zero-external-request rule.
 
 - The **only** new external origin permitted is `www.googletagmanager.com`
   (gtag.js), which in turn talks to Google's collection endpoints. Nothing else
@@ -44,13 +43,11 @@ Load Google's `gtag.js` to run GA4 + Google Ads conversion tracking, as a
 - **IDs live in a plain constants file**, `lib/analytics/config.ts`, matching the
   repo convention (`lib/content/brand.ts`). The project has no `.env` / runtime
   env pattern — a static export has no runtime env — so none was introduced.
-- A single WhatsApp conversion event is wired into the existing communication
-  layer: `lib/communication/index.ts`'s `trackConversationStart()` (previously a
-  documented no-op) now fires a Google Ads `conversion` event plus a mirrored
-  GA4 `start_conversation` event, carrying the discriminated `type`
-  (consultation / package / service / concept / …) and `meta` so conversions
-  stay segmentable. It is guarded by `typeof window.gtag === "function"`, so it
-  never throws during SSR/build.
+- A single WhatsApp conversion helper is wired into the existing communication
+  layer: every genuine WhatsApp action reaches `startConversation()`, which
+  invokes `trackWhatsAppConversion()` once immediately before opening WhatsApp.
+  The helper requires granted consent and an available `gtag`, emits only the
+  supplied Google Ads destination, and deduplicates accidental same-task calls.
 
 ## Advertiser, not publisher
 
@@ -63,19 +60,19 @@ it's the whole justification for making the exception at all.
 
 ## Configuration status
 
-The account-level Google Ads tag ID is configured. GA4 and the Ads conversion
-label remain **obvious placeholders**; we will not invent plausible-looking
-values:
+The account-level Google Ads tag ID and owner-supplied WhatsApp conversion label
+are configured. GA4 remains an **obvious placeholder**; we will not invent a
+plausible-looking value:
 
 | Constant | Placeholder | Source |
 | --- | --- | --- |
 | `GA4_MEASUREMENT_ID` | `G-XXXXXXXXXX` | GA → Admin → Data Streams → Measurement ID |
 | `GOOGLE_ADS_CONVERSION_ID` | `AW-18332132948` | Configured account-level Google Ads tag |
-| `GOOGLE_ADS_CONVERSION_LABEL` | `XXXXXXXXXXXXXXXXXXXX` | Same conversion action (part after the `/`) |
+| `GOOGLE_ADS_CONVERSION_LABEL` | `19YtCNmr49McENTMuKVE` | Website WhatsApp Click conversion action |
 
 `config.ts` separates the base Google Ads tag from event conversion readiness.
-The base tag can load only after explicit consent; the WhatsApp conversion event
-remains inert until a real conversion label is supplied.
+Both remain inert until explicit consent; the conversion event uses the exact
+destination `AW-18332132948/19YtCNmr49McENTMuKVE`.
 
 ## Consent gate
 
@@ -108,7 +105,6 @@ before they can fire.
 
 ## Future
 
-If a second conversion surface appears (e.g. a phone-call or form-submit
-channel in `lib/communication`), fire it from the same `trackConversationStart`
-seam — one tracking call site, already segmented by `type`. Every future
-measurement call must retain the shared stored-consent guard.
+If a second conversion surface appears (e.g. a phone-call channel), give it a
+distinct conversion helper and destination at the same communication boundary.
+Every future measurement call must retain the shared stored-consent guard.

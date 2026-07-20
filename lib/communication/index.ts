@@ -18,13 +18,9 @@
 import type { StartConversationInput } from "./types";
 import { buildMessage } from "./messages";
 import { openWhatsApp } from "./whatsapp";
-import {
-  GOOGLE_ADS_CONVERSION_ID,
-  GOOGLE_ADS_CONVERSION_LABEL,
-  adsEnabled,
-  ga4Enabled,
-} from "@/lib/analytics/config";
+import { ga4Enabled } from "@/lib/analytics/config";
 import { isConsentGranted } from "@/lib/analytics/consent";
+import { trackWhatsAppConversion } from "@/lib/analytics/conversions";
 
 export type { Channel, Meta, CartItem, MessageType, StartConversationInput } from "./types";
 
@@ -36,18 +32,13 @@ export type { Channel, Meta, CartItem, MessageType, StartConversationInput } fro
 // has not loaded. The event-specific flags below keep the account-level Ads
 // tag separate from conversion and GA4 event configuration.
 function trackConversationStart(input: StartConversationInput): void {
-  if (typeof window === "undefined" || typeof window.gtag !== "function" || !isConsentGranted()) return;
+  trackWhatsAppConversion();
 
-  // Google Ads conversion — send_to is "AW-XXXXXXXXXX/label". Only fires once
-  // BOTH the conversion id and label are real (see adsEnabled in
-  // lib/analytics/config.ts) — a real id with a forgotten label would send a
-  // conversion hit that matches nothing in the Ads account and fail silently.
-  if (adsEnabled) {
-    window.gtag("event", "conversion", {
-      send_to: `${GOOGLE_ADS_CONVERSION_ID}/${GOOGLE_ADS_CONVERSION_LABEL}`,
-      conversation_type: input.type,
-    });
-  }
+  if (
+    typeof window === "undefined" ||
+    typeof window.gtag !== "function" ||
+    !isConsentGranted()
+  ) return;
 
   // GA4 is independent of Ads and must not fire until its own measurement id
   // exists. Loading only the Google Ads base tag does not create an event.
@@ -62,11 +53,11 @@ function trackConversationStart(input: StartConversationInput): void {
 }
 
 export function startConversation(input: StartConversationInput): void {
-  trackConversationStart(input);
   const message = buildMessage(input);
 
   switch (input.channel) {
     case "whatsapp":
+      trackConversationStart(input);
       openWhatsApp(message);
       return;
     default: {

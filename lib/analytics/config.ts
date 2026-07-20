@@ -1,10 +1,10 @@
 // ---------------------------------------------------------------------------
 // Analytics & conversion tracking configuration.
 //
-// The Google Ads account tag is configured. GA4 and the Google Ads conversion
-// label remain placeholders, so neither analytics events nor Ads conversion
-// events are emitted yet. Loading Google's gtag.js is a deliberate, scoped
-// exception to the zero-external-request rule; see ADR-008.
+// The Google Ads account tag and WhatsApp-click conversion are configured.
+// GA4 remains a placeholder, so no GA4 configuration or event is emitted.
+// Loading Google's gtag.js is a deliberate, consent-gated exception to the
+// zero-external-request rule; see ADR-008.
 //
 // Where to get the real values:
 //
@@ -27,11 +27,13 @@
 
 export const GA4_MEASUREMENT_ID = "G-XXXXXXXXXX";
 export const GOOGLE_ADS_CONVERSION_ID: string = "AW-18332132948";
-export const GOOGLE_ADS_CONVERSION_LABEL = "XXXXXXXXXXXXXXXXXXXX";
+export const GOOGLE_ADS_CONVERSION_LABEL: string = "19YtCNmr49McENTMuKVE";
+export const GOOGLE_ADS_WHATSAPP_CONVERSION_DESTINATION =
+  `${GOOGLE_ADS_CONVERSION_ID}/${GOOGLE_ADS_CONVERSION_LABEL}`;
 
 // The account-level Ads tag can be configured before a conversion action
-// exists. Conversion events stay independently gated on the label so a base
-// tag never sends an incomplete WhatsApp conversion.
+// exists. Conversion events stay independently gated on the supplied label so
+// a base tag can never send an incomplete WhatsApp conversion.
 export const ga4Enabled = GA4_MEASUREMENT_ID !== "G-XXXXXXXXXX";
 export const googleAdsEnabled = GOOGLE_ADS_CONVERSION_ID !== "AW-XXXXXXXXXX";
 export const adsEnabled =

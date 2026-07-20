@@ -106,7 +106,7 @@ It is not called from pages or every deployment.
 
 ## Analytics & conversion tracking
 
-Consent-gated Google Ads measurement, with dormant GA4/conversion-event support,
+Consent-gated Google Ads measurement and WhatsApp conversion tracking, with dormant GA4 support,
 lives in `components/analytics/GoogleTag.tsx` (mounted in the server
 `layout.tsx`) and `lib/analytics/config.ts`. This is a **second, deliberate exception** to the
 site's zero-external-request rule — see
@@ -121,8 +121,10 @@ all four fields to granted, and loads/configures the tag once. Rejecting keeps
 the tag absent. The footer's Cookie preferences control lets visitors revise
 the choice. Withdrawing after opt-in saves denied, clears recognised first-party
 Google advertising cookies and reloads the page so the executed Google runtime
-cannot continue in the document. GA4 and the Ads conversion label remain obvious placeholders, so
-no GA4 or WhatsApp conversion event is emitted.
+cannot continue in the document. Genuine WhatsApp contact actions pass through
+the shared communication layer, which emits the configured Google Ads
+conversion destination once per accepted-consent click. GA4 remains an obvious
+placeholder, so no GA4 configuration or event is emitted.
 
 ## Performance (SEO-adjacent)
 

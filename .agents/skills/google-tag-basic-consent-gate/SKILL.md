@@ -1,6 +1,6 @@
 ---
 name: google-tag-basic-consent-gate
-description: Implement or audit Basic Consent Mode v2 for Google Ads or GA tags when requirements include explicit opt-in, zero Google requests before consent, persistent Accept/Reject choices, withdrawal, and matching privacy disclosures. Do not use for Google Tag Manager container design, server-side tagging, conversion-action setup, or legal advice.
+description: Implement or audit Basic Consent Mode v2 and consent-gated Google Ads or GA click conversion events when requirements include explicit opt-in, zero Google requests before consent, persistent choices, withdrawal, genuine-action tracking, and matching privacy disclosures. Do not use for configuring conversion actions inside Google Ads, GTM container design, server-side tagging, or legal advice.
 ---
 
 # Google Tag Basic Consent Gate
@@ -26,6 +26,15 @@ Build a consent boundary whose observable network behavior matches the privacy p
 8. Gate every application event at its shared emission boundary using the same stored-consent check. A consent-aware loader alone is insufficient.
 9. Ensure client navigation neither remounts nor duplicates the loader. Keep metadata-exporting layouts server components when the framework requires it.
 
+## Application conversion events
+
+1. Map every genuine action and prove whether it converges on a shared execution seam. Search for direct destination URLs that bypass that seam.
+2. Fire the conversion at the shared action boundary immediately before the real destination opens. Do not attach handlers separately to every visual button and do not track decorative icons or page loads.
+3. Require stored granted consent, an enabled owner-supplied destination, and an existing `window.gtag`. A denied click must remain a tracking no-op and must not load Google.
+4. Keep the event payload limited to the authorized fields. Do not invent labels, enhanced-conversion data, or message content.
+5. Avoid `event_callback` when the external action can open synchronously. Catch measurement failures so tracking never delays or blocks navigation.
+6. Guarantee one event per physical click at the central seam. If nested or bubbling callers are possible, use a same-browser-task guard that resets in a microtask; later user clicks must remain independently trackable.
+
 ## Disclosure integrity
 
 - Update the existing privacy policy to name the active provider, purpose, exact tag ID, choice mechanism, withdrawal limitation, and provider privacy/cookie links.
@@ -47,6 +56,7 @@ Verify these states separately:
 6. Denied to granted and re-grant: one loader/config initialization with no duplication.
 7. Generated routes: no active Google loader or external Google origin in static HTML before hydration and consent.
 8. Privacy route and exceptional chrome-free routes: preference access and wording match behavior.
+9. Conversion surfaces: no-consent and denied clicks open the real destination with zero conversion calls; granted clicks emit the exact destination once and still open it. Exercise representative wrappers plus every distinct direct call path.
 
 ## Output
 
