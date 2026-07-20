@@ -10,3 +10,4 @@ export * from "./concepts";
 export * from "./conceptSites";
 export * from "./process";
 export * from "./faqs";
+export * from "./legal";

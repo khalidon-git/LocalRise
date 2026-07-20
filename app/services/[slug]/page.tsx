@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { services, serviceDetails, packages, faqs, brand } from "@/lib/content";
+import { services, serviceDetails, packages, faqs, serviceScopeNote } from "@/lib/content";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
 import { ConversationButton } from "@/components/ui/ConversationButton";
@@ -12,8 +12,7 @@ import { ServiceHeroVisual } from "@/components/sections/ServiceHeroVisual";
 import { PackageCard } from "@/components/sections/PackageCard";
 import { ServiceFAQ } from "@/components/sections/ServiceFAQ";
 import { formatINR } from "@/lib/utils";
-
-const siteUrl = "https://localrise.in";
+import { SITE_URL, absoluteUrl, createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
 // Required for `output: export` — pre-render one page per service id.
 export function generateStaticParams() {
@@ -31,14 +30,11 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const data = getService(params.slug);
   if (!data) return {};
   const { service, detail } = data;
-  const url = `${siteUrl}/services/${service.id}`;
-  return {
-    title: service.title, // root layout applies the "%s · LocalRise" template
-    description: detail.sub,
-    alternates: { canonical: url },
-    openGraph: { title: `${service.title} · LocalRise`, description: detail.sub, url, type: "website" },
-    twitter: { card: "summary_large_image", title: `${service.title} · LocalRise`, description: detail.sub },
-  };
+  return createPageMetadata({
+    title: detail.seoTitle,
+    description: detail.metaDescription,
+    path: `/services/${service.id}/`,
+  });
 }
 
 export default function ServicePage({ params }: { params: { slug: string } }) {
@@ -47,31 +43,35 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
   const { service, detail } = data;
   const pkg = packages.find((p) => p.id === detail.relatedPackageId);
   const serviceFaqs = detail.faqPicks.map((i) => faqs[i]).filter(Boolean);
+  const relatedServices = detail.relatedServiceIds.flatMap((id) => {
+    const related = services.find((item) => item.id === id);
+    return related ? [related] : [];
+  });
+  const url = absoluteUrl(`/services/${service.id}/`);
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Service",
+        "@id": `${url}#service`,
         name: service.title,
-        description: detail.sub,
+        description: detail.metaDescription,
         serviceType: service.title,
-        areaServed: "IN",
-        provider: { "@type": "ProfessionalService", "@id": `${siteUrl}/#organization`, name: brand.name },
-        url: `${siteUrl}/services/${service.id}`,
-        ...(detail.priceFrom
-          ? { offers: { "@type": "Offer", price: detail.priceFrom, priceCurrency: "INR", availability: "https://schema.org/InStock" } }
-          : {}),
+        areaServed: { "@type": "Country", name: "India" },
+        provider: { "@id": `${SITE_URL}/#organization` },
+        url,
       },
       {
         // Mirrors the visible breadcrumb below: Home → Services (/#services) →
         // this service. "Services" points at the homepage anchor because there
         // is no /services/ index route.
         "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumb`,
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: `${siteUrl}/` },
-          { "@type": "ListItem", position: 2, name: "Services", item: `${siteUrl}/#services` },
-          { "@type": "ListItem", position: 3, name: service.title },
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Services", item: absoluteUrl("/#services") },
+          { "@type": "ListItem", position: 3, name: service.title, item: url },
         ],
       },
     ],
@@ -79,7 +79,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
 
   return (
     <main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
 
       {/* Hero */}
       <section className="relative overflow-hidden mesh-hero">
@@ -99,12 +99,13 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
               {service.title}
             </span>
 
-            <h1 className="mt-5 text-display-lg font-display text-ink">{detail.headline}</h1>
+            <h1 className="mt-5 text-heading-1 font-display text-ink">{detail.h1}</h1>
+            <p className="mt-4 font-display text-heading-3 font-semibold text-ink-2">{detail.headline}.</p>
             <p className="mt-5 max-w-xl text-body-lg text-ink-2">{detail.sub}</p>
 
             <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
               <Magnetic>
-                <Button href="/contact" size="lg" arrow>Get Free Consultation</Button>
+                <Button href="/contact/" size="lg" arrow>Get Free Consultation</Button>
               </Magnetic>
               <ConversationButton
                 start={{ channel: "whatsapp", type: "service", serviceName: service.title, price: detail.priceFrom, meta: { section: "service-detail-hero", button: service.id } }}
@@ -168,6 +169,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
                 </li>
               ))}
             </ul>
+            <p className="mt-5 text-body-sm text-ink-3">{serviceScopeNote}</p>
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="font-display text-heading-2 font-semibold text-ink">What you&apos;ll get</h2>
@@ -206,6 +208,37 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
         </section>
       )}
 
+      {relatedServices.length > 0 && (
+        <section className="section-pad">
+          <div className="container-x max-w-4xl">
+            <SectionHeading
+              title="Related services"
+              description="Combine the right services around one clear customer journey."
+            />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {relatedServices.map((related) => (
+                <SmartLink
+                  key={related.id}
+                  href={`/services/${related.id}/`}
+                  className="card card-hover flex items-center justify-between gap-4 p-5"
+                >
+                  <span>
+                    <span className="block font-display text-lg font-semibold text-ink">{related.title}</span>
+                    <span className="mt-1 block text-body-sm text-ink-2">{related.blurb}</span>
+                  </span>
+                  <Icon name="arrow-right" size={18} className="shrink-0 text-accent" />
+                </SmartLink>
+              ))}
+            </div>
+            <p className="mt-6 text-center text-body-sm text-ink-2">
+              See <SmartLink href="/process/" className="font-medium text-accent">how projects work</SmartLink>
+              {" or "}
+              <SmartLink href="/why-us/" className="font-medium text-accent">why local businesses choose LocalRise</SmartLink>.
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* FAQ */}
       {serviceFaqs.length > 0 && (
         <section className="section-pad bg-bg-subtle">
@@ -231,7 +264,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
             </p>
             <div className="relative mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Magnetic>
-                <Button href="/contact" size="lg" arrow>Get Free Consultation</Button>
+                <Button href="/contact/" size="lg" arrow>Get Free Consultation</Button>
               </Magnetic>
               <ConversationButton
                 start={{ channel: "whatsapp", type: "service", serviceName: service.title, price: detail.priceFrom, meta: { section: "service-detail-closing-cta", button: service.id } }}

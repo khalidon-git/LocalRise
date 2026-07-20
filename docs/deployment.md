@@ -61,6 +61,8 @@ binary assets are involved.**
 Copied into `out/` by the build, lands in `public_html`:
 
 - `ErrorDocument 404 /404.html` — serve the site's own 404.
+- Permanent canonical redirect for HTTP or `www` requests to the equivalent
+  `https://localrise.in` path.
 - `AddType audio/ogg .ogg .opus` — Apache doesn't always know Opus; without this
   the browser gets a generic download instead of playable audio.
 - Immutable 1-year cache **scoped to `/_next/static/`** only. Those filenames are
@@ -102,6 +104,11 @@ Expect `200`, and `audio/ogg` for the Opus file. Then spot-check a service page
 
 Browser-only checks (the build can't prove these) are listed in
 [audio.md](./audio.md#verification-checklist).
+
+For SEO-facing deploys, also run `npm run seo:verify` after the build, then
+check `/robots.txt`, `/sitemap.xml`, `/llms.txt`, canonical redirects and a real
+missing URL after the Hostinger redeploy. IndexNow submission is optional and
+must include only materially changed URLs; see `SEO_IMPLEMENTATION.md`.
 
 ## Repo hygiene
 

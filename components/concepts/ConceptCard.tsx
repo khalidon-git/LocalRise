@@ -18,7 +18,7 @@ export function ConceptCard({ concept }: { concept: Concept }) {
     // here was cutting it off. Rounding/clipping for the screenshot image
     // itself lives inside ScreenshotMock, which is the actual media frame.
     <article className="card group flex h-full flex-col p-2.5 sm:p-3">
-      <SmartLink href={`/concepts/${concept.slug}`} className="relative block">
+      <SmartLink href={`/concepts/${concept.slug}/`} className="relative block">
         {/* Honest badge: these are design concepts, never client work. */}
         <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-ink/80 px-2.5 py-1 text-label font-semibold text-white backdrop-blur">
           <span className="h-1.5 w-1.5 rounded-full bg-accent-bright" />
@@ -41,7 +41,7 @@ export function ConceptCard({ concept }: { concept: Concept }) {
             {concept.designStyle}
           </span>
         </div>
-        <SmartLink href={`/concepts/${concept.slug}`} className="mt-2">
+        <SmartLink href={`/concepts/${concept.slug}/`} className="mt-2">
           <h3 className="font-display text-xl font-semibold tracking-tight text-ink transition-colors group-hover:text-accent">
             {concept.name}
           </h3>
@@ -58,7 +58,7 @@ export function ConceptCard({ concept }: { concept: Concept }) {
         </ul>
 
         <div className="mt-5 grid gap-2.5 pt-1 sm:grid-cols-2">
-          <Button href={`/concepts/${concept.slug}/live`} size="md" variant="dark" icon="browser" className="w-full">
+          <Button href={`/concepts/${concept.slug}/live/`} size="md" variant="dark" icon="browser" className="w-full">
             Live Preview
           </Button>
           <ConversationButton

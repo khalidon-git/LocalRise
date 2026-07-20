@@ -3,7 +3,7 @@
 # Serve the site's own 404 page instead of Apache's default.
 ErrorDocument 404 /404.html
 
-# Canonical host: force the bare apex (non-www). www.localrise.in otherwise
+# Canonical scheme and host: force HTTPS on the bare apex. www.localrise.in otherwise
 # serves an identical copy of every page (same content, same ETag), which
 # splits Google's canonical signal across two hosts and can suppress indexing.
 # 301 so link equity consolidates on the apex — the host used by metadataBase
@@ -11,7 +11,8 @@ ErrorDocument 404 /404.html
 # the full path incl. the trailing slash, so /services/websites/ still lands.
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteCond %{HTTP_HOST} ^www\.localrise\.in$ [NC]
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} !^localrise\.in$ [NC]
   RewriteRule ^ https://localrise.in%{REQUEST_URI} [R=301,L,NE]
 </IfModule>
 

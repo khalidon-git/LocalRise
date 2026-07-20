@@ -1,0 +1,4 @@
+interface:
+  display_name: "Technical SEO Static Export Gate"
+  short_description: "Verify crawlable, canonical static SEO output"
+  default_prompt: "Use $technical-seo-static-export-gate to audit and verify this static-export site SEO."

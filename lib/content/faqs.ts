@@ -13,7 +13,7 @@ export const faqs: FAQ[] = [
   },
   {
     q: "Will my business show up on Google?",
-    a: "Yes. We set up your Google Business Profile and build your website in a way that helps people find you when they search for what you offer nearby.",
+    a: "We can set up or improve your Google Business Profile and build your website so search engines can understand it. Google controls verification and rankings, so no agency can guarantee a particular position or approval.",
   },
   {
     q: "Can customers contact me on WhatsApp?",

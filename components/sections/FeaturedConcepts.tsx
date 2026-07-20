@@ -26,7 +26,7 @@ export function FeaturedConcepts({ concepts }: { concepts: Concept[] }) {
         </div>
 
         <Reveal delay={0.1} className="mt-10 flex justify-center sm:mt-12">
-          <Button href="/concepts" variant="secondary" size="lg" arrow>
+          <Button href="/concepts/" variant="secondary" size="lg" arrow>
             See every concept in detail
           </Button>
         </Reveal>

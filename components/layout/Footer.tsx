@@ -18,7 +18,10 @@ const footerServices = [
   { label: "Branding", href: "/services/logo/" },
 ];
 
-const supportingLinks = [{ label: "Why Us", href: "/why-us/" }] as const;
+const supportingLinks = [
+  { label: "Why Us", href: "/why-us/" },
+  { label: "Concepts", href: "/concepts/" },
+] as const;
 
 // Only live profiles belong here — a dead social link costs more trust than a
 // missing one. Add Facebook / LinkedIn / X back once those accounts exist.
@@ -44,7 +47,7 @@ export function Footer() {
           </div>
           <GrowScene className="hidden h-auto w-52 shrink-0 xl:block" />
           <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row">
-            <Button href="/contact" size="lg" arrow className="w-full sm:w-auto">Get Free Consultation</Button>
+            <Button href="/contact/" size="lg" arrow className="w-full sm:w-auto">Get Free Consultation</Button>
             <ConversationButton
               start={{ channel: "whatsapp", type: "consultation", meta: { section: "footer", button: "whatsapp-us" } }}
               variant="whatsapp"
@@ -96,7 +99,7 @@ export function Footer() {
                 </li>
               ))}
               <li>
-                <SmartLink href="/contact" className="text-body-sm text-ink-inverse-2 transition-colors hover:text-white">Contact Us</SmartLink>
+                <SmartLink href="/contact/" className="text-body-sm text-ink-inverse-2 transition-colors hover:text-white">Contact Us</SmartLink>
               </li>
             </ul>
           </nav>
@@ -152,8 +155,8 @@ export function Footer() {
             Made with <Icon name="heart" size={13} className="text-accent-bright" /> for local businesses in India
           </p>
           <div className="flex gap-6">
-            <a href="#" className="transition-colors hover:text-white">Privacy</a>
-            <a href="#" className="transition-colors hover:text-white">Terms</a>
+            <SmartLink href="/privacy-policy/" className="transition-colors hover:text-white">Privacy</SmartLink>
+            <SmartLink href="/terms/" className="transition-colors hover:text-white">Terms</SmartLink>
           </div>
         </div>
       </div>

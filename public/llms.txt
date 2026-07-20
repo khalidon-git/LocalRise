@@ -1,0 +1,23 @@
+# LocalRise India
+
+> LocalRise is an India-focused digital studio helping local businesses get online, get found and get more customers.
+
+LocalRise provides professional websites, Google Business Profile setup, WhatsApp Business integration, ecommerce development, branding and business automation for small and local businesses across India.
+
+## Primary pages
+
+- [LocalRise India](https://localrise.in/): Company overview, packages and services.
+- [Why LocalRise](https://localrise.in/why-us/): How LocalRise works and what makes the company different.
+- [Website Design](https://localrise.in/services/websites/): Website design and development for small businesses.
+- [Google Business Profile](https://localrise.in/services/google/): Google Business Profile setup and optimization.
+- [WhatsApp Business Setup](https://localrise.in/services/whatsapp/): WhatsApp Business configuration and integration.
+- [Ecommerce Websites](https://localrise.in/services/store/): Online-store development for small businesses.
+- [Logo and Branding](https://localrise.in/services/logo/): Logo and brand identity services.
+- [Design Concepts](https://localrise.in/concepts/): Fictional demonstration website concepts across different industries.
+
+## Business information
+
+- Website: https://localrise.in/
+- Service area: India
+- Email: help@localrise.in
+- Phone: +91 91222 69958

@@ -3,7 +3,7 @@ import { Icon, type IconName } from "@/components/ui/Icon";
 import { ConsultScene } from "@/components/illustrations/SpotScenes";
 import { ContactWhatsAppCard } from "@/components/contact/ContactWhatsAppCard";
 
-// Contact methods, business hours and the schedule-a-meeting card. Pure
+// Contact methods and business hours. Pure
 // markup — no state — so unlike ContactForm this stays a server component.
 // WhatsApp is rendered separately via ContactWhatsAppCard (needs an onClick,
 // see that file); Call/Email stay plain links here.
@@ -40,7 +40,7 @@ export function ContactMethods() {
           ))}
         </div>
 
-        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <div className="mt-6">
           <div className="rounded-2xl border border-line bg-white p-4">
             <span className="inline-flex items-center gap-2 text-body-sm font-semibold text-ink">
               <Icon name="clock" size={16} className="text-accent" /> Business hours
@@ -48,19 +48,6 @@ export function ContactMethods() {
             <p className="mt-1.5 text-body-sm text-ink-2">Mon–Sat · 10am – 7pm</p>
             <p className="text-body-sm text-ink-3">WhatsApp us anytime</p>
           </div>
-          <a
-            href="https://calendly.com/localrise"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex flex-col justify-between rounded-2xl border border-line bg-white p-4 transition-all hover:-translate-y-0.5 hover:shadow-md"
-          >
-            <span className="inline-flex items-center gap-2 text-body-sm font-semibold text-ink">
-              <Icon name="calendar" size={16} className="text-accent" /> Schedule a meeting
-            </span>
-            <span className="mt-1.5 inline-flex items-center gap-1 text-body-sm text-accent">
-              Pick a time <Icon name="arrow-right" size={13} strokeWidth={2.2} className="transition-transform group-hover:translate-x-0.5" />
-            </span>
-          </a>
         </div>
       </div>
     </div>

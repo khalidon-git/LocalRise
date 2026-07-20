@@ -1,55 +1,70 @@
 import type { Metadata } from "next";
 import { concepts } from "@/lib/content";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { ConversationButton } from "@/components/ui/ConversationButton";
 import { Icon } from "@/components/ui/Icon";
 import { ConceptCard } from "@/components/concepts/ConceptCard";
+import { SITE_URL, absoluteUrl, createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
-const siteUrl = "https://localrise.in";
-const title = "Concept Websites";
+const title = "Website Design Concepts for Local Businesses | LocalRise";
 const description =
-  "Design concepts for local businesses — clinics, restaurants, hotels, stores, gyms and salons. Each one a different look and feel, built to show what your website could be.";
+  "Explore website design concepts created by LocalRise for restaurants, clinics, contractors, shops and other local business categories.";
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: `${siteUrl}/concepts/` },
-  openGraph: { title: `${title} · LocalRise`, description, url: `${siteUrl}/concepts/`, type: "website" },
-  twitter: { card: "summary_large_image", title: `${title} · LocalRise`, description },
-};
+export const metadata: Metadata = createPageMetadata({ title, description, path: "/concepts/" });
 
 // A CollectionPage rather than a portfolio of client work — these are concepts,
 // and the schema shouldn't imply otherwise.
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "@id": `${siteUrl}/concepts/#page`,
-  name: `${title} · LocalRise`,
-  description,
-  url: `${siteUrl}/concepts/`,
-  isPartOf: { "@id": `${siteUrl}/#website` },
-  about: concepts.map((c) => ({
-    "@type": "CreativeWork",
-    name: c.name,
-    genre: c.industry,
-    abstract: c.summary,
-    url: `${siteUrl}/concepts/${c.slug}/`,
-  })),
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${SITE_URL}/concepts/#page`,
+      name: title,
+      description,
+      url: absoluteUrl("/concepts/"),
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: concepts.map((c) => ({
+        "@type": "CreativeWork",
+        name: c.name,
+        genre: c.industry,
+        abstract: `${c.summary} A fictional design concept by LocalRise — not a client project.`,
+        url: absoluteUrl(`/concepts/${c.slug}/`),
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${SITE_URL}/concepts/#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+        { "@type": "ListItem", position: 2, name: "Concepts", item: absoluteUrl("/concepts/") },
+      ],
+    },
+  ],
 };
 
 export default function ConceptsPage() {
   return (
     <main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
 
       <section className="section-pad pt-28 sm:pt-32">
         <div className="container-x">
-          <SectionHeading
-            title="Concept websites for local businesses"
-            description="We're a young studio, so rather than borrow other people's logos we design honest concepts. Each is a different industry with its own colours, type and layout — the same care we'd bring to your business."
-          />
+          <div className="mx-auto flex flex-col items-center gap-2 text-center sm:gap-3">
+            <Reveal delay={0.05}>
+              <h1 className="font-display text-heading-section text-ink">
+                Website concepts for local businesses
+              </h1>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="max-w-prose text-body-sm text-ink-2 sm:text-body-lg">
+                We&apos;re a young studio, so rather than borrow other people&apos;s logos we design honest
+                concepts. Each is a different industry with its own colours, type and layout — the
+                same care we&apos;d bring to your business.
+              </p>
+            </Reveal>
+          </div>
 
           <Reveal delay={0.1} className="mx-auto mt-6 flex max-w-xl justify-center">
             <p className="inline-flex items-start gap-2 rounded-2xl border border-line bg-bg-subtle px-4 py-3 text-center text-body-sm text-ink-2">
@@ -78,7 +93,7 @@ export default function ConceptsPage() {
               timeline before we start.
             </p>
             <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
-              <Button href="/contact" size="lg" arrow>
+              <Button href="/contact/" size="lg" arrow>
                 Get a free consultation
               </Button>
               <ConversationButton

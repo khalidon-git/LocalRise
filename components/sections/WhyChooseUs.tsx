@@ -55,7 +55,7 @@ export function WhyChooseUs() {
           {/* CTA tile fills the grid */}
           <StaggerItem>
             <SmartLink
-              href="/contact"
+              href="/contact/"
               className="group flex min-h-48 h-full flex-col justify-between rounded-2xl accent-gradient p-5 text-white shadow-glow transition-transform duration-500 ease-premium hover:-translate-y-0.5 sm:p-6"
             >
               <div>

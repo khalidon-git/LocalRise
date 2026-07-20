@@ -1,0 +1,18 @@
+{
+  "name": "LocalRise India",
+  "short_name": "LocalRise",
+  "description": "Websites and digital growth services for local businesses across India.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2f5bff",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -21,27 +21,28 @@ export function Hero() {
         <HeroVideo size="bg" />
       </div>
 
-      <div className="container-x section-hero relative z-10 flex flex-1 flex-col items-start justify-center">
-        <div className="flex max-w-2xl flex-col items-start">
-          <h1 className="text-display-xl font-display text-ink">
-            Helping local businesses{" "}
-            <span className="relative whitespace-nowrap text-accent">
-              grow online
-              <svg className="absolute -bottom-2 left-0 w-full text-accent" height="12" viewBox="0 0 300 12" fill="none" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M2 8C60 3 240 3 298 8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" opacity="0.35" />
-              </svg>
-            </span>
-            .
+      <div className="container-x section-hero pointer-events-none relative z-10 flex flex-1 flex-col items-start justify-center">
+        <div className="flex max-w-3xl flex-col items-start">
+          <p className="mb-5 text-label font-semibold uppercase tracking-[0.16em] text-accent">
+            {brand.name} India
+          </p>
+
+          <h1 className="text-display-lg font-display text-ink">
+            Websites and digital growth for local businesses in India
           </h1>
 
-          <p className="mt-6 max-w-xl text-body-lg text-ink-2">
+          <p className="mt-6 max-w-2xl font-display text-heading-3 text-ink">
+            We help businesses get more customers.
+          </p>
+
+          <p className="mt-3 max-w-xl text-body-lg text-ink-2">
             Professional websites, Google visibility, WhatsApp integration and digital branding —
             designed to help your business attract more customers.
           </p>
 
-          <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+          <div className="pointer-events-auto mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
             <Magnetic>
-              <Button href="/contact" size="lg" arrow className="w-full sm:w-auto">
+              <Button href="/contact/" size="lg" arrow className="w-full sm:w-auto">
                 Get Free Consultation
               </Button>
             </Magnetic>

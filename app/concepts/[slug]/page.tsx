@@ -10,8 +10,7 @@ import { ScreenshotMock } from "@/components/concepts/ScreenshotMock";
 import { ScreenshotPhone } from "@/components/concepts/ScreenshotPhone";
 import { ConceptCard } from "@/components/concepts/ConceptCard";
 import { cx } from "@/lib/utils";
-
-const siteUrl = "https://localrise.in";
+import { SITE_URL, absoluteUrl, createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
 export function generateStaticParams() {
   return concepts.map((c) => ({ slug: c.slug }));
@@ -21,17 +20,10 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const concept = getConcept(params.slug);
   if (!concept) return {};
 
-  const title = `${concept.name} — ${concept.industry} Website Concept`;
+  const title = `${concept.name} — ${concept.industry} Website Concept | LocalRise`;
   const description = concept.summary;
-  const url = `${siteUrl}/concepts/${concept.slug}/`;
 
-  return {
-    title,
-    description,
-    alternates: { canonical: url },
-    openGraph: { title: `${title} · LocalRise`, description, url, type: "article" },
-    twitter: { card: "summary_large_image", title: `${title} · LocalRise`, description },
-  };
+  return createPageMetadata({ title, description, path: `/concepts/${concept.slug}/` });
 }
 
 export default function ConceptPage({ params }: { params: { slug: string } }) {
@@ -39,6 +31,7 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
   if (!concept) notFound();
 
   const others = concepts.filter((c) => c.slug !== concept.slug).slice(0, 2);
+  const url = absoluteUrl(`/concepts/${concept.slug}/`);
 
   // CreativeWork, not a portfolio item — and abstract states plainly that the
   // business is fictional, so the schema can't imply a real client.
@@ -47,19 +40,20 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
     "@graph": [
       {
         "@type": "CreativeWork",
-        "@id": `${siteUrl}/concepts/${concept.slug}/#concept`,
+        "@id": `${url}#concept`,
         name: concept.name,
         genre: concept.industry,
         abstract: `${concept.summary} A fictional design concept by LocalRise — not a client project.`,
-        creator: { "@id": `${siteUrl}/#organization` },
-        url: `${siteUrl}/concepts/${concept.slug}/`,
+        creator: { "@id": `${SITE_URL}/#organization` },
+        url,
       },
       {
         "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumb`,
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: `${siteUrl}/` },
-          { "@type": "ListItem", position: 2, name: "Concepts", item: `${siteUrl}/concepts/` },
-          { "@type": "ListItem", position: 3, name: concept.name },
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Concepts", item: absoluteUrl("/concepts/") },
+          { "@type": "ListItem", position: 3, name: concept.name, item: url },
         ],
       },
     ],
@@ -67,7 +61,7 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
 
   return (
     <main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
 
       <section className="section-pad pt-28 sm:pt-32">
         <div className="container-x">
@@ -78,7 +72,7 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
                 Home
               </SmartLink>
               <Icon name="arrow-right" size={13} strokeWidth={2} />
-              <SmartLink href="/concepts" className="transition-colors hover:text-ink">
+              <SmartLink href="/concepts/" className="transition-colors hover:text-ink">
                 Concepts
               </SmartLink>
               <Icon name="arrow-right" size={13} strokeWidth={2} />
@@ -105,7 +99,7 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
 
               <Reveal delay={0.15}>
                 <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                  <Button href={`/concepts/${concept.slug}/live`} size="lg" variant="dark" icon="browser" arrow>
+                  <Button href={`/concepts/${concept.slug}/live/`} size="lg" variant="dark" icon="browser" arrow>
                     Live Preview
                   </Button>
                   <ConversationButton
@@ -206,7 +200,7 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
         <div className="container-x">
           <div className="flex items-end justify-between gap-4">
             <h2 className="font-display text-heading-2 font-semibold text-ink">More concepts</h2>
-            <SmartLink href="/concepts" className="inline-flex items-center gap-1.5 text-body-sm font-medium text-accent">
+            <SmartLink href="/concepts/" className="inline-flex items-center gap-1.5 text-body-sm font-medium text-accent">
               View all
               <Icon name="arrow-right" size={15} strokeWidth={2} />
             </SmartLink>
@@ -226,7 +220,7 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
               what you do and we&apos;ll show you what it could become.
             </p>
             <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
-              <Button href="/contact" size="lg" arrow>
+              <Button href="/contact/" size="lg" arrow>
                 Get a free consultation
               </Button>
               <Button href="/#packages" variant="secondary" size="lg">

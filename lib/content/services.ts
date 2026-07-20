@@ -78,6 +78,9 @@ export const services: Service[] = [
 // package; `priceFrom` mirrors individualServices where one maps cleanly.
 // ---------------------------------------------------------------------------
 export type ServiceDetail = {
+  seoTitle: string;
+  metaDescription: string;
+  h1: string;
   headline: string;
   sub: string;
   who: string;
@@ -87,11 +90,18 @@ export type ServiceDetail = {
   outcomes: string[];
   faqPicks: number[];
   relatedPackageId: string;
+  relatedServiceIds: string[];
   priceFrom?: number;
 };
 
+export const serviceScopeNote =
+  "Third-party fees and work outside the agreed scope are not included unless they are listed in your proposal. We explain any separate cost before you approve it.";
+
 export const serviceDetails: Record<string, ServiceDetail> = {
   websites: {
+    seoTitle: "Website Design for Small Businesses in India | LocalRise",
+    metaDescription: "Get a fast, professional and mobile-friendly business website designed to generate calls, WhatsApp messages and customer enquiries across India.",
+    h1: "Website design for small businesses in India",
     headline: "A website that works as hard as you do",
     sub: "A fast, professional website that makes your business look established — and turns visitors into calls, messages and walk-ins.",
     who: "Perfect for any local business that wants to look credible online and be effortless to contact.",
@@ -106,9 +116,13 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     outcomes: ["More enquiries and calls", "A credible first impression", "Easy for customers to reach you"],
     faqPicks: [0, 1, 4],
     relatedPackageId: "growth",
+    relatedServiceIds: ["google", "whatsapp"],
     priceFrom: 7999,
   },
   google: {
+    seoTitle: "Google Business Profile Setup in India | LocalRise",
+    metaDescription: "Set up and optimize your Google Business Profile so nearby customers can find your business on Google Search and Google Maps.",
+    h1: "Google Business Profile setup for local businesses",
     headline: "Show up when nearby customers search",
     sub: "Get on Google Maps and local search so people nearby find you first — with photos, hours and one-tap directions.",
     who: "For any business that wants walk-ins and calls from people searching nearby.",
@@ -119,13 +133,17 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       { icon: "pin", title: "Easy to find", text: "Customers get directions to your door in a single tap." },
       { icon: "phone", title: "More calls", text: "A prominent call button right inside your Google listing." },
     ],
-    included: ["Profile setup & verification", "Photos & business hours", "Category & keyword tuning", "Google Posts setup", "Review link to collect ratings"],
+    included: ["Profile setup guidance", "Photos & business hours", "Category & keyword tuning", "Google Posts setup", "Review link to collect ratings"],
     outcomes: ["More walk-ins and calls", "Higher trust from reviews", "Found by nearby customers"],
     faqPicks: [2, 0, 5],
     relatedPackageId: "growth",
+    relatedServiceIds: ["websites", "reviews"],
     priceFrom: 2999,
   },
   whatsapp: {
+    seoTitle: "WhatsApp Business Setup for Small Businesses | LocalRise",
+    metaDescription: "Set up WhatsApp Business, click-to-chat links and website integration so customers can contact your business more easily.",
+    h1: "WhatsApp Business setup for local businesses",
     headline: "Turn visitors into WhatsApp chats",
     sub: "Let customers message you with one tap, and reply faster with a proper WhatsApp Business setup.",
     who: "For businesses that win customers through conversations, not forms.",
@@ -139,9 +157,13 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     outcomes: ["Faster replies", "More conversations", "Fewer missed enquiries"],
     faqPicks: [3, 1, 7],
     relatedPackageId: "starter",
+    relatedServiceIds: ["websites", "automation"],
     priceFrom: 1999,
   },
   store: {
+    seoTitle: "Ecommerce Website Development in India | LocalRise",
+    metaDescription: "Launch a fast, mobile-friendly ecommerce website designed for Indian small businesses to showcase products and accept customer orders.",
+    h1: "Ecommerce websites for small businesses in India",
     headline: "Sell online, take orders around the clock",
     sub: "A simple online store or booking system so customers can buy, book and pay 24/7 — even while you sleep.",
     who: "For shops, boutiques and services ready to sell or take bookings online.",
@@ -156,9 +178,13 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     outcomes: ["Sales beyond opening hours", "Fewer manual orders", "A shop that scales"],
     faqPicks: [0, 4, 5],
     relatedPackageId: "automation",
+    relatedServiceIds: ["websites", "whatsapp"],
     priceFrom: 19999,
   },
   logo: {
+    seoTitle: "Logo and Branding Design for Small Businesses | LocalRise",
+    metaDescription: "Build a clear and memorable business identity with professional logo and branding design created for growing small businesses.",
+    h1: "Logo and branding design for small businesses",
     headline: "A look customers remember",
     sub: "A memorable logo and a consistent set of colours and fonts that make your business instantly recognisable.",
     who: "For new businesses, or established ones ready to look the part.",
@@ -172,9 +198,13 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     outcomes: ["Instant recognition", "A premium first impression", "One consistent look"],
     faqPicks: [0, 4, 7],
     relatedPackageId: "starter",
+    relatedServiceIds: ["websites", "google"],
     priceFrom: 3499,
   },
   reviews: {
+    seoTitle: "Review and Reputation Setup for Local Businesses | LocalRise",
+    metaDescription: "Make it easier to request and display genuine customer reviews with practical reputation tools for local businesses in India.",
+    h1: "Review and reputation tools for local businesses",
     headline: "Let happy customers do the selling",
     sub: "Collect more 5-star reviews and show them off, so new customers trust you before they ever call.",
     who: "For businesses with happy customers who just aren't leaving reviews yet.",
@@ -188,9 +218,13 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     outcomes: ["A stronger reputation", "Higher trust from new customers", "More reviews on autopilot"],
     faqPicks: [2, 5, 7],
     relatedPackageId: "growth",
+    relatedServiceIds: ["google", "websites"],
     priceFrom: 2499,
   },
   automation: {
+    seoTitle: "Small Business Automation Services in India | LocalRise",
+    metaDescription: "Save time with practical enquiry capture, auto-replies, reminders and simple business automation designed for growing local businesses.",
+    h1: "Practical automation for local businesses",
     headline: "Let your business run on autopilot",
     sub: "Auto-replies, enquiry capture and reminders that work while you sleep — so no lead is ever missed.",
     who: "For busy owners who can't reply to everything by hand.",
@@ -205,6 +239,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     outcomes: ["No missed enquiries", "Hours saved every week", "A business that runs itself"],
     faqPicks: [3, 4, 5],
     relatedPackageId: "automation",
+    relatedServiceIds: ["whatsapp", "websites"],
     priceFrom: 29999,
   },
 };
@@ -254,7 +289,7 @@ export const individualServices: IndividualService[] = [
     delivery: "2 days",
     icon: "map",
     desc: "Get your business on Google Maps and local search results.",
-    includes: ["Profile setup & verification", "Photos & business hours", "Posts & category tuning"],
+    includes: ["Profile setup guidance", "Photos & business hours", "Posts & category tuning"],
     accent: "from-[#12b981] to-[#5be3b0]",
     visual: "maps",
   },
@@ -347,4 +382,3 @@ export const individualServices: IndividualService[] = [
 export const homepageServices: IndividualService[] = individualServices.filter(
   (s) => s.visual !== "shop" && s.visual !== "reviews",
 );
-

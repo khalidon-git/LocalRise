@@ -1,6 +1,7 @@
 import { cx } from "@/lib/utils";
 
-// The real logo mark (public/logo.png) is dark navy/blue on a transparent
+// The display-sized real logo mark (public/logo-display.png, derived from the
+// full-resolution public/logo.png) is dark navy/blue on a transparent
 // background — legible on light surfaces (Nav, which never sits on a dark
 // background) but nearly invisible on dark ones. Footer is the one dark
 // surface that uses this component, so tone="dark" sets it inside a small
@@ -14,7 +15,7 @@ export function Logo({
 }) {
   const img = (
     // eslint-disable-next-line @next/next/no-img-element -- output: export has no image loader
-    <img src="/logo.png" alt="LocalRise" width={752} height={328} className="h-9 w-auto" />
+    <img src="/logo-display.png" alt="LocalRise" width={200} height={87} className="h-9 w-auto" />
   );
 
   if (tone === "dark") {

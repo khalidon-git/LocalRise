@@ -45,7 +45,7 @@ export function LiveFooter({ site }: { site: ConceptSite }) {
                 >
                   Build something similar
                 </LiveConversationButton>
-                <LiveButton href={`/concepts/${site.slug}`} radius={theme.radius} variant="outline">About this concept</LiveButton>
+                <LiveButton href={`/concepts/${site.slug}/`} radius={theme.radius} variant="outline">About this concept</LiveButton>
               </div>
             </div>
           </Reveal>
@@ -57,7 +57,7 @@ export function LiveFooter({ site }: { site: ConceptSite }) {
         <p className="text-center text-sm text-[var(--lv-ink-muted)] sm:text-left">
           © {new Date().getFullYear()} {site.brandName} — a fictional Design Concept, not a real business.
         </p>
-        <SmartLink href="/concepts" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-[var(--lv-ink-muted)] hover:text-[var(--lv-ink)]">
+        <SmartLink href="/concepts/" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-[var(--lv-ink-muted)] hover:text-[var(--lv-ink)]">
           <Icon name="arrow-right" size={13} className="rotate-180" />
           All concept websites
         </SmartLink>

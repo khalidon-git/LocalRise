@@ -9,6 +9,7 @@ import { ServiceHeroVisual } from "@/components/sections/ServiceHeroVisual";
 import { ServiceFAQ } from "@/components/sections/ServiceFAQ";
 import { formatINR } from "@/lib/utils";
 import type { Package } from "@/lib/content";
+import { createPageMetadata } from "@/lib/seo";
 
 // ---------------------------------------------------------------------------
 // /lp/website-design/ — dedicated Google Ads landing page for the "Websites"
@@ -22,17 +23,19 @@ import type { Package } from "@/lib/content";
 // lib/content (ADR-004 honest-content: no invented claims or social proof).
 // ---------------------------------------------------------------------------
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   // Absolute title (bypasses the "%s · LocalRise" template) so the tab matches
   // the ad's message. Noindexed, so this never competes with the SEO page.
-  title: { absolute: "Business Website Design for Small Business · LocalRise" },
+  title: "Business Website Design for Small Business | LocalRise",
   description:
     "A fast, professional website for your small business — from ₹7,999. Mobile-first design, WhatsApp & call buttons, and transparent pricing with no hidden charges.",
   // Ads-only page: index:false avoids duplicate/thin-content risk against
   // /services/websites/; follow:true still lets any (rare) outbound crawl pass
   // link equity. Same pattern as app/concepts/[slug]/live/page.tsx.
-  robots: { index: false, follow: true },
-};
+  path: "/lp/website-design/",
+  canonicalPath: "/services/websites/",
+  index: false,
+});
 
 // A read-only price tier for the transparent-pricing anchor. No CTA and no link
 // of its own — the page keeps exactly one conversion action (the WhatsApp CTA),

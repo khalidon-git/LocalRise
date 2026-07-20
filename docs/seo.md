@@ -13,17 +13,18 @@ build-time — there is no server to render meta tags dynamically.
 | `app/services/[slug]/page.tsx` | Per-page `generateMetadata` |
 | `app/sitemap.ts` | Sitemap |
 | `app/robots.ts` | robots.txt |
+| `lib/seo/*` | Canonical constants, metadata builder and safe JSON-LD serializer |
 | `lib/content/*` | The source data for all of the above |
 
-Canonical host is `https://localrise.in`, declared as a `siteUrl` constant in
-`layout.tsx`, `sitemap.ts` and `robots.ts`. **Changing domain means updating all
-three.**
+Canonical host is `https://localrise.in`, declared once as `SITE_URL` in
+`lib/seo/config.ts` and consumed by metadata, schema, sitemap and robots output.
 
 ## Global metadata
 
 `app/layout.tsx` exports a `Metadata` object with `metadataBase`, a title
-template (`%s · LocalRise`), description, keywords, Open Graph, Twitter card,
-canonical and robots directives.
+template (`%s | LocalRise India`), the homepage title/description, Open Graph,
+Twitter, canonical, verification and detailed robots directives. Internal pages
+use `createPageMetadata()` so canonicals and social images cannot drift.
 
 > `app/layout.tsx` must stay a **server component** to export `metadata`. Adding
 > `"use client"` silently drops all of it. This is why providers are separate
@@ -36,8 +37,11 @@ so **contact details can never drift out of sync with the visible page**:
 
 | Node | Notes |
 | --- | --- |
-| `ProfessionalService` | Name, description, `email`, `telephone` (both numbers), `areaServed: "IN"`, `priceRange`, `sameAs: [instagram]` |
-| `WebSite` | Publisher → the organisation node |
+| `Organization` | Name/alternate names, verified logo/contact details, India service area, expertise and official Instagram profile; no fabricated address |
+| `WebSite` | `LocalRise India`, locale and publisher → the organisation node |
+
+The homepage adds its own `WebPage` node. It is deliberately not in the root
+layout because that would claim every route is the homepage.
 
 Per-page schema is added inline on the page that actually renders the matching
 content, not the global graph — so nothing emits on a page where a visitor
@@ -55,7 +59,8 @@ can't see it:
 per-page pattern already used by the concept pages.
 
 Injected via `<script type="application/ld+json">` with `dangerouslySetInnerHTML`.
-Safe here: the input is our own build-time content, not user data.
+Every page uses `serializeJsonLd()`, which removes empty values and escapes `<`
+and script-sensitive line separators. Inputs remain trusted build-time content.
 
 Validate changes with Google's Rich Results Test.
 
@@ -68,14 +73,15 @@ static export; a slug missing from it simply won't exist.
 ## Sitemap & robots
 
 `app/sitemap.ts` and `app/robots.ts` are Next's file conventions, emitted as
-static `sitemap.xml` / `robots.txt`. The sitemap enumerates `/` plus each service
-route from `lib/content`, so new services appear automatically.
+static `sitemap.xml` / `robots.txt`. The sitemap enumerates canonical indexable
+routes and deliberately omits build-time `lastmod`, arbitrary priority and
+change-frequency values. Noindex ad/live-preview routes are excluded.
 
 ## OG / Twitter image
 
 `app/opengraph-image.png` (1200×630, static file) — Next's file convention
-auto-wires `og:image` **and** `twitter:image` (Twitter inherits the OG image
-when `twitter` declares none of its own, which is the case in `layout.tsx`).
+provides the image asset. The root metadata and `createPageMetadata()` both
+declare the absolute asset explicitly for Open Graph and Twitter cards.
 Pure static-file copy, so it's fully `output: export`-compatible on any OS.
 
 > We tried `app/opengraph-image.tsx` with `next/og`'s `ImageResponse` first —
@@ -87,11 +93,16 @@ Pure static-file copy, so it's fully `output: export`-compatible on any OS.
 > revisiting. Until then, regenerate the static PNG by hand when the brand
 > visuals change.
 
-## Known gaps
+## Crawl and AI-discovery files
 
-- **Calendly link is still a placeholder** (`calendly.com/localrise`) in
-  `components/contact/ContactMethods.tsx`. Blocked on the owner setting up a
-  real Calendly account — can't be fixed in code.
+`public/llms.txt` provides a concise, factual page map. It is experimental and
+does not guarantee indexing. `robots.ts` explicitly permits general crawlers,
+OAI-SearchBot, GPTBot, Claude-SearchBot, Claude-User and ClaudeBot; the general
+allow rule already covers them, while explicit rules make policy easy to adjust.
+
+`scripts/submit-indexnow.mjs` is an opt-in deployment utility. It requires an
+environment key, a deployed public verification file and explicit changed URLs.
+It is not called from pages or every deployment.
 
 ## Analytics & conversion tracking
 
@@ -135,5 +146,5 @@ FAQs repoints them. See [content.md](./content.md).
 **More schema** on an existing page → add it as a page-level inline
 `<script type="application/ld+json">` (a `@graph` of related nodes if there's
 more than one), following the pattern in `services/[slug]/page.tsx` or
-`concepts/[slug]/page.tsx` — not the global graph in `layout.tsx`, which should
+`concepts/[slug]/page.tsx`, and serialize with `serializeJsonLd()` — not the global graph in `layout.tsx`, which should
 stay limited to things true on every page.

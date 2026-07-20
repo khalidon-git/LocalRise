@@ -7,6 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "typecheck": "tsc --noEmit",
+    "seo:verify": "node scripts/verify-seo.mjs",
+    "indexnow:submit": "node scripts/submit-indexnow.mjs",
     "verify": "npm run typecheck && npm run build",
     "start": "next start"
   },

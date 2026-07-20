@@ -79,19 +79,11 @@ function ShopVisual() {
 function ReviewsVisual() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-3">
-      <div className="flex items-baseline gap-1.5">
-        <span className="font-display text-3xl font-bold text-white">4.9</span>
-        <div className="flex gap-0.5 text-white">
-          {[0, 1, 2, 3, 4].map((i) => (
-            <Icon key={i} name="star" size={13} strokeWidth={0} className="fill-current" />
-          ))}
-        </div>
+      <div className="grid h-10 w-10 place-items-center rounded-full bg-white/90 text-ink shadow-md">
+        <Icon name="star" size={20} strokeWidth={1.8} />
       </div>
-      <div className="flex w-3/5 flex-col gap-1.5">
-        {[0.9, 0.6].map((w, i) => (
-          <div key={i} className="h-1.5 rounded-full bg-white/40" style={{ width: `${w * 100}%` }} />
-        ))}
-      </div>
+      <p className="rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold text-ink shadow-md">Review request</p>
+      <p className="text-[10px] font-medium uppercase tracking-wide text-white/80">Illustrative preview</p>
     </div>
   );
 }

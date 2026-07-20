@@ -10,8 +10,9 @@ import { cx } from "@/lib/utils";
 // an autoplaying video. Detected client-side via matchMedia (this component
 // is already "use client" via its parent, Hero.tsx) — motion is assumed
 // allowed on first paint so the common case never flashes/swaps, and only
-// reduced-motion visitors see a (near-instant, pre-decode) swap to the
-// poster image.
+// reduced-motion visitors never mount the video. The server renders the poster
+// first for everyone, making it the stable LCP candidate; motion-capable clients
+// enhance it to video after hydration.
 const POSTER = "/hero-poster.jpg";
 const VIDEO_LABEL =
   "Animated illustration: a local shop's storefront growing into a small, connected city skyline";
@@ -37,17 +38,15 @@ export function HeroVideo({
   className?: string;
   size?: Size;
 }) {
-  const [reduceMotion, setReduceMotion] = useState(false);
+  const [usePoster, setUsePoster] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  // The homepage background is the requested primary experience and must play
-  // consistently on desktop. Smaller supporting video panels still honour the
-  // operating-system reduced-motion preference with a static poster.
-  const usePoster = reduceMotion && size !== "bg";
+  const manuallyPausedRef = useRef(false);
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduceMotion(query.matches);
-    const onChange = (e: MediaQueryListEvent) => setReduceMotion(e.matches);
+    setUsePoster(query.matches);
+    const onChange = (e: MediaQueryListEvent) => setUsePoster(e.matches);
     query.addEventListener("change", onChange);
     return () => query.removeEventListener("change", onChange);
   }, []);
@@ -79,7 +78,7 @@ export function HeroVideo({
       if (!document.hidden) attemptPlay();
     };
     const onUnexpectedPause = () => {
-      if (!el.ended && el.currentTime > 0 && !pauseRecoveryUsed) {
+      if (!manuallyPausedRef.current && !el.ended && el.currentTime > 0 && !pauseRecoveryUsed) {
         pauseRecoveryUsed = true;
         attemptPlay();
       }
@@ -101,6 +100,20 @@ export function HeroVideo({
     };
   }, [usePoster]);
 
+  function togglePlayback() {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      manuallyPausedRef.current = false;
+      video.play().then(() => setIsPaused(false)).catch(() => undefined);
+    } else {
+      manuallyPausedRef.current = true;
+      video.pause();
+      setIsPaused(true);
+    }
+  }
+
   // In "bg" mode the video is decorative wallpaper behind a real <h1> that
   // already carries the message — hide it from screen readers rather than
   // announcing a redundant description. The "lg"/"sm" panel modes are the
@@ -110,10 +123,13 @@ export function HeroVideo({
   const media = usePoster ? (
     <img
       src={POSTER}
-      alt={VIDEO_LABEL}
+      alt={decorative ? "" : VIDEO_LABEL}
       width={1280}
       height={720}
-      className="block h-auto w-full"
+      loading="eager"
+      fetchPriority={size === "bg" ? "high" : "auto"}
+      aria-hidden={decorative || undefined}
+      className={size === "bg" ? "block h-full w-full object-cover" : "block h-auto w-full"}
     />
   ) : (
     <video
@@ -122,7 +138,7 @@ export function HeroVideo({
       muted
       loop
       playsInline
-      preload={size === "bg" ? "auto" : "metadata"}
+      preload="metadata"
       poster={POSTER}
       width={1280}
       height={720}
@@ -137,6 +153,22 @@ export function HeroVideo({
       <source src="/hero.mp4" type="video/mp4" />
     </video>
   );
+
+  const playbackControl = !usePoster ? (
+    <button
+      type="button"
+      onClick={togglePlayback}
+      aria-label={isPaused ? "Play background animation" : "Pause background animation"}
+      className={cx(
+        "pointer-events-auto absolute bottom-4 z-20 min-h-11 rounded-full border px-4 text-label font-semibold shadow-sm backdrop-blur-md transition-colors focus:outline-none focus:ring-4 focus:ring-accent/20",
+        size === "bg"
+          ? "right-24 border-white/60 bg-white/80 text-ink hover:bg-white sm:right-28"
+          : "right-4 border-line bg-white/90 text-ink hover:bg-white",
+      )}
+    >
+      {isPaused ? "Play animation" : "Pause animation"}
+    </button>
+  ) : null;
 
   if (size === "bg") {
     return (
@@ -157,9 +189,10 @@ export function HeroVideo({
           style={{
             background:
               "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(255,255,255,0.55) 16%, rgba(255,255,255,0.16) 30%, rgba(255,255,255,0) 44%), " +
-              "linear-gradient(100deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.86) 32%, rgba(255,255,255,0.5) 54%, rgba(255,255,255,0.12) 76%, rgba(255,255,255,0) 94%)",
+              "linear-gradient(100deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.90) 34%, rgba(255,255,255,0.70) 58%, rgba(255,255,255,0.28) 78%, rgba(255,255,255,0) 96%)",
           }}
         />
+        {playbackControl}
       </div>
     );
   }
@@ -179,6 +212,7 @@ export function HeroVideo({
 
       <div className={cx("relative overflow-hidden border border-line bg-bg-subtle", frame.panel)}>
         {media}
+        {playbackControl}
       </div>
     </div>
   );

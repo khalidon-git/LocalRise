@@ -7,18 +7,25 @@ import { AudioProvider } from "@/providers/AudioProvider";
 import { CartProvider } from "@/providers/CartProvider";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { GoogleTag } from "@/components/analytics/GoogleTag";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_TITLE,
+  SITE_NAME,
+  SITE_URL,
+  absoluteUrl,
+  serializeJsonLd,
+} from "@/lib/seo";
 
-const siteUrl = "https://localrise.in";
-const description =
-  "LocalRise builds professional websites, gets you found on Google, and connects customers over WhatsApp — helping local businesses across India attract more customers. Transparent pricing, fast delivery, no hidden charges.";
+const googleVerification = process.env.GOOGLE_SITE_VERIFICATION?.trim();
+const bingVerification = process.env.BING_SITE_VERIFICATION?.trim();
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "LocalRise — Helping Local Businesses Grow Online",
-    template: "%s · LocalRise",
+    default: DEFAULT_TITLE,
+    template: "%s | LocalRise India",
   },
-  description,
+  description: DEFAULT_DESCRIPTION,
   keywords: [
     "digital agency India",
     "local business website",
@@ -27,23 +34,32 @@ export const metadata: Metadata = {
     "affordable website design",
     "small business online",
   ],
-  authors: [{ name: "LocalRise" }],
-  creator: "LocalRise",
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  manifest: "/manifest.webmanifest",
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: siteUrl,
-    siteName: "LocalRise",
-    title: "LocalRise — Helping Local Businesses Grow Online",
-    description,
+    url: absoluteUrl("/"),
+    siteName: SITE_NAME,
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: [{ url: absoluteUrl("/opengraph-image.png"), width: 1200, height: 630, alt: "LocalRise India — websites and digital growth for local businesses" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "LocalRise — Helping Local Businesses Grow Online",
-    description,
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: [absoluteUrl("/opengraph-image.png")],
   },
-  alternates: { canonical: siteUrl },
-  robots: { index: true, follow: true },
+  alternates: { canonical: absoluteUrl("/") },
+  verification:
+    googleVerification || bingVerification
+      ? {
+          ...(googleVerification ? { google: googleVerification } : {}),
+          ...(bingVerification ? { other: { "msvalidate.01": bingVerification } } : {}),
+        }
+      : undefined,
 };
 
 export const viewport: Viewport = {
@@ -56,24 +72,47 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "ProfessionalService",
-      "@id": `${siteUrl}/#organization`,
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
       name: brand.name,
-      description,
-      url: siteUrl,
-      email: brand.email,
-      telephone: [brand.phoneDisplay, brand.phoneAltDisplay],
-      areaServed: "IN",
+      alternateName: ["LocalRise India", "LocalRise.in"],
+      description:
+        "LocalRise is an India-focused digital studio helping local businesses get more customers through professional websites, Google visibility, WhatsApp integration, branding and business automation.",
+      url: absoluteUrl("/"),
+      logo: {
+        "@type": "ImageObject",
+        "@id": `${SITE_URL}/#logo`,
+        url: absoluteUrl("/logo.png"),
+        contentUrl: absoluteUrl("/logo.png"),
+        caption: SITE_NAME,
+      },
+      email: `mailto:${brand.email}`,
+      telephone: [brand.phoneHref, brand.phoneAltHref],
+      contactPoint: [
+        { "@type": "ContactPoint", telephone: brand.phoneHref, contactType: "customer service", areaServed: "IN" },
+        { "@type": "ContactPoint", telephone: brand.phoneAltHref, contactType: "customer service", areaServed: "IN" },
+      ],
+      areaServed: { "@type": "Country", name: "India" },
       slogan: brand.tagline,
-      priceRange: "₹₹",
       sameAs: [brand.instagram],
+      knowsAbout: [
+        "Small business website design",
+        "Google Business Profile setup",
+        "WhatsApp Business setup",
+        "Ecommerce website development",
+        "Logo and branding design",
+        "Business automation",
+      ],
     },
     {
       "@type": "WebSite",
-      "@id": `${siteUrl}/#website`,
-      url: siteUrl,
-      name: brand.name,
-      publisher: { "@id": `${siteUrl}/#organization` },
+      "@id": `${SITE_URL}/#website`,
+      url: absoluteUrl("/"),
+      name: SITE_NAME,
+      alternateName: brand.name,
+      description: "Websites and digital growth services for local businesses across India.",
+      publisher: { "@id": `${SITE_URL}/#organization` },
+      inLanguage: "en-IN",
     },
     // FAQPage schema is NOT global — it renders as a page-level script on
     // /faq/ (see app/faq/page.tsx), the only page showing the full FAQ. Keeping
@@ -84,11 +123,11 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en-IN">
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
         />
         {/* Google tag (gtag.js) — GA4 + Google Ads conversion tracking. Renders
             nothing until real IDs are set in lib/analytics/config.ts, so the

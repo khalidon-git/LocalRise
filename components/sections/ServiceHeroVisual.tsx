@@ -5,16 +5,6 @@ import { BrowserMock } from "@/components/illustrations/BrowserMock";
 // BrowserMock plus one floating card themed to the service. CSS float
 // animations only (reduced-motion is handled globally in globals.css).
 
-function Stars({ n = 5 }: { n?: number }) {
-  return (
-    <span className="inline-flex items-center gap-0.5 text-[#FFB020]">
-      {Array.from({ length: n }).map((_, i) => (
-        <Icon key={i} name="star" size={11} strokeWidth={0} className="fill-current" />
-      ))}
-    </span>
-  );
-}
-
 const cardShell = "rounded-xl border border-line bg-white/95 p-3 shadow-lg backdrop-blur sm:rounded-2xl sm:p-3.5";
 
 function FloatingCard({ id }: { id: string }) {
@@ -27,12 +17,9 @@ function FloatingCard({ id }: { id: string }) {
               <Icon name="pin" size={18} />
             </span>
             <div>
-              <p className="text-[12px] font-semibold text-ink">Your Business</p>
-              <div className="mt-0.5 flex items-center gap-1.5">
-                <span className="text-[11px] font-semibold text-ink">4.9</span>
-                <Stars />
-              </div>
-              <p className="mt-1 text-[10px] text-ink-3">Open now · 2.1 km</p>
+              <p className="text-[12px] font-semibold text-ink">Business profile preview</p>
+              <p className="mt-1 text-[10px] text-ink-3">Hours · photos · directions</p>
+              <p className="mt-1 text-[9px] font-medium uppercase tracking-wide text-accent">Illustrative example</p>
             </div>
           </div>
         </div>
@@ -44,12 +31,12 @@ function FloatingCard({ id }: { id: string }) {
             <span className="grid h-6 w-6 place-items-center rounded-full bg-[#25D366] text-[#06240f]">
               <Icon name="whatsapp" size={13} />
             </span>
-            <span className="text-[11px] font-semibold text-ink">WhatsApp</span>
+            <span className="text-[11px] font-semibold text-ink">WhatsApp preview</span>
             <span className="ml-auto h-2 w-2 rounded-full bg-[#25D366]" />
           </div>
           <div className="space-y-1.5">
-            <div className="max-w-[85%] rounded-2xl rounded-tl-md bg-bg-muted px-3 py-1.5 text-[11px] text-ink-2">Are you open today?</div>
-            <div className="ml-auto max-w-[88%] rounded-2xl rounded-tr-md bg-[#DCFCE7] px-3 py-1.5 text-[11px] text-[#0b3d1e]">Yes! Till 9pm 🙌</div>
+            <div className="max-w-[85%] rounded-2xl rounded-tl-md bg-bg-muted px-3 py-1.5 text-[11px] text-ink-2">Customer enquiry</div>
+            <div className="ml-auto max-w-[88%] rounded-2xl rounded-tr-md bg-[#DCFCE7] px-3 py-1.5 text-[11px] text-[#0b3d1e]">Saved reply</div>
           </div>
         </div>
       );
@@ -58,12 +45,12 @@ function FloatingCard({ id }: { id: string }) {
         <div className={cardShell}>
           <div className="flex items-center justify-between">
             <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-ink-3">
-              <Icon name="cart" size={13} className="text-accent" /> New order
+              <Icon name="cart" size={13} className="text-accent" /> Order workflow
             </span>
-            <span className="rounded-full bg-[#e7f8ef] px-1.5 py-0.5 text-[10px] font-semibold text-[#12b981]">Paid</span>
+            <span className="rounded-full bg-accent-tint px-1.5 py-0.5 text-[10px] font-semibold text-accent">Example</span>
           </div>
-          <p className="mt-1 font-display text-lg font-semibold text-ink">₹1,249</p>
-          <p className="text-[10px] text-ink-3">2 items · WhatsApp checkout</p>
+          <p className="mt-2 text-[11px] font-semibold text-ink">Products · checkout · alerts</p>
+          <p className="mt-1 text-[10px] text-ink-3">Illustrative storefront preview</p>
         </div>
       );
     case "logo":
@@ -86,8 +73,8 @@ function FloatingCard({ id }: { id: string }) {
               <Icon name="star" size={14} strokeWidth={0} className="fill-current" />
             </span>
             <div>
-              <p className="text-[11px] font-semibold text-ink">+3 new reviews</p>
-              <Stars />
+              <p className="text-[11px] font-semibold text-ink">Review request ready</p>
+              <p className="mt-0.5 text-[10px] text-ink-3">Share link · QR code</p>
             </div>
           </div>
         </div>
@@ -98,16 +85,12 @@ function FloatingCard({ id }: { id: string }) {
       return (
         <div className={cardShell}>
           <div className="flex items-center justify-between">
-            <p className="text-[11px] font-medium text-ink-3">Visitors this month</p>
-            <span className="inline-flex items-center gap-0.5 rounded-full bg-[#e7f8ef] px-1.5 py-0.5 text-[10px] font-semibold text-[#12b981]">
-              <Icon name="arrow-up-right" size={10} strokeWidth={2.4} /> 128%
-            </span>
+            <p className="text-[11px] font-medium text-ink-3">Enquiry workflow</p>
+            <span className="rounded-full bg-accent-tint px-1.5 py-0.5 text-[10px] font-semibold text-accent">Example</span>
           </div>
-          <p className="mt-1 font-display text-2xl font-semibold text-ink">3,248</p>
-          <div className="mt-2 flex h-8 items-end gap-1">
-            {[35, 50, 42, 65, 58, 78, 70, 92, 84, 100].map((h, i) => (
-              <span key={i} className="flex-1 rounded-sm bg-gradient-to-t from-accent/30 to-accent" style={{ height: `${h}%` }} />
-            ))}
+          <div className="mt-2 space-y-1.5 text-[10px] text-ink-2">
+            <p className="rounded-md bg-bg-muted px-2 py-1">Website visit</p>
+            <p className="rounded-md bg-accent-tint px-2 py-1 text-accent">Call · WhatsApp · form</p>
           </div>
         </div>
       );
