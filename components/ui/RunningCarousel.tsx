@@ -2,11 +2,10 @@
 
 import { useRef, type ReactNode } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y, Autoplay, FreeMode, Navigation } from "swiper/modules";
+import { A11y, Autoplay, Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 
 import "swiper/css";
-import "swiper/css/free-mode";
 import "swiper/css/navigation";
 
 type RunningCarouselProps<T> = {
@@ -27,12 +26,8 @@ export function RunningCarousel<T>({
 
   return (
     <Swiper
-      modules={[Autoplay, FreeMode, Navigation, A11y]}
+      modules={[Autoplay, Navigation, A11y]}
       loop
-      freeMode={{
-        enabled: true,
-        momentum: false,
-      }}
       speed={isConcept ? 7500 : 5500}
       autoplay={{
         delay: 0,
