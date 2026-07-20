@@ -250,3 +250,47 @@
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Continuous-motion Swiper Running Carousel */
+.running-carousel {
+  width: 100%;
+  overflow: hidden;
+  padding: 0.5rem 0 3.25rem;
+}
+
+.running-carousel .swiper-wrapper {
+  align-items: stretch;
+  transition-timing-function: linear !important;
+}
+
+.running-carousel .swiper-slide {
+  display: flex;
+  height: auto;
+}
+
+.running-carousel .swiper-slide > * {
+  width: 100%;
+}
+
+.running-carousel .swiper-button-prev,
+.running-carousel .swiper-button-next {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgb(226 232 240);
+  border-radius: 999px;
+  background: white;
+  box-shadow: 0 8px 24px rgb(15 23 42 / 10%);
+}
+
+.running-carousel .swiper-button-prev::after,
+.running-carousel .swiper-button-next::after {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .running-carousel .swiper-wrapper {
+    transition-duration: 0ms !important;
+  }
+}
+
