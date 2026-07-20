@@ -34,10 +34,10 @@ Load Google's `gtag.js` to run GA4 + Google Ads conversion tracking, as a
   (gtag.js), which in turn talks to Google's collection endpoints. Nothing else
   is added: fonts stay self-hosted, imagery stays inline/self-hosted, no other
   third-party script or CDN is introduced.
-- The tag is loaded client-side via `next/script` with
+- After explicit consent, the tag is loaded client-side via `next/script` with
   `strategy="afterInteractive"` from **`components/analytics/GoogleTag.tsx`**,
-  mounted in `app/layout.tsx`. `GoogleTag` is a *server component*, so the layout
-  stays a server component and no exported `metadata` is lost (see
+  mounted in `app/layout.tsx`. `GoogleTag` is a client consent boundary while
+  the layout stays a server component, so no exported `metadata` is lost (see
   [docs/seo.md](../../docs/seo.md) / CLAUDE.md #3). This is compatible with
   `output: "export"`: gtag.js runs only in the browser at runtime; nothing about
   it needs a server.
@@ -61,22 +61,33 @@ reason a Google script loads is to attribute LocalRise's own ad spend to its own
 leads. That's a materially smaller privacy/perf surface than ad monetisation, and
 it's the whole justification for making the exception at all.
 
-## Real IDs are pending
+## Configuration status
 
-Shipped with **obvious placeholders** — the owner has not yet provided real
-account IDs, and we will not invent plausible-looking ones:
+The account-level Google Ads tag ID is configured. GA4 and the Ads conversion
+label remain **obvious placeholders**; we will not invent plausible-looking
+values:
 
 | Constant | Placeholder | Source |
 | --- | --- | --- |
 | `GA4_MEASUREMENT_ID` | `G-XXXXXXXXXX` | GA → Admin → Data Streams → Measurement ID |
-| `GOOGLE_ADS_CONVERSION_ID` | `AW-XXXXXXXXXX` | Google Ads → Tools → Conversions → Tag setup |
+| `GOOGLE_ADS_CONVERSION_ID` | `AW-18332132948` | Configured account-level Google Ads tag |
 | `GOOGLE_ADS_CONVERSION_LABEL` | `XXXXXXXXXXXXXXXXXXXX` | Same conversion action (part after the `/`) |
 
-`config.ts` exports `analyticsEnabled`, which is `false` while the placeholders
-are unchanged. **While disabled, `GoogleTag` renders nothing and no request to
-`googletagmanager.com` is made** — so until the owner deliberately pastes real
-IDs, the site still makes *zero* external requests and the exception is latent,
-not active. The conversion call is likewise inert (no `window.gtag` exists).
+`config.ts` separates the base Google Ads tag from event conversion readiness.
+The base tag can load only after explicit consent; the WhatsApp conversion event
+remains inert until a real conversion label is supplied.
+
+## Consent gate
+
+`GoogleTag` initializes a local gtag queue with all four Consent Mode v2 fields
+denied. It does not download or configure Google's tag until the visitor accepts
+optional cookies. The decision is stored as `localrise_consent_v1`; rejecting
+keeps the script absent, and the footer preference control supports withdrawal
+or later opt-in. Withdrawal updates consent to denied and removes recognised
+first-party Google advertising cookies where browser rules permit. If Google's
+runtime already loaded, withdrawal hard-reloads the page so the denied next
+document never mounts it. Conversion events also check the same stored consent
+before they can fire.
 
 ## Alternatives rejected
 
@@ -90,10 +101,8 @@ not active. The conversion call is likewise inert (no `window.gtag` exists).
 
 ## Trade-offs
 
-- **Cost**: the site is no longer strictly zero-external-request once real IDs
-  are set; adds Google's cookies/network calls and the usual analytics privacy
-  considerations. A cookie/consent notice may be warranted depending on the
-  audience — out of scope here, flagged for the owner.
+- **Cost**: visitors who opt in make Google's script and collection requests;
+  this adds payload and Google privacy considerations for those visitors.
 - **Benefit**: LocalRise can finally measure paid-traffic ROI and optimise Ads
   bidding toward real WhatsApp conversions — the point of running ads at all.
 
@@ -101,6 +110,5 @@ not active. The conversion call is likewise inert (no `window.gtag` exists).
 
 If a second conversion surface appears (e.g. a phone-call or form-submit
 channel in `lib/communication`), fire it from the same `trackConversationStart`
-seam — one tracking call site, already segmented by `type`. If consent
-management becomes required, gate `GoogleTag` (and the conversion call) behind
-the consent state rather than scattering checks.
+seam — one tracking call site, already segmented by `type`. Every future
+measurement call must retain the shared stored-consent guard.

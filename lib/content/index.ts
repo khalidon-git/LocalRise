@@ -11,3 +11,4 @@ export * from "./conceptSites";
 export * from "./process";
 export * from "./faqs";
 export * from "./legal";
+export * from "./consent";

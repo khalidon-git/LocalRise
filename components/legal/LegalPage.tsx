@@ -33,6 +33,22 @@ export function LegalPage({ title, description, updated, sections }: Props) {
                     </p>
                   ))}
                 </div>
+                {section.links && (
+                  <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-3">
+                    {section.links.map((link) => (
+                      <li key={link.href}>
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex min-h-11 items-center text-body-sm font-medium text-accent underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </section>
             ))}
           </div>

@@ -6,6 +6,7 @@ import { SmartLink } from "@/components/ui/SmartLink";
 import { Icon } from "@/components/ui/Icon";
 import { GrowScene } from "@/components/illustrations/SpotScenes";
 import { FooterWhatsAppLink } from "@/components/layout/FooterWhatsAppLink";
+import { CookiePreferencesButton } from "@/components/analytics/CookiePreferencesButton";
 
 // Deep-links into the per-service pages (short labels for the column).
 // Trailing slash matches the exported canonical URLs (trailingSlash: true) so
@@ -154,9 +155,10 @@ export function Footer() {
           <p className="inline-flex items-center gap-1.5">
             Made with <Icon name="heart" size={13} className="text-accent-bright" /> for local businesses in India
           </p>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
             <SmartLink href="/privacy-policy/" className="transition-colors hover:text-white">Privacy</SmartLink>
             <SmartLink href="/terms/" className="transition-colors hover:text-white">Terms</SmartLink>
+            <CookiePreferencesButton className="inline-flex min-h-11 items-center transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-ink" />
           </div>
         </div>
       </div>

@@ -129,11 +129,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
         />
-        {/* Google tag (gtag.js) — GA4 + Google Ads conversion tracking. Renders
-            nothing until real IDs are set in lib/analytics/config.ts, so the
-            site keeps making zero external requests until the owner opts in.
-            It's a server component (next/script works fine from one), so this
-            layout stays a server component — see knowledge/decisions/008. */}
+        {/* The client consent gate initializes denied local consent state and
+            only renders Google's external script after an explicit opt-in.
+            Keeping that client boundary here preserves this layout as a server
+            component, so its metadata exports remain intact. */}
         <GoogleTag />
         {/* AudioProvider sits at the root so its <audio> element is mounted once
             and survives every client-side navigation — never recreated, never

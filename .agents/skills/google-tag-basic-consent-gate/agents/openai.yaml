@@ -1,0 +1,4 @@
+interface:
+  display_name: "Google Tag Consent Gate"
+  short_description: "Gate Google tags behind explicit consent"
+  default_prompt: "Use $google-tag-basic-consent-gate to add or audit a no-request-before-consent Google tag integration."

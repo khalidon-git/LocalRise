@@ -18,22 +18,25 @@
 import type { StartConversationInput } from "./types";
 import { buildMessage } from "./messages";
 import { openWhatsApp } from "./whatsapp";
-import { GOOGLE_ADS_CONVERSION_ID, GOOGLE_ADS_CONVERSION_LABEL, adsEnabled } from "@/lib/analytics/config";
+import {
+  GOOGLE_ADS_CONVERSION_ID,
+  GOOGLE_ADS_CONVERSION_LABEL,
+  adsEnabled,
+  ga4Enabled,
+} from "@/lib/analytics/config";
+import { isConsentGranted } from "@/lib/analytics/consent";
 
 export type { Channel, Meta, CartItem, MessageType, StartConversationInput } from "./types";
 
-// Fires a Google Ads conversion (the primary outbound signal — LocalRise is the
-// advertiser) plus a mirrored GA4 event whenever a conversation starts. The
-// discriminated `type` and `meta` ride along as event params so conversions
-// stay segmentable (consultation vs package vs service vs concept, and which
-// section/button drove them) without restructuring anything here.
+// Fires configured Google Ads and GA4 events when a conversation starts. The
+// discriminated `type` and `meta` keep configured events segmentable without
+// restructuring anything here.
 //
 // Guarded so it's a safe no-op during SSR/static export and whenever gtag.js
-// hasn't loaded — which includes the default state where lib/analytics/config
-// still holds placeholder IDs (GoogleTag renders nothing, so window.gtag is
-// undefined and this simply returns).
+// has not loaded. The event-specific flags below keep the account-level Ads
+// tag separate from conversion and GA4 event configuration.
 function trackConversationStart(input: StartConversationInput): void {
-  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
+  if (typeof window === "undefined" || typeof window.gtag !== "function" || !isConsentGranted()) return;
 
   // Google Ads conversion — send_to is "AW-XXXXXXXXXX/label". Only fires once
   // BOTH the conversion id and label are real (see adsEnabled in
@@ -46,14 +49,16 @@ function trackConversationStart(input: StartConversationInput): void {
     });
   }
 
-  // GA4 custom event — independent of Ads; fires whenever gtag.js is loaded
-  // at all (i.e. whenever GA4 or Ads is enabled), kept for segmentation.
-  window.gtag("event", "start_conversation", {
-    channel: input.channel,
-    conversation_type: input.type,
-    section: input.meta?.section,
-    button: input.meta?.button,
-  });
+  // GA4 is independent of Ads and must not fire until its own measurement id
+  // exists. Loading only the Google Ads base tag does not create an event.
+  if (ga4Enabled) {
+    window.gtag("event", "start_conversation", {
+      channel: input.channel,
+      conversation_type: input.type,
+      section: input.meta?.section,
+      button: input.meta?.button,
+    });
+  }
 }
 
 export function startConversation(input: StartConversationInput): void {

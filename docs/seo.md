@@ -106,21 +106,23 @@ It is not called from pages or every deployment.
 
 ## Analytics & conversion tracking
 
-GA4 + Google Ads conversion tracking via `components/analytics/GoogleTag.tsx`
-(mounted in `layout.tsx`, still a server component) and
-`lib/analytics/config.ts`. This is a **second, deliberate exception** to the
+Consent-gated Google Ads measurement, with dormant GA4/conversion-event support,
+lives in `components/analytics/GoogleTag.tsx` (mounted in the server
+`layout.tsx`) and `lib/analytics/config.ts`. This is a **second, deliberate exception** to the
 site's zero-external-request rule — see
 [ADR-008](../knowledge/decisions/008-analytics-conversion-tracking.md) for the
 full reasoning (ADR-007 was the first, for concept-site imagery).
 
-Ships with placeholder IDs — the tag renders nothing and the site makes no
-external request until real GA4/Google Ads IDs are pasted into
-`lib/analytics/config.ts`. `lib/communication/index.ts`'s
-`trackConversationStart()` fires the conversion event once enabled.
-**Before enabling in production, add a cookie/consent notice** — loading
-`gtag.js` sets Google cookies, which typically requires visitor consent under
-Indian (DPDP Act) and EU (GDPR) rules depending on audience. Not yet built;
-flagged here so it isn't missed.
+The Google Ads account tag ID is configured. Before a visitor chooses Accept,
+the client initializes a local Consent Mode v2 queue with `ad_storage`,
+`analytics_storage`, `ad_user_data` and `ad_personalization` denied; it does not
+render or request `gtag.js`. Accepting persists `localrise_consent_v1`, updates
+all four fields to granted, and loads/configures the tag once. Rejecting keeps
+the tag absent. The footer's Cookie preferences control lets visitors revise
+the choice. Withdrawing after opt-in saves denied, clears recognised first-party
+Google advertising cookies and reloads the page so the executed Google runtime
+cannot continue in the document. GA4 and the Ads conversion label remain obvious placeholders, so
+no GA4 or WhatsApp conversion event is emitted.
 
 ## Performance (SEO-adjacent)
 

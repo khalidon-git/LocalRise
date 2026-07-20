@@ -1,6 +1,10 @@
 export type LegalSection = {
   heading: string;
   paragraphs: readonly string[];
+  links?: readonly {
+    label: string;
+    href: string;
+  }[];
 };
 
 export const privacyPolicy = {
@@ -20,7 +24,7 @@ export const privacyPolicy = {
       heading: "Hosting and device data",
       paragraphs: [
         "When you visit the site, Hostinger may process standard request information such as your IP address, browser, requested page and request time to deliver and secure the website. Hostinger controls its own operational log retention under its applicable terms and policies.",
-        "The site stores your guided-experience choice in local storage and audio state in session storage so those preferences work across navigation or a reload. You can clear this data through your browser settings.",
+        "The site stores your guided-experience and cookie-consent choices in local storage, and audio state in session storage, so those preferences work across navigation or a reload. You can clear this data through your browser settings.",
       ],
     },
     {
@@ -36,9 +40,16 @@ export const privacyPolicy = {
       ],
     },
     {
-      heading: "Analytics and cookies",
+      heading: "Advertising and Analytics Cookies",
       paragraphs: [
-        "The codebase supports optional Google Analytics and Google Ads measurement, but those tags remain inactive until real measurement identifiers are configured. Before enabling them, LocalRise must add an appropriate consent notice and update this policy to describe the active measurement tools.",
+        "With your permission, LocalRise uses the Google Ads global site tag to measure advertising performance and support conversion tracking. The Google tag is not downloaded or configured until you choose Accept in the cookie notice.",
+        "Provider: Google. Purpose: advertising measurement and conversion tracking. Google Ads tag ID: AW-18332132948. Google may set or read cookies and process device, browser, IP-address, page-view and advertising interaction information under its own policies.",
+        "You can accept or reject optional cookies, and you can change your choice at any time using Cookie preferences in the site footer. Rejecting optional cookies does not prevent you from using the website. Withdrawing consent stops future Google tag loading and measurement on this site and removes recognised first-party Google advertising cookies where the browser permits it; it cannot automatically delete information already transmitted to Google.",
+        "WhatsApp, phone and email links open the third-party service you choose. The LocalRise Google Ads tag does not read or store the contents of your WhatsApp messages, phone calls or emails.",
+      ],
+      links: [
+        { label: "Google Privacy Policy", href: "https://policies.google.com/privacy" },
+        { label: "How Google uses cookies", href: "https://policies.google.com/technologies/cookies" },
       ],
     },
     {

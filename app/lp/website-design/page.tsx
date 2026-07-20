@@ -10,6 +10,7 @@ import { ServiceFAQ } from "@/components/sections/ServiceFAQ";
 import { formatINR } from "@/lib/utils";
 import type { Package } from "@/lib/content";
 import { createPageMetadata } from "@/lib/seo";
+import { CookiePreferencesButton } from "@/components/analytics/CookiePreferencesButton";
 
 // ---------------------------------------------------------------------------
 // /lp/website-design/ — dedicated Google Ads landing page for the "Websites"
@@ -292,6 +293,9 @@ export default function WebsiteDesignLandingPage() {
           </div>
         </div>
       </section>
+      <footer className="border-t border-line py-5 text-center">
+        <CookiePreferencesButton className="min-h-11 text-body-sm text-ink-3 underline-offset-4 hover:text-ink hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent" />
+      </footer>
     </main>
   );
 }

@@ -5,6 +5,7 @@ import { LiveButton } from "@/components/live/LiveButton";
 import { LiveConversationButton } from "@/components/live/LiveConversationButton";
 import { Reveal } from "@/components/ui/Reveal";
 import { cx } from "@/lib/utils";
+import { CookiePreferencesButton } from "@/components/analytics/CookiePreferencesButton";
 
 // The one place on a live site that breaks the illusion on purpose: a small,
 // permanent "Design Concept by LocalRise" disclosure and a CTA back to the
@@ -57,10 +58,13 @@ export function LiveFooter({ site }: { site: ConceptSite }) {
         <p className="text-center text-sm text-[var(--lv-ink-muted)] sm:text-left">
           © {new Date().getFullYear()} {site.brandName} — a fictional Design Concept, not a real business.
         </p>
-        <SmartLink href="/concepts/" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-[var(--lv-ink-muted)] hover:text-[var(--lv-ink)]">
-          <Icon name="arrow-right" size={13} className="rotate-180" />
-          All concept websites
-        </SmartLink>
+        <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+          <CookiePreferencesButton className="min-h-11 text-sm font-medium text-[var(--lv-ink-muted)] hover:text-[var(--lv-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--lv-ink)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--lv-bg)]" />
+          <SmartLink href="/concepts/" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-[var(--lv-ink-muted)] hover:text-[var(--lv-ink)]">
+            <Icon name="arrow-right" size={13} className="rotate-180" />
+            All concept websites
+          </SmartLink>
+        </div>
       </div>
     </footer>
   );
