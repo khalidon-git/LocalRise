@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl("/process/") },
     { url: absoluteUrl("/faq/") },
     { url: absoluteUrl("/why-us/") },
+    { url: absoluteUrl("/services/") },
     { url: absoluteUrl("/concepts/") },
     { url: absoluteUrl("/privacy-policy/") },
     { url: absoluteUrl("/terms/") },

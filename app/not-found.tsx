@@ -35,7 +35,7 @@ export default function NotFound() {
           <p className="mx-auto mt-4 max-w-xl text-body-lg text-ink-2">{notFoundPage.description}</p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Button href="/" size="lg" arrow>Return home</Button>
-            <Button href="/#services" size="lg" variant="secondary">Explore services</Button>
+            <Button href="/services/" size="lg" variant="secondary">Explore services</Button>
           </div>
           <p className="mt-7 text-body-sm text-ink-2">
             Looking for a specific service? Try{" "}

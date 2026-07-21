@@ -63,14 +63,14 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
         url,
       },
       {
-        // Mirrors the visible breadcrumb below: Home → Services (/#services) →
+        // Mirrors the visible breadcrumb below: Home → Services (/services/) →
         // this service. "Services" points at the homepage anchor because there
         // is no /services/ index route.
         "@type": "BreadcrumbList",
         "@id": `${url}#breadcrumb`,
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
-          { "@type": "ListItem", position: 2, name: "Services", item: absoluteUrl("/#services") },
+          { "@type": "ListItem", position: 2, name: "Services", item: absoluteUrl("/services/") },
           { "@type": "ListItem", position: 3, name: service.title, item: url },
         ],
       },
@@ -89,7 +89,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
             <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-body-sm text-ink-3">
               <SmartLink href="/" className="transition-colors hover:text-ink">Home</SmartLink>
               <Icon name="arrow-right" size={14} />
-              <SmartLink href="/#services" className="transition-colors hover:text-ink">Services</SmartLink>
+              <SmartLink href="/services/" className="transition-colors hover:text-ink">Services</SmartLink>
               <Icon name="arrow-right" size={14} />
               <span className="text-ink-2">{service.title}</span>
             </nav>
@@ -170,6 +170,12 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
               ))}
             </ul>
             <p className="mt-5 text-body-sm text-ink-3">{serviceScopeNote}</p>
+            {detail.note && (
+              <p className="mt-4 flex items-start gap-2.5 rounded-xl border border-line-2 bg-white p-4 text-body-sm text-ink-2">
+                <Icon name="shield" size={16} strokeWidth={1.8} className="mt-0.5 shrink-0 text-accent" />
+                <span>{detail.note}</span>
+              </p>
+            )}
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="font-display text-heading-2 font-semibold text-ink">What you&apos;ll get</h2>

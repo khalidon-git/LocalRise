@@ -69,6 +69,22 @@ export const services: Service[] = [
     span: "lg",
     points: ["Auto-reply", "Lead capture", "Reminders"],
   },
+  {
+    id: "branding",
+    title: "Business Branding Kit",
+    blurb:
+      "A coordinated identity — logo, colours, type and ready-to-use business materials.",
+    icon: "layers",
+    span: "sm",
+  },
+  {
+    id: "marketplace",
+    title: "Marketplace Registration",
+    blurb:
+      "Get registered to sell on Amazon, Flipkart, Myntra and more — paperwork handled.",
+    icon: "rocket",
+    span: "sm",
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -92,6 +108,8 @@ export type ServiceDetail = {
   relatedPackageId: string;
   relatedServiceIds: string[];
   priceFrom?: number;
+  /** Optional visible clarification (e.g. third-party/marketplace-controlled terms). */
+  note?: string;
 };
 
 export const serviceScopeNote =
@@ -242,6 +260,47 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     relatedServiceIds: ["whatsapp", "websites"],
     priceFrom: 29999,
   },
+  branding: {
+    seoTitle: "Business Branding Kit Design in India | LocalRise",
+    metaDescription: "Get a complete business branding kit — logo and colour system, business cards, social templates and signage-ready files — designed for small businesses in India.",
+    h1: "Business Branding Kit",
+    headline: "A coordinated identity, beyond a logo",
+    sub: "A complete visual identity — logo and colour system, business cards, social templates and signage-ready files — so your business looks consistent everywhere, not just a single logo.",
+    who: "For businesses that need a full, consistent look — more than a logo on its own.",
+    accent: "from-[#ec4899] to-[#f9a8d4]",
+    benefits: [
+      { icon: "sparkles", title: "One coherent look", text: "A logo and colour system that ties every touchpoint together." },
+      { icon: "layers", title: "Ready-to-use materials", text: "Business cards, social templates and signage-ready files, prepared for you." },
+      { icon: "palette", title: "Consistent everywhere", text: "The same identity across your website, print and social." },
+    ],
+    included: ["Logo & colour system", "Business cards", "Social media templates", "Signage-ready files"],
+    outcomes: ["A consistent brand everywhere", "A premium, put-together impression", "Materials ready to use"],
+    faqPicks: [0, 4, 7],
+    relatedPackageId: "growth",
+    relatedServiceIds: ["logo", "websites"],
+    priceFrom: 9999,
+  },
+  marketplace: {
+    seoTitle: "Marketplace Registration for Sellers in India | LocalRise",
+    metaDescription: "Get help registering to sell on online marketplaces like Amazon, Flipkart and Myntra — document and GST handling, an initial catalogue upload and seller account setup.",
+    h1: "Marketplace Registration",
+    headline: "Get set up to sell on the big marketplaces",
+    sub: "We prepare and submit your registration to sell on Amazon, Flipkart, Myntra and more — from documents and GST handling to your first catalogue upload.",
+    who: "For businesses ready to start selling on online marketplaces.",
+    accent: "from-[#06b6d4] to-[#22d3ee]",
+    benefits: [
+      { icon: "rocket", title: "Register on the platforms", text: "Set up your seller presence on Amazon, Flipkart, Myntra and more." },
+      { icon: "shield", title: "Paperwork handled", text: "Document and GST handling, prepared and submitted correctly." },
+      { icon: "list", title: "Your first listings", text: "An initial catalogue upload so your account is ready to sell." },
+    ],
+    included: ["Amazon + Flipkart + Myntra setup", "Document & GST handling", "Initial catalog upload", "Account health setup"],
+    outcomes: ["Ready to list and sell", "Paperwork sorted", "A set-up seller account"],
+    note: "Marketplace approval, documentation requirements and any third-party or platform charges are decided by each marketplace (Amazon, Flipkart, Myntra and others). We prepare and submit everything correctly — the final approval and timelines rest with the marketplace.",
+    faqPicks: [0, 4, 5],
+    relatedPackageId: "growth",
+    relatedServiceIds: ["store", "websites"],
+    priceFrom: 4999,
+  },
 };
 
 
@@ -382,3 +441,27 @@ export const individualServices: IndividualService[] = [
 export const homepageServices: IndividualService[] = individualServices.filter(
   (s) => s.visual !== "shop" && s.visual !== "reviews",
 );
+
+// Single source of truth for the "More Info" destination of each catalogue
+// card → its dedicated /services/<id>/ detail page. Keyed on `visual` (already
+// a unique, stable per-card key — same reason homepageServices filters on it)
+// so a title edit can't silently repoint a link. All nine catalogue services
+// now have their own detail page, so every mapping resolves to a dedicated,
+// relevant route (no service maps to an unrelated one; none falls back to the
+// /services/ overview).
+const DETAIL_ID_BY_VISUAL: Record<ServiceVisualKind, string> = {
+  website: "websites",
+  maps: "google",
+  chat: "whatsapp",
+  shop: "store",
+  brand: "logo",
+  brandkit: "branding",
+  reviews: "reviews",
+  automation: "automation",
+  marketplace: "marketplace",
+};
+
+/** "More Info" href for a catalogue card — its dedicated detail page. */
+export function serviceMoreInfoHref(service: IndividualService): string {
+  return `/services/${DETAIL_ID_BY_VISUAL[service.visual]}/`;
+}

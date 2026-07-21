@@ -24,7 +24,7 @@ export const brand = {
 // hash change (no reload). Process, Why Us and FAQ each have one dedicated
 // route so visitors do not need to search through a combined information page.
 export const nav = [
-  { label: "Services", href: "/#services" },
+  { label: "Services", href: "/services/" },
   { label: "Packages", href: "/#packages" },
   { label: "Work", href: "/#concepts" },
   { label: "Process", href: "/process/" },

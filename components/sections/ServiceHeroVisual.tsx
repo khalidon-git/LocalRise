@@ -79,6 +79,31 @@ function FloatingCard({ id }: { id: string }) {
           </div>
         </div>
       );
+    case "branding":
+      return (
+        <div className={cardShell}>
+          <p className="text-[11px] font-medium text-ink-3">Brand kit</p>
+          <div className="mt-2 flex items-center gap-1.5">
+            {["bg-[#ec4899]", "bg-accent", "bg-ink", "bg-[#12b981]"].map((c) => (
+              <span key={c} className={`h-6 w-6 rounded-full ${c}`} />
+            ))}
+          </div>
+          <p className="mt-2 text-[10px] text-ink-3">Logo · colours · templates</p>
+        </div>
+      );
+    case "marketplace":
+      return (
+        <div className={cardShell}>
+          <div className="flex items-center justify-between">
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-ink-3">
+              <Icon name="rocket" size={13} className="text-accent" /> Seller setup
+            </span>
+            <span className="rounded-full bg-accent-tint px-1.5 py-0.5 text-[10px] font-semibold text-accent">Example</span>
+          </div>
+          <p className="mt-2 text-[11px] font-semibold text-ink">Amazon · Flipkart · Myntra</p>
+          <p className="mt-1 text-[10px] text-ink-3">Docs · catalogue · account</p>
+        </div>
+      );
     case "automation":
     case "websites":
     default:
