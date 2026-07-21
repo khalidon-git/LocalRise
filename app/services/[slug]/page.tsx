@@ -1,16 +1,27 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { services, serviceDetails, packages, faqs, serviceScopeNote } from "@/lib/content";
+import { services, serviceDetails, serviceGuides, packages, faqs, serviceScopeNote } from "@/lib/content";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
 import { ConversationButton } from "@/components/ui/ConversationButton";
 import { SmartLink } from "@/components/ui/SmartLink";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/Reveal";
 import { ServiceHeroVisual } from "@/components/sections/ServiceHeroVisual";
 import { PackageCard } from "@/components/sections/PackageCard";
 import { ServiceFAQ } from "@/components/sections/ServiceFAQ";
+import {
+  ServiceProblem,
+  ServiceWhatItDoes,
+  ServiceBenefits,
+  ServiceInclusions,
+  ServiceExpectations,
+  ServiceWhoFor,
+  ServiceProcess,
+  ServiceRequirementsTimeline,
+  ServiceResults,
+} from "@/components/sections/ServiceGuideSections";
 import { formatINR } from "@/lib/utils";
 import { SITE_URL, absoluteUrl, createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
@@ -41,8 +52,10 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
   const data = getService(params.slug);
   if (!data) notFound();
   const { service, detail } = data;
+  const guide = serviceGuides[service.id];
   const pkg = packages.find((p) => p.id === detail.relatedPackageId);
-  const serviceFaqs = detail.faqPicks.map((i) => faqs[i]).filter(Boolean);
+  // Prefer the service-specific guide FAQs; fall back to the shared picks.
+  const serviceFaqs = guide?.faqs ?? detail.faqPicks.map((i) => faqs[i]).filter(Boolean);
   const relatedServices = detail.relatedServiceIds.flatMap((id) => {
     const related = services.find((item) => item.id === id);
     return related ? [related] : [];
@@ -131,67 +144,111 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-white" />
       </section>
 
-      {/* Benefits */}
-      <section className="section-pad">
-        <div className="container-x">
-          <SectionHeading
-            title={`What ${service.title} does for you`}
-            description={detail.who}
+      {guide ? (
+        <>
+          {/* Long-form educational sections (serviceGuides.ts) */}
+          <ServiceProblem problem={guide.problem} muted />
+          <ServiceWhatItDoes whatItDoes={guide.whatItDoes} />
+          <ServiceBenefits benefits={guide.benefits} serviceTitle={service.title} muted />
+          <ServiceInclusions groups={guide.inclusionGroups} scopeNote={serviceScopeNote} note={detail.note} />
+          <ServiceExpectations notIncluded={guide.notIncluded} muted />
+          <ServiceWhoFor whoFor={guide.whoFor} />
+          <ServiceProcess steps={guide.process} muted />
+          <ServiceRequirementsTimeline
+            requirements={guide.requirements}
+            timeline={guide.timeline}
+            delivery={guide.delivery}
           />
-          <Stagger className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
-            {detail.benefits.map((b) => (
-              <StaggerItem key={b.title}>
-                <div className="card card-hover h-full p-5 sm:p-6">
-                  <span className="grid h-12 w-12 place-items-center rounded-2xl border border-line bg-white text-accent shadow-xs">
-                    <Icon name={b.icon} size={22} strokeWidth={1.7} />
-                  </span>
-                  <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-ink">{b.title}</h3>
-                  <p className="mt-2 text-body-sm text-ink-2">{b.text}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
-      </section>
+          <ServiceResults results={guide.results} muted />
 
-      {/* Included + Outcomes */}
-      <section className="section-pad bg-bg-subtle">
-        <div className="container-x grid gap-10 lg:grid-cols-2 lg:gap-14">
-          <Reveal>
-            <h2 className="font-display text-heading-2 font-semibold text-ink">What&apos;s included</h2>
-            <ul className="mt-6 flex flex-col gap-3">
-              {detail.included.map((it) => (
-                <li key={it} className="flex items-start gap-3 text-body text-ink">
-                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent-tint text-accent">
-                    <Icon name="check" size={12} strokeWidth={2.6} />
+          {guide.linkWebsiteGuide && (
+            <section className="section-compact">
+              <div className="container-x max-w-3xl">
+                <SmartLink
+                  href="/website-guide/"
+                  className="card card-hover flex items-center justify-between gap-4 p-5 sm:p-6"
+                >
+                  <span className="flex items-start gap-4">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-tint text-accent">
+                      <Icon name="browser" size={22} strokeWidth={1.7} />
+                    </span>
+                    <span>
+                      <span className="block font-display text-lg font-semibold text-ink">
+                        Naye ho online? Pehle yeh guide padhein
+                      </span>
+                      <span className="mt-1 block text-body-sm text-ink-2">
+                        Why your business needs a professional website — bina bikwaali, seedhi baat.
+                      </span>
+                    </span>
                   </span>
-                  {it}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-5 text-body-sm text-ink-3">{serviceScopeNote}</p>
-            {detail.note && (
-              <p className="mt-4 flex items-start gap-2.5 rounded-xl border border-line-2 bg-white p-4 text-body-sm text-ink-2">
-                <Icon name="shield" size={16} strokeWidth={1.8} className="mt-0.5 shrink-0 text-accent" />
-                <span>{detail.note}</span>
-              </p>
-            )}
-          </Reveal>
-          <Reveal delay={0.1}>
-            <h2 className="font-display text-heading-2 font-semibold text-ink">What you&apos;ll get</h2>
-            <div className="mt-6 flex flex-col gap-3">
-              {detail.outcomes.map((o) => (
-                <div key={o} className="flex items-center gap-3 rounded-2xl border border-line bg-white p-4 shadow-xs">
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-accent-tint text-accent">
-                    <Icon name="spark" size={18} />
-                  </span>
-                  <span className="font-medium text-ink">{o}</span>
-                </div>
-              ))}
+                  <Icon name="arrow-right" size={18} className="shrink-0 text-accent" />
+                </SmartLink>
+              </div>
+            </section>
+          )}
+        </>
+      ) : (
+        <>
+          {/* Fallback: original compact layout for any service without a guide */}
+          <section className="section-pad">
+            <div className="container-x">
+              <SectionHeading
+                title={`What ${service.title} does for you`}
+                description={detail.who}
+              />
+              <div className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
+                {detail.benefits.map((b) => (
+                  <div key={b.title} className="card card-hover h-full p-5 sm:p-6">
+                    <span className="grid h-12 w-12 place-items-center rounded-2xl border border-line bg-white text-accent shadow-xs">
+                      <Icon name={b.icon} size={22} strokeWidth={1.7} />
+                    </span>
+                    <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-ink">{b.title}</h3>
+                    <p className="mt-2 text-body-sm text-ink-2">{b.text}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </Reveal>
-        </div>
-      </section>
+          </section>
+
+          <section className="section-pad bg-bg-subtle">
+            <div className="container-x grid gap-10 lg:grid-cols-2 lg:gap-14">
+              <Reveal>
+                <h2 className="font-display text-heading-2 font-semibold text-ink">What&apos;s included</h2>
+                <ul className="mt-6 flex flex-col gap-3">
+                  {detail.included.map((it) => (
+                    <li key={it} className="flex items-start gap-3 text-body text-ink">
+                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent-tint text-accent">
+                        <Icon name="check" size={12} strokeWidth={2.6} />
+                      </span>
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-5 text-body-sm text-ink-3">{serviceScopeNote}</p>
+                {detail.note && (
+                  <p className="mt-4 flex items-start gap-2.5 rounded-xl border border-line-2 bg-white p-4 text-body-sm text-ink-2">
+                    <Icon name="shield" size={16} strokeWidth={1.8} className="mt-0.5 shrink-0 text-accent" />
+                    <span>{detail.note}</span>
+                  </p>
+                )}
+              </Reveal>
+              <Reveal delay={0.1}>
+                <h2 className="font-display text-heading-2 font-semibold text-ink">What you&apos;ll get</h2>
+                <div className="mt-6 flex flex-col gap-3">
+                  {detail.outcomes.map((o) => (
+                    <div key={o} className="flex items-center gap-3 rounded-2xl border border-line bg-white p-4 shadow-xs">
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-accent-tint text-accent">
+                        <Icon name="spark" size={18} />
+                      </span>
+                      <span className="font-medium text-ink">{o}</span>
+                    </div>
+                  ))}
+                </div>
+              </Reveal>
+            </div>
+          </section>
+        </>
+      )}
 
       {/* Related package */}
       {pkg && (

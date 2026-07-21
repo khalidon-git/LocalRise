@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl("/faq/") },
     { url: absoluteUrl("/why-us/") },
     { url: absoluteUrl("/services/") },
+    { url: absoluteUrl("/website-guide/") },
     { url: absoluteUrl("/concepts/") },
     { url: absoluteUrl("/privacy-policy/") },
     { url: absoluteUrl("/terms/") },

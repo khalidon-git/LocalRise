@@ -4,6 +4,8 @@
 
 export * from "./brand";
 export * from "./services";
+export * from "./serviceGuides";
+export * from "./websiteGuide";
 export * from "./packages";
 export * from "./industries";
 export * from "./concepts";
