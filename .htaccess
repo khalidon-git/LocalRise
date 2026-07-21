@@ -1,0 +1,38 @@
+# Copied into out/ by the build, so it lands in public_html on deploy.
+
+# Serve the site's own 404 page instead of Apache's default.
+ErrorDocument 404 /404.html
+
+# Canonical scheme and host: force HTTPS on the bare apex. www.localrise.in otherwise
+# serves an identical copy of every page (same content, same ETag), which
+# splits Google's canonical signal across two hosts and can suppress indexing.
+# 301 so link equity consolidates on the apex — the host used by metadataBase
+# (app/layout.tsx), app/sitemap.ts and app/robots.ts. %{REQUEST_URI} preserves
+# the full path incl. the trailing slash, so /services/websites/ still lands.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} !^localrise\.in$ [NC]
+  RewriteRule ^ https://localrise.in%{REQUEST_URI} [R=301,L,NE]
+</IfModule>
+
+# Apache doesn't always know Ogg/Opus or WebM — be explicit so browsers treat
+# these as playable media instead of a generic download (or, worse, silently
+# refuse to play a <source> whose real Content-Type doesn't match its
+# declared `type` attribute — confirmed live: hero.webm was serving as
+# text/plain, and since it's listed first in HeroVideo's <source> order, that
+# broke the whole element instead of cleanly falling back to the mp4 source).
+<IfModule mod_mime.c>
+  AddType audio/ogg .ogg
+  AddType audio/ogg .opus
+  AddType video/webm .webm
+</IfModule>
+
+# Everything under /_next/static/ has a content hash in its filename, so a
+# change always produces a new URL and these can never go stale. Scoped to
+# that path deliberately — a year-long cache on anything unhashed would be
+# very hard to undo.
+<IfModule mod_headers.c>
+  SetEnvIf Request_URI "^/_next/static/" IMMUTABLE_ASSET
+  Header set Cache-Control "public, max-age=31536000, immutable" env=IMMUTABLE_ASSET
+</IfModule>
